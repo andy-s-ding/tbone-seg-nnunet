@@ -1,0 +1,11 @@
+*.ipynb
+*.nii.gz
+*.nii
+*~
+*.npz
+jhu*.pkl
+00_ading/
+01_jsoong/
+02_jsoong/
+04_jsoong/
+test_jsoong/
