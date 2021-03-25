@@ -1,0 +1,9 @@
+{
+    "dataset": "original",
+    "generated_dataset_dir": null,
+    "generated_label_dir": null,
+    "original_dataset_dir": "../registered_niftis/",
+    "output_dir": "../test_jsoong/",
+    "pickle_path": "./datasplit.pkl",
+    "task_num": "999"
+}
