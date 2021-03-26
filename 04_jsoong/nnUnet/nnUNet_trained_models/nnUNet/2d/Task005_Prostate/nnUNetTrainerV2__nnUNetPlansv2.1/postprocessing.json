@@ -1,0 +1,22 @@
+{
+    "dc_per_class_pp_all": {
+        "1": 0.6290777354530083,
+        "2": 0.8442745524041534
+    },
+    "dc_per_class_pp_per_class": {
+        "1": 0.6322999099898385,
+        "2": 0.8441990576832838
+    },
+    "dc_per_class_raw": {
+        "1": 0.6294799366630228,
+        "2": 0.8435835297832515
+    },
+    "for_which_classes": [
+        1,
+        2
+    ],
+    "min_valid_object_sizes": "None",
+    "num_samples": 32,
+    "validation_final": "cv_niftis_postprocessed",
+    "validation_raw": "cv_niftis_raw"
+}
