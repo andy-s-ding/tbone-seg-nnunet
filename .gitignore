@@ -1,3 +1,4 @@
+.ipynb_checkpoints
 *.ipynb
 *.nii.gz
 *.nii
@@ -12,3 +13,4 @@ jhu*.pkl
 test_jsoong/
 *.model*
 *checkpoint*
+Task05_Prostate/
