@@ -12,10 +12,10 @@
 #### load and unload modules you may need
 module restore deeplearning
 
-conda activate nnUnet
+conda activate nnUNet
 
 #### execute code and write output file to OUT-25log.
-nnUNet_train 3d_fullres nnUNetTrainerV2 Task101_TemporalBone 4 --npz > ./debugging_logs/fold4fullres-6tasks.log
+nnUNet_train 3d_fullres nnUNetTrainerV2 Task101_TemporalBone 4 -c --npz >> ./debugging_logs/fold4fullres-6tasks.log
 echo "Finished with job $SLURM_JOBID"
 
 #### mpiexec by default launches number of tasks requested
