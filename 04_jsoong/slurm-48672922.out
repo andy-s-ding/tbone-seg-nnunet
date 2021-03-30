@@ -1,1 +1,2 @@
 Restoring modules from user's deeplearning
+slurmstepd: error: *** JOB 48672922 ON gpu034 CANCELLED AT 2021-03-29T04:27:29 DUE TO TIME LIMIT ***
