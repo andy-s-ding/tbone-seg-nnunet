@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH --job-name=nnUnet2K80
-#SBATCH --time=48:0:0
-#SBATCH --partition=gpuk80
+#SBATCH --job-name=nnUnet2P100
+#SBATCH --time=12:0:0
+#SBATCH --partition=gpup100
 #SBATCH --gres=gpu:1
-#SBATCH --ntasks-per-node=6
+#SBATCH --ntasks-per-node=12
 #SBATCH --nodes=1
 #SBATCH --mail-type=end
 #SBATCH --mail-user=jsoong1@jhu.edu
