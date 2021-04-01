@@ -1,0 +1,14 @@
+dataset	file reading	preprocessing	registration	propagation	file writing
+dataset	file reading	preprocessing	registration	propagation	file writing
+dataset	file reading	preprocessing	registration	propagation	file writing
+RT 153 to RT 138	22.64	24.61	471.70	65.55	44.49	
+RT 153 to RT 144	20.94	20.09	426.03	63.07	45.61	
+RT 153 to RT 152	20.54	20.40	408.94	61.18	42.55	
+RT 153 to RT 175	21.09	24.59	507.83	64.82	45.08	
+RT 153 to RT 183	20.44	20.18	355.85	61.86	39.83	
+dataset	file reading	preprocessing	registration	propagation	file writing
+RT 153 to LT 143	20.92	33.94	395.91	71.10	37.97	
+RT 153 to LT 147	20.57	33.94	443.87	64.17	36.33	
+RT 153 to LT 171	20.49	34.32	492.73	64.86	33.77	
+RT 153 to LT 177	22.23	35.13	411.92	63.38	36.29	
+RT 153 to LT 195	20.47	34.29	566.53	64.34	35.14	
