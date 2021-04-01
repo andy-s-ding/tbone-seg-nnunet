@@ -43432,3 +43432,119 @@ Forward pass time: -0.5711970329284668 seconds.
 
 2021-04-01 12:56:59.766360: saving checkpoint...
 2021-04-01 12:57:00.259152: done, saving took 0.58 seconds
+jhu_010 (2, 512, 508, 489)
+debug: mirroring True mirror_axes (0, 1, 2)
+step_size: 0.5
+do mirror: True
+data shape: (1, 512, 508, 489)
+patch size: [128 128 128]
+steps (x, y, and z): [[0, 64, 128, 192, 256, 320, 384], [0, 63, 127, 190, 253, 317, 380], [0, 60, 120, 180, 241, 301, 361]]
+number of tiles: 343
+computing Gaussian
+prediction done
+jhu_012 (2, 512, 508, 512)
+debug: mirroring True mirror_axes (0, 1, 2)
+step_size: 0.5
+do mirror: True
+data shape: (1, 512, 508, 512)
+patch size: [128 128 128]
+steps (x, y, and z): [[0, 64, 128, 192, 256, 320, 384], [0, 63, 127, 190, 253, 317, 380], [0, 64, 128, 192, 256, 320, 384]]
+number of tiles: 343
+using precomputed Gaussian
+prediction done
+jhu_014 (2, 512, 498, 512)
+debug: mirroring True mirror_axes (0, 1, 2)
+step_size: 0.5
+do mirror: True
+data shape: (1, 512, 498, 512)
+patch size: [128 128 128]
+steps (x, y, and z): [[0, 64, 128, 192, 256, 320, 384], [0, 62, 123, 185, 247, 308, 370], [0, 64, 128, 192, 256, 320, 384]]
+number of tiles: 343
+using precomputed Gaussian
+prediction done
+2021-04-01 13:54:20.924258: finished prediction
+2021-04-01 13:54:20.955200: evaluation of raw predictions
+2021-04-01 13:55:17.659882: determining postprocessing
+Foreground vs background
+before: 0.6745148099277233
+after:  0.6184928649534923
+1
+before: 0.9531831599469774
+after:  0.9533543329692583
+Removing all but the largest region for class 1 improved results!
+min_valid_object_sizes None
+10
+before: 0.773474781330136
+after:  0.6767406114012423
+11
+before: 0.3426780940331806
+after:  0.3352449567803424
+12
+before: 0.8328869133568029
+after:  0.8721571353548963
+Removing all but the largest region for class 12 improved results!
+min_valid_object_sizes None
+13
+before: 0.6922942446808541
+after:  0.7392978166910007
+Removing all but the largest region for class 13 improved results!
+min_valid_object_sizes None
+14
+before: 0.5938953885588268
+after:  0.5940110681020704
+Removing all but the largest region for class 14 improved results!
+min_valid_object_sizes None
+15
+before: 0.9038734968074666
+after:  0.9052767502139819
+Removing all but the largest region for class 15 improved results!
+min_valid_object_sizes None
+16
+before: 0.8245461631054538
+after:  0.8257878101726192
+Removing all but the largest region for class 16 improved results!
+min_valid_object_sizes None
+2
+before: 0.8750835024994795
+after:  0.8701775476931416
+3
+before: 0.8728897012908217
+after:  0.88102115697298
+Removing all but the largest region for class 3 improved results!
+min_valid_object_sizes None
+4
+before: 0.3034324335794924
+after:  0.29547054670924977
+5
+before: 0.9261290871936344
+after:  0.9275435341313578
+Removing all but the largest region for class 5 improved results!
+min_valid_object_sizes None
+6
+before: 0.8861131350002905
+after:  0.8862998008760673
+Removing all but the largest region for class 6 improved results!
+min_valid_object_sizes None
+7
+before: 0.28524098453188274
+after:  0.2878072675100463
+Removing all but the largest region for class 7 improved results!
+min_valid_object_sizes None
+8
+before: 0.22117879789683648
+after:  0.15931391268072148
+9
+before: 0.5053370750314363
+after:  0.5053370750314363
+done
+for which classes:
+[1, 12, 13, 14, 15, 16, 3, 5, 6, 7]
+min_object_sizes
+None
+force_separate_z: None interpolation order: 1
+no resampling necessary
+force_separate_z: None interpolation order: 1
+no resampling necessary
+force_separate_z: None interpolation order: 1
+no resampling necessary
+done

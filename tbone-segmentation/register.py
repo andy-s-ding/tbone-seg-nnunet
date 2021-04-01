@@ -54,7 +54,7 @@ def register_to_target(template_path, target_path, target_segmentation_path, sid
 
         if flip:
             target_image = flip_image(target_image)
-            target_segmentations = flip_image(target_segmentations)
+            target_segmentations = flip_image(target_segmentations, single_components=True)
 
         if downsample:
             target_image_downsample = ants.resample_image(target_image, (downsample_size, downsample_size, downsample_size), 1, 0)

@@ -40,7 +40,7 @@ def parse_command_line(args):
 	parser.add_argument('--base', 
 						action="store", 
 						type=str, 
-                     	default="/Volumes/Extreme SSD/ANTs-registration/"
+						default="/scratch/groups/rtaylor2/ANTs-registration"
 						)
 	parser.add_argument('--target',
 						action="store",
@@ -56,7 +56,7 @@ def parse_command_line(args):
 	parser.add_argument('--cached',
 						action="store",
 						type=str, 
-                     	default="/Volumes/Extreme SSD/ANTs-registration/transforms/"
+						default="scratch/groups/rtaylor2/ANTs-registration/transforms/SyN_Demons_1.9/"
 						)
 	parser.add_argument('--dry',
 						action="store_true"
@@ -72,7 +72,6 @@ def parse_command_line(args):
                     	)
 	parser.add_argument('--transforms',
                      	action="store_true",
-						default=True,
 						help="determines whether to write the transforms of the deformation field"
                      	)
 	parser.add_argument('--annotations',
@@ -86,11 +85,6 @@ def parse_command_line(args):
 	parser.add_argument('--overwrite',
                      	action="store_true",
 						help="determines whether to overwrite existing output .seg.nrrds if present"
-                     	)
-	parser.add_argument('--register_uncached',
-                     	action="store_true",
-						default=True,
-						help="determines whether to perform registration if cached transforms do not exist"
                      	)
 	parser.add_argument('--flip',
 						action="store_true",
@@ -175,6 +169,8 @@ def propagate(template, target, base, side, save_dir, transform, downsample=Fals
 	target_image = ants.image_read(target_path)
 	target_image_header = nrrd.read_header(target_path)
 
+	propagated = []
+
 	if propagate_segmentations: 
 		template_segmentation_path = os.path.join(base, "segmentations/Segmentation %s %s.seg.nrrd" % (side, template))
 		template_segmentations = ants.image_read(template_segmentation_path, pixeltype="unsigned char")
@@ -186,6 +182,8 @@ def propagate(template, target, base, side, save_dir, transform, downsample=Fals
 		predicted_segmentations = apply_transform_to_image(transform, target_image, template_segmentations)
 		predicted_targets_path = adjust_file_path(save_dir, "%s %s %s"%(side, template, target), ".seg.nrrd", downsample=downsample, downsample_size=downsample_size, flip=flip)
 		ants_image_to_file(predicted_segmentations, template_segmentations_header, target_image_header, predicted_targets_path)
+
+		propagated.append(predicted_segmentations)
 
 	if propagate_annotations: 
 		template_annotation_path = os.path.join(base, "annotations/Annotations %s %s.seg.nrrd" % (side, template))
@@ -201,7 +199,7 @@ def propagate(template, target, base, side, save_dir, transform, downsample=Fals
 
 		propagated.append(predicted_annotations)
 
-	return
+	return propagated
 
 
 def register_to_target(template, target, base, side, save_dir, dry=False, downsample=False, downsample_size=300, write_transforms=False, write_annotations=False, flip=False): 
@@ -243,6 +241,7 @@ def register_to_target(template, target, base, side, save_dir, dry=False, downsa
 		target_image = ants.image_read(target_path)
 		template_image = ants.image_read(template_path)
 		template_segmentations = ants.image_read(template_segmentation_path, pixeltype="unsigned char")
+
 		if flip:
 			template_image = flip_image(template_image)
 			template_segmentations = flip_image(template_segmentations, single_components=True)
@@ -349,48 +348,36 @@ def main():
 	target = args['target']
 	images = os.path.join(base, 'images')
 	save_dir = os.path.join(base, 'predictions')
-	RT = [	'138', 
+	RT = [#'138', 
 			# '142',
 			# '143', 
-			'144',
+			# '144',
 			# '146', 
 			# '147',
-			'152', 
+			# '152', 
 			# '153',
 			# '170',
 			# '174', 
-			'175',
+			# '175',
 			# '177',
-			# '179',
+			'179',
 			'183',
-			# '189',
-			# '191',
-			# '192',
-			# '195'
+			'189',
 		]
-	LT = [	#'138',
-			'143',
-			# '144',
+	LT = [#'143',
 			# '145', 
 			# '146', 
-			'147',
-			# '148',
 			# '151', 
-			# '152',
 			# '169', 
-			# '170', 
-			'171', 
-			# '172',
-			# '173',
+			'170', 
+			# '171', 
+			'172',
+			'173',
 			# '175',
 			# '176',
-			'177',
-			# '183',
-			# '185',
-			# '191',
-			# '192',
-			# '193',
-			'195'
+			# '177',
+			'183',
+			'185'
 			]
 	if side == 'RT':
 		scan_id = RT
@@ -412,6 +399,7 @@ def main():
 		if template in target: 
 			continue
 		else:
+
 			predicted_targets_path = adjust_file_path(save_dir, "%s %s %s"%(side, template, target), ".seg.nrrd", args['downsample'], args['downsample_size'], flip=args['flip'])
 			predicted_annotations_path = adjust_file_path(save_dir, "%s %s %s"%(side, template, target), ".seg.nrrd", args['downsample'], args['downsample_size'], is_annotation=True, flip=args['flip'])
 			if not args['overwrite'] and os.path.exists(predicted_targets_path) and os.path.exists(predicted_annotations_path):
@@ -431,11 +419,7 @@ def main():
 
 				if not (os.path.exists(deform_path) and os.path.exists(affine_path)): 
 					print('-- expected cached results at %s, %s' % (affine_path, deform_path))
-					if args['register_uncached']:
-						register_to_target(template, target, base, side, save_dir,
-								dry=args['dry'], downsample=args['downsample'], downsample_size=args['downsample_size'],
-								write_transforms=args['transforms'], write_annotations=args['annotations'], flip=args['flip'])
-					continue
+					return
 
 				need_segmentations = not args['annotations_only']
 
