@@ -43481,3 +43481,82 @@ prediction done
 2021-04-01 15:44:58.290013: finished prediction
 2021-04-01 15:44:58.305730: evaluation of raw predictions
 2021-04-01 15:45:44.556408: determining postprocessing
+Foreground vs background
+before: 0.7309253531731297
+after:  0.5895114896835608
+1
+before: 0.9460839617771644
+after:  0.9461349622798672
+Removing all but the largest region for class 1 improved results!
+min_valid_object_sizes None
+10
+before: 0.8529675227048061
+after:  0.8531780417541078
+Removing all but the largest region for class 10 improved results!
+min_valid_object_sizes None
+11
+before: 0.5367651090419727
+after:  0.4867826114136115
+12
+before: 0.5378417789525308
+after:  0.6020030908923726
+Removing all but the largest region for class 12 improved results!
+min_valid_object_sizes None
+13
+before: 0.5983657954051901
+after:  0.5853922390537982
+14
+before: 0.5604206791451968
+after:  0.5629068990379732
+Removing all but the largest region for class 14 improved results!
+min_valid_object_sizes None
+15
+before: 0.9171278511164807
+after:  0.9186905718458257
+Removing all but the largest region for class 15 improved results!
+min_valid_object_sizes None
+16
+before: 0.6768445373575576
+after:  0.6956967909568236
+Removing all but the largest region for class 16 improved results!
+min_valid_object_sizes None
+2
+before: 0.9032591510296597
+after:  0.9032591510296597
+3
+before: 0.9267375708878408
+after:  0.9267375708878408
+4
+before: 0.5694292818625948
+after:  0.5258298684605036
+5
+before: 0.9479929681847691
+after:  0.9479923753578238
+6
+before: 0.7593743659899107
+after:  0.7593885895175281
+Removing all but the largest region for class 6 improved results!
+min_valid_object_sizes None
+7
+before: 0.5559063724870003
+after:  0.5566515705695657
+Removing all but the largest region for class 7 improved results!
+min_valid_object_sizes None
+8
+before: 0.6759374015474141
+after:  0.7385651577224143
+Removing all but the largest region for class 8 improved results!
+min_valid_object_sizes None
+9
+before: 0.7297513032799849
+after:  0.7297513032799849
+done
+for which classes:
+[1, 10, 12, 14, 15, 16, 6, 7, 8]
+min_object_sizes
+None
+force_separate_z: None interpolation order: 1
+no resampling necessary
+force_separate_z: None interpolation order: 1
+no resampling necessary
+done
