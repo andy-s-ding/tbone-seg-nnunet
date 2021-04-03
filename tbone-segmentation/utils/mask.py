@@ -33,9 +33,7 @@ def get_bounding_box(np_array, as_string=True):
 		ymin, ymax = np.where(y)[0][[0, -1]]
 		zmin, zmax = np.where(z)[0][[0, -1]]
 
-		bounds = "%d %d %d %d %d %d" % (xmin, xmax, ymin, ymax, zmin, zmax)
-		print(bounds)
-		bounding_boxes.append(bounds)
+		bounding_boxes.append("%d %d %d %d %d %d" % (xmin, xmax, ymin, ymax, zmin, zmax))
 
 	return bounding_boxes
 
