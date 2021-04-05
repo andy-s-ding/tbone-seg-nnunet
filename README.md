@@ -10,14 +10,14 @@ git clone https://github.com/jpsoong/jsad-tbone
 ## Step 1: Set up two environments using .yml files in environments/
 Navigate to environments/ folder
 
-# Step 1.1: Creating scripting environment
+### Step 1.1: Creating scripting environment
 Create environment from scripting_environment.yml file:
 ```
 conda env create -f scripting_environment.yml
 ```
 
 
-# Step 1.2: Creating nnUNet environment.
+### Step 1.2: Creating nnUNet environment.
 Create environment from nnUNet_environment.yml file:
 ```
 conda env create -f nnUNet_environment.yml
