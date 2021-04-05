@@ -18,23 +18,23 @@ from batchgenerators.utilities.file_and_folder_operations import *
 
 # Establish labels
 label_key = {
-    0: "Bone",
-    1: "Malleus",
-    2: "Incus",
-    3: "Stapes",
-    4: "Vestibule_and_Cochlea",
-    5: "Vestibular_Nerve",
-    6: "Superior_Vestibular_Nerve",
-    7: "Inferior_Vestibular_Nerve",
-    8: "Cochlear_Nerve",
-    9: "Facial_Nerve",
-    10: "Chorda_Tympani",
-    11: "ICA",
-    12: "Sinus_and_Dura",
-    13: "Vestibular_Aqueduct",
-    14: "TMJ",
-    15: "EAC",
-    16: "Foreign_Body"
+    0: "Background",
+    1: "Bone",
+    2: "Malleus",
+    3: "Incus",
+    4: "Stapes",
+    5: "Vestibule_and_Cochlea",
+    6: "Vestibular_Nerve",
+    7: "Superior_Vestibular_Nerve",
+    8: "Inferior_Vestibular_Nerve",
+    9: "Cochlear_Nerve",
+    10: "Facial_Nerve",
+    11: "Chorda_Tympani",
+    12: "ICA",
+    13: "Sinus_and_Dura",
+    14: "Vestibular_Aqueduct",
+    15: "TMJ",
+    16: "EAC",
 }
 
 
