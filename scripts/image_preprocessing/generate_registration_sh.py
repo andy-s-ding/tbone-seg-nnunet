@@ -14,13 +14,15 @@ def main(argv):
     
     # Get all nifti file names
     in_seg_path_list = glob.glob(segmentation_path + "/*.nii.gz")
+    in_seg_path_list = [path for path in in_seg_path_list if "deform" not in path and "153" not in path]
+    print(f"There are {len(in_seg_path_list)} files to register.")
 
     # Prepare list to write to
     command_list = []
     string_base = "python register.py"
     
     # Template path
-    template = '../nii_files/RT_153.nii.gz'
+    template = '../../nii_files/20210404_images/RT_153.nii.gz'
 
     for path in in_seg_path_list:
         try:
