@@ -55,7 +55,7 @@ def parse_command_line(args):
 	parser.add_argument('--downsample_size',
 						action="store",
 						type=int,
-						default=300
+						default=60
 						)
 	parser.add_argument('--num_deforms',
 						action="store",
@@ -64,7 +64,15 @@ def parse_command_line(args):
 						)
 	parser.add_argument('--overwrite',
 					 	action="store_true",
-						help="determines whether to overwrite existing output .nrrds if present"
+						help="determines whether to overwrite existing output if present"
+					 	)
+	parser.add_argument('--segs',
+					 	action="store_true",
+						help="determines whether to write segmentation files"
+					 	)
+	parser.add_argument('--nifti',
+					 	action="store_true",
+						help="determines whether to write nifti files in addition to nrrd files"
 					 	)
 	parser.add_argument('--flip',
 						action="store_true",
@@ -138,7 +146,7 @@ def adjust_file_path(save_dir, prefix, suffix, downsample=None, downsample_size=
 	return path
 
 
-def deform(template, base, side, save_dir, transform, id, downsample=False, downsample_size=300, write_segmentations=True):
+def deform(template, base, side, transform, id, downsample=False, downsample_size=300, write_nifti=False, write_segmentations=False):
 	if side == 'RT':
 		other_side = 'LT'
 	else:
@@ -150,10 +158,11 @@ def deform(template, base, side, save_dir, transform, id, downsample=False, down
 	template_image_header = nrrd.read_header(template_path)
 
 	deformed_volume = apply_transform_to_image(transform, template_image, template_image, interpolator='linear')
-	deformed_volume_path_nrrd = adjust_file_path(save_dir, "%s %s deform%d" % (side, template, id), ".nrrd", registration=None, downsample=downsample, downsample_size=downsample_size)
-	deformed_volume_path_nii = adjust_file_path(save_dir, "%s %s deform%d" % (side, template, id), ".nii.gz", registration=None, downsample=downsample, downsample_size=downsample_size)
+	deformed_volume_path_nrrd = adjust_file_path(deformed_volumes_dir, "%s %s deform%d" % (side, template, id), ".nrrd", registration=None, downsample=downsample, downsample_size=downsample_size)
+	deformed_volume_path_nii = adjust_file_path(deformed_volumes_nii_dir, "%s %s deform%d" % (side, template, id), ".nii.gz", registration=None, downsample=downsample, downsample_size=downsample_size)
 	ants_image_to_file(deformed_volume, template_image_header, template_image_header, deformed_volume_path_nrrd, segmentations=False)
-	# ants_image_to_file(deformed_volume, template_image_header, template_image_header, deformed_volume_path_nii, segmentations=False, nifti=True)
+	if write_nifti:
+		ants_image_to_file(deformed_volume, template_image_header, template_image_header, deformed_volume_path_nii, segmentations=False, nifti=True)
 
 	if write_segmentations:
 		template_segmentation_path = os.path.join(base, "segmentations/Segmentation %s %s.seg.nrrd" % (side, template))
@@ -161,11 +170,11 @@ def deform(template, base, side, save_dir, transform, id, downsample=False, down
 		template_segmentations_header = nrrd.read_header(template_segmentation_path)
 
 		predicted_segmentations = apply_transform_to_image(transform, template_image, template_segmentations)
-		predicted_targets_path_nrrd = adjust_file_path(save_dir, "Segmentation %s %s deform%d" % (side, template, id), ".seg.nrrd", registration=None, downsample=downsample, downsample_size=downsample_size)
-		predicted_targets_path_nii = adjust_file_path(save_dir, "Segmentation %s %s deform%d" % (side, template, id), ".nii.gz", registration=None, downsample=downsample, downsample_size=downsample_size)
+		predicted_targets_path_nrrd = adjust_file_path(pred_dir, "Segmentation %s %s deform%d" % (side, template, id), ".seg.nrrd", registration=None, downsample=downsample, downsample_size=downsample_size)
+		predicted_targets_path_nii = adjust_file_path(pred_nii_dir, "Segmentation %s %s deform%d" % (side, template, id), ".nii.gz", registration=None, downsample=downsample, downsample_size=downsample_size)
 		ants_image_to_file(predicted_segmentations, template_segmentations_header, template_image_header, predicted_targets_path_nrrd)
-		# ants_image_to_file(predicted_segmentations, template_segmentations_header, template_image_header, predicted_targets_path_nii, nifti=True, ants_header=template_ants_header)
-
+		if write_nifti:
+			ants_image_to_file(predicted_segmentations, template_segmentations_header, template_image_header, predicted_targets_path_nii, nifti=True)
 	return
 
 def main(): 
@@ -173,42 +182,48 @@ def main():
 	side = args['side']
 	base = args['base']
 	template = args['template']
+	global pred_dir
+	global pred_nii_dir
+	global deformed_volumes_dir
+	global deformed_volumes_nii_dir
 	pred_dir = os.path.join(base, 'predictions')
-	save_dir = os.path.join(pred_dir, 'NIFTI Predictions')
+	pred_nii_dir = os.path.join(pred_dir, 'NIFTI Predictions')
+	deformed_volumes_dir = os.path.join(base, 'deformed_volumes')
+	deformed_volumes_nii_dir = os.path.join(deformed_volumes_dir, 'NIFTI Volumes')
 	num_deforms = args['num_deforms']
 	ids = range(1,num_deforms+1)
 
-	# for deform_id in ids:
-	# 	deform_path = adjust_file_path(args["cached"], "%s %s deform%d" % (side, template, deform_id), ".nii.gz", registration='inverse',
-	# 											downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'])
-	# 	deformed_volume_path = adjust_file_path(save_dir, "%s %s deform%d" % (side, template, deform_id), ".nrrd", registration=None,
-	# 											downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'])
-
-	# 	if args['overwrite'] or not(os.path.exists(deformed_volume_path)):
-	# 		deform(template, base, side, save_dir, [deform_path], deform_id, downsample=args['downsample'], downsample_size=args['downsample_size'])
-		
-	# 	else:
-	# 		print('-- deformed volume already exists at %s' % (deformed_volume_path))
-	# return 
-
 	for deform_id in ids:
-		deformed_seg_path = adjust_file_path(pred_dir, "Segmentation %s %s deform%d" % (side, template, deform_id), ".seg.nrrd", registration=None,
+		deform_path = adjust_file_path(args["cached"], "%s %s deform%d" % (side, template, deform_id), ".nii.gz", registration='inverse',
+												downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'])
+		deformed_volume_path_nrrd = adjust_file_path(deformed_volumes_dir, "%s %s deform%d" % (side, template, deform_id), ".nrrd", registration=None,
 												downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'])
 
-		deformed_nii_path = adjust_file_path(save_dir, "Segmentation %s %s deform%d" % (side, template, deform_id), ".nii.gz", registration=None,
-											downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'])
-		
-		if args['overwrite'] or not(os.path.exists(deformed_nii_path)):
-			ants_img = ants.image_read(deformed_seg_path)
-			header = nrrd.read_header(deformed_seg_path)
-			data = ants_img.view(single_components=True)
-			data = convert_to_one_hot(data, header)
-			fg = np.max(data, axis=0)
-			labelmap = np.multiply(np.argmax(data, axis=0) + 1, fg).astype('uint8')
-			deformed_seg = ants.from_numpy(labelmap, origin=ants_img.origin, spacing = ants_img.spacing, direction=ants_img.direction)
-			deformed_seg.to_filename(deformed_nii_path)
+		if args['overwrite'] or not(os.path.exists(deformed_volume_path_nrrd)):
+			deform(template, base, side, [deform_path], deform_id, downsample=args['downsample'], downsample_size=args['downsample_size'],
+					write_nifti=args['nifti'], write_segmentations=args['segs'])
 		else:
-			print('-- deformed segmentation already exists at %s' % (deformed_nii_path))
+			print('-- deformed volume already exists at %s' % (deformed_volume_path_nrrd))
+	return 
+
+	# for deform_id in ids:
+	# 	deformed_seg_path = adjust_file_path(pred_dir, "Segmentation %s %s deform%d" % (side, template, deform_id), ".seg.nrrd", registration=None,
+	# 											downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'])
+
+	# 	deformed_nii_path = adjust_file_path(save_dir, "Segmentation %s %s deform%d" % (side, template, deform_id), ".nii.gz", registration=None,
+	# 											downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'])
+		
+	# 	if args['overwrite'] or not(os.path.exists(deformed_nii_path)):
+	# 		ants_img = ants.image_read(deformed_seg_path)
+	# 		header = nrrd.read_header(deformed_seg_path)
+	# 		data = ants_img.view(single_components=True)
+	# 		data = convert_to_one_hot(data, header)
+	# 		fg = np.max(data, axis=0)
+	# 		labelmap = np.multiply(np.argmax(data, axis=0) + 1, fg).astype('uint8')
+	# 		deformed_seg = ants.from_numpy(labelmap, origin=ants_img.origin, spacing = ants_img.spacing, direction=ants_img.direction)
+	# 		deformed_seg.to_filename(deformed_nii_path)
+	# 	else:
+	# 		print('-- deformed segmentation already exists at %s' % (deformed_nii_path))
 
 if __name__ == "__main__":
 	main()

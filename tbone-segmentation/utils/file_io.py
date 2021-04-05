@@ -4,6 +4,8 @@ file_io.py
 
 import nrrd
 import ants
+from ants.utils import convert_nibabel as cn
+import nibabel as nib
 import numpy as np
 import pyvista as pv
 import vtk
@@ -140,7 +142,7 @@ def convert_to_one_hot(data, header, segment_indices=None):
 	else:
 		return data
 
-	print(one_hot.shape)
+	print("One-Hot Shape: {}".format(one_hot.shape))
 	return one_hot
 
 
@@ -194,7 +196,7 @@ def extract_landmarks(segmentation_nrrds, segmentation_dir, output_dir):
 		data, header = nrrd.read(path_seg_nrrd)
 
 
-def ants_image_to_file(ants_img, template_header, spatial_header, file_name): 
+def ants_image_to_file(ants_img, template_header, spatial_header, file_name, segmentations=True, nifti=False): 
 	"""write out an ants image using nrrd 
 	
 	Note that the ANTsImage format is by default (x_dim, y_dim, z_dim, n_channels) 
@@ -211,38 +213,59 @@ def ants_image_to_file(ants_img, template_header, spatial_header, file_name):
 	Returns:
 	    None
 	"""
-	print(template_header)
 	print(ants_img.shape)
-	img_as_np = ants_img.numpy(single_components=True)
+	img_as_np = ants_img.view(single_components=segmentations)
 	print('image as numpy shape', img_as_np.shape)
-	print('new view shape', np.moveaxis(img_as_np, -1, 0).shape)
 
-	# copy over image spacing
-	template_header['spacing'] = ants_img.spacing
+	if nifti:
+		if segmentations:
+			data = convert_to_one_hot(img_as_np, template_header)
+			foreground = np.max(data, axis=0)
+			labelmap = np.multiply(np.argmax(data, axis=0) + 1, foreground).astype('uint8')
+			segmentation_img = ants.from_numpy(labelmap, origin=ants_img.origin, spacing = ants_img.spacing, direction=ants_img.direction)
+			print('-- Saving NII Segmentations')
+			segmentation_img.to_filename(file_name)
+		else:
+			print('-- Saving NII Volume')
+			ants_img.to_filename(file_name)
+	else:
+		# copy over image spacing
+		template_header['spacing'] = ants_img.spacing
 
-	# copy over the space coordinate frame and spatial origin
-	template_header['space'] = spatial_header['space']
-	template_header['space origin'] = spatial_header['space origin']
+		# copy over the space coordinate frame and spatial origin
+		template_header['space'] = spatial_header['space']
+		template_header['space origin'] = spatial_header['space origin']
 
-	# copy over spatial directions (3,3).
-	# add offset if the template_header is (3,3)
-	# so that the final output is (4,3)
-	if template_header['space directions'].shape[0] == 4: 
-		template_header['space directions'][1:] = spatial_header['space directions']
-	else: 
-		nan = np.ones((1, 3))*np.nan
-		template_header['space directions'] = np.concatenate((nan, spatial_header['space directions']))
-		template_header['kinds'].insert(0, 'list')
+		if segmentations:
+			# copy over spatial directions (3,3).
+			# add offset if the template_header is (3,3)
+			# so that the final output is (4,3)
+			if template_header['space directions'].shape[0] == 4: 
+				template_header['space directions'][1:] = spatial_header['space directions'][-3:]
+			else: 
+				nan = np.ones((1, 3))*np.nan
+				template_header['space directions'] = np.concatenate((nan, spatial_header['space directions']))
+				template_header['kinds'].insert(0, 'list')
 
-	# update the segment extents by finding bounding box for each segmentation. This will slightly
-	# increase slicer speed for reading in the segmentation. 
-	bbox_strings = get_bounding_box(np.moveaxis(img_as_np, -1, 0))
-	for idx, bbox_string in enumerate(bbox_strings): 
-		template_header["Segment%d_Extent" % (idx)] = bbox_string
+			# update the segment extents by finding bounding box for each segmentation. This will slightly
+			# increase slicer speed for reading in the segmentation. 
+			seg_layers = get_layer_values(template_header)
+			if len(seg_layers) > 1: # If seg file is new version with multiple layers
+				bbox_strings = get_bounding_box(img_as_np)
+				for idx in range(len(seg_layers)):
+					template_header["Segment%d_Extent" % (idx)] = bbox_strings[seg_layers[idx]] # Segments in same layer have same extent
+			else: # If seg file is old version or has one layer
+				image_one_hot = convert_to_one_hot(img_as_np, template_header)
+				bbox_strings = get_bounding_box(image_one_hot)
+				for idx, bbox_string in enumerate(bbox_strings):
+					template_header["Segment%d_Extent" % (idx)] = bbox_string
 
-	# write out the file with the updated header
-	nrrd.write(file_name, np.moveaxis(img_as_np, -1, 0), template_header)
-	
+			nrrd.write(file_name, img_as_np, template_header)
+
+		else:
+			template_header['space directions'] = spatial_header['space directions']
+			nrrd.write(file_name, img_as_np, template_header)
+
 	return
 
 
