@@ -43,4 +43,4 @@ def main(argv):
         
 if __name__ == '__main__':
     main(sys.argv[1:])
-    # example usage:  python generate_registration_sh.py ../nii_files/ ../NIFTI_Segmentations/ ../test_imgs/
+    # example usage:  python generate_registration_sh.py ../../nii_files/20210404 ../../NIFTI_Segmentations/20210404 <OUTPUT DIR>
