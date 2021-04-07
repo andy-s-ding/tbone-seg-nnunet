@@ -16,7 +16,7 @@ conda activate nnUNet
 
 #### execute code and write output file to OUT-25log.
 
-nnUNet_train 3d_fullres nnUNetTrainerV2 Task101_TemporalBone 'all' --npz > ./debugging_logs/fullres-6tasks.log
+nnUNet_train 3d_fullres nnUNetTrainerV2 Task101_TemporalBone 'all' --npz -c >> ./debugging_logs/fullres-6tasks.log
 echo "Finished with job $SLURM_JOBID"
 
 #### mpiexec by default launches number of tasks requested
