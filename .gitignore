@@ -10,6 +10,7 @@ prostate*.pkl
 jhu*.pkl
 01_jsoong/
 02_jsoong/
+temp_holding_dir/
 test_jsoong/
 *.model*
 *checkpoint*
