@@ -29,15 +29,15 @@ stage:  1
 I am using stage 1 from these plans
 I am using batch dice + CE loss
 
-I am using data from this folder:  /scratch/groups/rtaylor2/jsad-tbone-segmentation/04_jsoong/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/nnUNetData_plans_v2.1
+I am using data from this folder:  /scratch/groups/rtaylor2/jsad-tbone-segmentation/00_jsoong/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/nnUNetData_plans_v2.1
 ###############################################
 loading dataset
 loading all case properties
-2021-04-06 01:49:41.691780: Using splits from existing split file: /scratch/groups/rtaylor2/jsad-tbone-segmentation/04_jsoong/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl
-2021-04-06 01:49:41.707352: The split file contains 5 splits.
-2021-04-06 01:49:41.707999: Desired fold for training: 3
-2021-04-06 01:49:41.708506: This split has 12 training and 3 validation cases.
+2021-04-10 08:29:39.570456: Using splits from existing split file: /scratch/groups/rtaylor2/jsad-tbone-segmentation/00_jsoong/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl
+2021-04-10 08:29:39.575486: The split file contains 5 splits.
+2021-04-10 08:29:39.575892: Desired fold for training: 3
+2021-04-10 08:29:39.576284: This split has 12 training and 3 validation cases.
 unpacking dataset
 done
-2021-04-06 01:49:45.698383: lr: 0.01
+2021-04-10 08:29:43.841863: lr: 0.01
 using pin_memory on device 0
