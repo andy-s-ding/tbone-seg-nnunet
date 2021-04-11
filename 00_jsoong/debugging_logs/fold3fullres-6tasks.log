@@ -33,11 +33,11 @@ I am using data from this folder:  /scratch/groups/rtaylor2/jsad-tbone-segmentat
 ###############################################
 loading dataset
 loading all case properties
-2021-04-10 08:29:39.570456: Using splits from existing split file: /scratch/groups/rtaylor2/jsad-tbone-segmentation/00_jsoong/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl
-2021-04-10 08:29:39.575486: The split file contains 5 splits.
-2021-04-10 08:29:39.575892: Desired fold for training: 3
-2021-04-10 08:29:39.576284: This split has 12 training and 3 validation cases.
+2021-04-11 04:06:58.152816: Using splits from existing split file: /scratch/groups/rtaylor2/jsad-tbone-segmentation/00_jsoong/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl
+2021-04-11 04:06:58.173952: The split file contains 5 splits.
+2021-04-11 04:06:58.174369: Desired fold for training: 3
+2021-04-11 04:06:58.174703: This split has 12 training and 3 validation cases.
 unpacking dataset
 done
-2021-04-10 08:29:43.841863: lr: 0.01
+2021-04-11 04:07:04.863653: lr: 0.01
 using pin_memory on device 0
