@@ -172,6 +172,7 @@ def main(args):
     train_files = split['Train']
     test_files = split['Test']
     
+    
     # Establish filenames
     base_dir = os.path.join(target_dir, "nnUnet")
     task_dir = os.path.join(base_dir, "nnUNet_raw_data_base", "nnUNet_raw_data", "Task101_TemporalBone")
