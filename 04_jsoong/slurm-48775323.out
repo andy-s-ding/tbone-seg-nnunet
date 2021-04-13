@@ -1,2 +1,3 @@
 Restoring modules from user's deeplearning
 OMP: Warning #190: Forking a process while a parallel region is active is potentially unsafe.
+slurmstepd: error: *** JOB 48775323 ON gpu017 CANCELLED AT 2021-04-02T16:29:10 DUE TO TIME LIMIT ***

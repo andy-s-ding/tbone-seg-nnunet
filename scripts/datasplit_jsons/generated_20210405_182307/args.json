@@ -1,0 +1,9 @@
+{
+    "dataset": "generated",
+    "generated_dataset_dir": "../nii_files/20210404_images/",
+    "generated_label_dir": "../NIFTI_Segmentations/20210404_annotations/",
+    "original_dataset_dir": "../registered_niftis/",
+    "output_dir": "../00_ading/",
+    "pickle_path": "./datasplit_generated.pkl",
+    "task_num": "103"
+}

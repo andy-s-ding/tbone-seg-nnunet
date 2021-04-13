@@ -1,4 +1,5 @@
 .ipynb_checkpoints
+*__pycache__*
 *.ipynb
 *.nii.gz
 *.nii
@@ -7,9 +8,9 @@
 *.npy
 prostate*.pkl
 jhu*.pkl
-00_ading/
 01_jsoong/
 02_jsoong/
+temp_holding_dir/
 test_jsoong/
 *.model*
 *checkpoint*

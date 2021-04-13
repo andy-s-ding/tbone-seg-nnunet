@@ -1,0 +1,10 @@
+Restoring modules from user's deeplearning
+Traceback (most recent call last):
+  File "/home-2/jsoong1@jhu.edu/.conda/envs/nnUNet/bin/nnUNet_train", line 33, in <module>
+    sys.exit(load_entry_point('nnunet', 'console_scripts', 'nnUNet_train')())
+  File "/scratch/groups/rtaylor2/jsad-tbone-segmentation/nnUNet_code/nnUNet/nnunet/run/run_training.py", line 171, in main
+    trainer.load_latest_checkpoint()
+  File "/scratch/groups/rtaylor2/jsad-tbone-segmentation/nnUNet_code/nnUNet/nnunet/training/network_training/network_trainer.py", line 307, in load_latest_checkpoint
+    raise RuntimeError("No checkpoint found")
+RuntimeError: No checkpoint found
+Finished with job 48928041

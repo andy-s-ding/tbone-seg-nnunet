@@ -18,23 +18,23 @@ from batchgenerators.utilities.file_and_folder_operations import *
 
 # Establish labels
 label_key = {
-    0: "Bone",
-    1: "Malleus",
-    2: "Incus",
-    3: "Stapes",
-    4: "Vestibule_and_Cochlea",
-    5: "Vestibular_Nerve",
-    6: "Superior_Vestibular_Nerve",
-    7: "Inferior_Vestibular_Nerve",
-    8: "Cochlear_Nerve",
-    9: "Facial_Nerve",
-    10: "Chorda_Tympani",
-    11: "ICA",
-    12: "Sinus_and_Dura",
-    13: "Vestibular_Aqueduct",
-    14: "TMJ",
-    15: "EAC",
-    16: "Foreign_Body"
+    0: "Background",
+    1: "Bone",
+    2: "Malleus",
+    3: "Incus",
+    4: "Stapes",
+    5: "Vestibule_and_Cochlea",
+    6: "Vestibular_Nerve",
+    7: "Superior_Vestibular_Nerve",
+    8: "Inferior_Vestibular_Nerve",
+    9: "Cochlear_Nerve",
+    10: "Facial_Nerve",
+    11: "Chorda_Tympani",
+    12: "ICA",
+    13: "Sinus_and_Dura",
+    14: "Vestibular_Aqueduct",
+    15: "TMJ",
+    16: "EAC",
 }
 
 
@@ -172,6 +172,7 @@ def main(args):
     train_files = split['Train']
     test_files = split['Test']
     
+    
     # Establish filenames
     base_dir = os.path.join(target_dir, "nnUnet")
     task_dir = os.path.join(base_dir, "nnUNet_raw_data_base", "nnUNet_raw_data", "Task101_TemporalBone")
@@ -219,6 +220,7 @@ def main(args):
                 command = f"cp {return_label(file, args, dirpath=data_path)} {rename_file(j, test_label_dir, 'label')}"
                 # print(command)
                 os.system(command)
+
         elif args.dataset == 'generated':
             print("Copying Train Files Over...")
             for i, file in tqdm(enumerate(train_files)):
@@ -246,7 +248,7 @@ def main(args):
         # Make dataset.json file
         mapping_df.to_csv(os.path.join('.', csv_name))
         generate_dataset_json(join(task_dir, 'dataset.json'), train_dir, test_dir, ("CT",),
-                          labels=label_key, dataset_name="Task101_TemporalBone", license='hands off!')
+                          labels=label_key, dataset_name=f"Task{args.task_num}_TemporalBone", license='hands off!')
     else:
         print(f"{base_dir} already exists.")
 
