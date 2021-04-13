@@ -177,15 +177,22 @@ def main():
 			'147',
 			'152', 
 			'153',
+			'168',
 			'170',
+			'172',
 			'174', 
 			'175',
 			'177',
 			'179',
+			'181',
 			'183',
+			'184',
+			'186',
+			'187',
 			'189',
 			'191',
 			'192',
+			'194',
 			'195'
 		]
 	LT = [	'138',
@@ -197,6 +204,7 @@ def main():
 			'148',
 			'151', 
 			'152',
+			'168',
 			'169', 
 			'170', 
 			'171', 
@@ -205,11 +213,15 @@ def main():
 			'175',
 			'176',
 			'177',
+			'181',
 			'183',
+			'184',
 			'185',
+			'186',
 			'191',
 			'192',
 			'193',
+			'194',
 			'195'
 			]
 	if side == 'RT':
@@ -241,7 +253,7 @@ def main():
 				register_to_template(template, target, base, side, save_dir, downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'])
 			
 			else:
-				print('-- expected cached results at %s, %s' % (affine_path, deform_path))
+				print('-- transform already exists at %s, %s' % (affine_path, deform_path))
 	return 
 
 

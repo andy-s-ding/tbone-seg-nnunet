@@ -55,7 +55,7 @@ def parse_command_line(args):
 	parser.add_argument('--downsample_size',
 						action="store",
 						type=int,
-						default=60
+						default=100
 						)
 	parser.add_argument('--num_deforms',
 						action="store",

@@ -20,7 +20,7 @@ if not(exist(ssm_meta_dir, 'dir'))
 end
 
 side = "RT";
-downsample_size = 60;
+downsample_size = 100;
 template = 153;
 
 transform_H5_path = fullfile(ssm_H5_transform_dir, sprintf('%s %d inverse-downsample%d.h5', side, template, downsample_size));
