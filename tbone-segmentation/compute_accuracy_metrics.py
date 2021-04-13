@@ -1,9 +1,3 @@
-"""
-propagate_segments.py
-
-Andy's copy of registration_pipeline with functionality for segment and annotation propagation 
-
-"""
 import os 
 import sys 
 import argparse 
@@ -136,11 +130,12 @@ def main():
 	if args['flip']: target_scan_id = opposite_scan_id
 	else: target_scan_id = scan_id	
 	
-	if args['target'] is not None: 
-		if args['target'] not in target_scan_id: 
-			print('incorrectly specified target scan')
-			return
-		target_scan_id = [args['target']]
+	if args['target'] is not None:
+		for target in args['target']:
+			if target not in target_scan_id: 
+				print('incorrectly specified target scan')
+				return
+		target_scan_id = args['target']
 
 	template_seg_path = adjust_file_path(gt_dir, "Segmentation %s %s"%(side, template), ".seg.nrrd", registration=None)
 	seg_names = get_segmentation_names(nrrd.read_header(template_seg_path))
@@ -154,6 +149,7 @@ def main():
 		if template in target: 
 			continue
 		else:
+			print('-- Evaluating %s'%(target))
 			pred_seg_path = adjust_file_path(pred_dir, "Segmentation %s %s %s"%(side, template, target), ".nii.gz", args['downsample'], args['downsample_size'], flip=args['flip'])
 			
 			if args['flip']:
@@ -181,6 +177,7 @@ def main():
 
 			for i in ids:
 				seg_name = seg_names[i-1]
+				print('---- Computing metrics for segment: %s'%(seg_name))
 				dice_coeff = compute_dice_coefficient(gt_one_hot[i], pred_one_hot[i])
 				surface_distances = compute_surface_distances(gt_one_hot[i], pred_one_hot[i], spacing)
 				mod_hausdorff_distance = max(compute_average_surface_distance(surface_distances))

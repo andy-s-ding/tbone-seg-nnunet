@@ -1,26 +1,10 @@
-"""
-deform_volumes.py
-
-Andy's copy of registration_pipeline with functionality for volume deformation
-
-"""
 import os 
 import sys 
-import argparse 
 import numpy as np
 import ants
 from ants.utils import convert_nibabel as cn
 import nibabel as nib
 import nrrd
-
-import shutil
-import psutil
-import gc
-import time
-
-from utils.file_io import *
-from utils.mask import flip_image
-from propagate_segments import adjust_file_path
 
 import glob
 
