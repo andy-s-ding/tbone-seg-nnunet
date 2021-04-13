@@ -14,7 +14,7 @@ end
 
 num_transforms = 100;
 side = "RT";
-downsample_size = 60;
+downsample_size = 100;
 template = 153;
 
 transform_meta_path = fullfile(ssm_meta_dir, sprintf('%s %d inverse-downsample%d.mat', side, template, downsample_size));

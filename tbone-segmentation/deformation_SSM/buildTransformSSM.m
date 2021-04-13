@@ -25,17 +25,15 @@ if not(exist(ssm_meta_dir, 'dir'))
 end
 
 side = "RT";
-downsample_size = 60;
+downsample_size = 100;
 template = 153;
-
-% Test split: ['RT_143', 'LT_148', 'LT_171', 'LT_147', 'LT_143', 'RT_147']
 
 side_files = dir(fullfile(transform_dir, sprintf('%s %d *-inverse-downsample%d.nii.gz', side, template, downsample_size)));
 other_side_files = dir(fullfile(transform_dir, sprintf('%s %d *-inverse-downsample%d-flipped.nii.gz', side, template, downsample_size)));
 
 % Exclude any datasets in the test set
-exclude_side = ["143", "147"];
-exclude_other_side = ["148", "171", "147", "143"];
+exclude_side = ["138", "142", "143", "144", "146", "147" "150", "152", "153"];
+exclude_other_side = ["138", "143", "144", "146", "147", "148", "150", "151", "152", "169", "171"];
 side_names = string(vertcat(side_files(:).name));
 other_side_names = string(vertcat(other_side_files(:).name));
 side_names = exclude_indices(side_names, exclude_side);

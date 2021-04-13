@@ -30,7 +30,7 @@ def parse_command_line(args):
 	parser.add_argument('--template', 
 						action="store", 
 						type=str, 
-						default="142"
+						default="153"
 						)
 	parser.add_argument('--side', 
 						action="store", 
@@ -40,7 +40,7 @@ def parse_command_line(args):
 	parser.add_argument('--base', 
 						action="store", 
 						type=str, 
-						default="/scratch/groups/rtaylor2/ANTs-registration"
+                     default="/Volumes/Extreme SSD/ANTs-registration"
 						)
 	parser.add_argument('--target',
 						action="store",
@@ -202,7 +202,7 @@ def propagate(template, target, base, side, save_dir, transform, downsample=Fals
 	return propagated
 
 
-def register_to_target(template, target, base, side, save_dir, dry=False, downsample=False, downsample_size=300, write_transforms=False, write_annotations=False, flip=False): 
+def register_to_target(template, target, base, side, save_dir, dry=False, downsample=False, downsample_size=300, write_transforms=False, write_annotations=False, flip=False, nifti=True): 
 	"""Summary
 	
 	Args:
@@ -262,6 +262,9 @@ def register_to_target(template, target, base, side, save_dir, dry=False, downsa
 		# adjust file path according to input parameters
 		predicted_targets_path = adjust_file_path(save_dir, "%s %s %s"%(side, template, target), ".seg.nrrd", downsample, downsample_size, flip=flip)
 		ants_image_to_file(predicted_targets_image, template_segmentations_header, target_image_header, predicted_targets_path)
+
+		if nifti:
+			predicted_nii_path = adjust_file_path(os.path.join(save_dir, 'NIFTI Predictions'), "%s %s %s"%(side, template, target), ".nii.gz", downsample, downsample_size, flip=flip)
 
 		if write_annotations:
 			print("writing annotations")
@@ -348,25 +351,26 @@ def main():
 	target = args['target']
 	images = os.path.join(base, 'images')
 	save_dir = os.path.join(base, 'predictions')
-	RT = [#'138', 
-			# '142',
-			# '143', 
-			# '144',
-			# '146', 
-			# '147',
-			# '152', 
-			# '153',
-			# '170',
-			# '174', 
-			# '175',
-			# '177',
-			'179',
+	RT = ['138', 
+			# # '142',
+			# # '143', 
+			# # '144',
+			# # '146', 
+			# # '147',
+			# # '152', 
+			# # '153',
+			# # '170',
+			# # '174', 
+			# # '175',
+			# # '177',
+			# '179',
 			'183',
 			'189',
 		]
 	LT = [#'143',
 			# '145', 
 			# '146', 
+			'147',
 			# '151', 
 			# '169', 
 			'170', 
