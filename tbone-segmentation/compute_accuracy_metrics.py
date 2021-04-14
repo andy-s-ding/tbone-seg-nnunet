@@ -1,3 +1,9 @@
+"""
+compute_accuracy_metrics.py
+
+Compute dice scores and Hausdorff distances for segment ids
+
+"""
 import os 
 import sys 
 import argparse 
@@ -64,39 +70,13 @@ def parse_command_line(args):
 	args = vars(parser.parse_args())
 	return args
 
-
-def adjust_file_path(save_dir, prefix, suffix, downsample=None, downsample_size=300, registration="syn80-demons", is_annotation=False, flip=False): 
-
-	path = os.path.join(save_dir, prefix)
-
-	if registration:
-		path += "-" + registration
-
-	if downsample: 
-		path += "-downsample%d"%(downsample_size)
-
-	if flip:
-		path += "-flipped"
-
-	if is_annotation: 
-		path += "-annotations"
-
-	path += suffix
-
-	print(" -- returning path: %s" % path)
-
-	return path
-
-
 def main(): 
 	args = parse_command_line(sys.argv)
-
 	side = args['side']
 	base = args['base']
 	template = args['template']
 	target = args['target']
 	ids = args['ids']
-	print(ids)
 	gt_dir = os.path.join(base, 'segmentations')
 	gt_dir_nii = os.path.join(base, 'segmentations', 'NIFTI Segmentations')
 	pred_dir = os.path.join(base, 'predictions', 'NIFTI Predictions')

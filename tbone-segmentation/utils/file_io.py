@@ -17,6 +17,20 @@ import pickle
 from .mask import get_bounding_box
 
 
+def adjust_file_path(save_dir, prefix, suffix, downsample=None, downsample_size=300, registration="syn80-demons", is_annotation=False, flip=False):
+	path = os.path.join(save_dir, prefix)
+	if registration:
+		path += "-" + registration
+	if downsample:
+		path += "-downsample%d" % (downsample_size)
+	if flip:
+		path += "-flipped"
+	if is_annotation:
+		path += "-annotations"
+	path += suffix
+	print(" -- returning path: %s" % path)
+	return path
+
 def get_segmentation_names(header, indices=None): 
 
 	if indices is None: 
@@ -172,29 +186,6 @@ def read_vtk(file_path, use_vtk=False, as_pyvista=False):
 	mesh = pv.read(file_path)
 
 	return mesh
-
-
-def extract_landmarks(segmentation_nrrds, segmentation_dir, output_dir):
-	"""Summary
-	
-	return a dictionary {
-		Segment_Name: mesh 
-	}
-	
-	Args:
-	    segmentation_nrrds (TYPE): Description
-	    segmentation_dir (TYPE): Description
-	    output_dir (TYPE): Description
-	
-	
-	"""
-	landmark_indices = {
-		''
-	}
-	for i, nrrd_num in enumerate(segmentation_nrrds):
-		path_seg_nrrd = os.path.join(segmentation_dir, "Segmentation %s %s.seg.nrrd" % (side, nrrd_num)) 
-		data, header = nrrd.read(path_seg_nrrd)
-
 
 def ants_image_to_file(ants_img, template_header, spatial_header, file_name, segmentations=True, nifti=False): 
 	"""write out an ants image using nrrd 
