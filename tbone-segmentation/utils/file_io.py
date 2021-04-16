@@ -168,7 +168,6 @@ def name_consistency_check(names1, names2):
 
 	return
 
-
 def read_vtk(file_path, use_vtk=False, as_pyvista=False):
 
 	if use_vtk: 
@@ -258,25 +257,6 @@ def ants_image_to_file(ants_img, template_header, spatial_header, file_name, seg
 			nrrd.write(file_name, img_as_np, template_header)
 
 	return
-
-
-def adjust_path(path_input, folder="mesh_output"): 
-
-	adjusted_path = ""
-
-	if path_input is None: 
-		cur_outs = os.listdir(os.path.join(os.getcwd(), "test"))
-		next_avail = len([file for file in cur_outs if (".vtk" in file) and ("test" in file)])
-		adjusted_path = "test/test_%d.vtk" % (next_avail)
-
-	elif ".vtk" in path_input: 
-		adjusted_path = os.path.join(folder, path_input)
-
-	else: 
-		adjusted_path = os.path.join(folder, path_input + ".vtk")
-
-	return os.path.abspath(adjusted_path)
-
 
 def print_scores(scores, names=None): 
 

@@ -65,7 +65,7 @@ def parse_command_line(args):
 	parser.add_argument('--ids',
 						type=int,
 						nargs='+',
-						help="segment indices to calculate accuracy metrics")
+						help="segment indices (1-indexed) to calculate accuracy metrics")
 	
 	args = vars(parser.parse_args())
 	return args
@@ -120,9 +120,10 @@ def main():
 	template_seg_path = adjust_file_path(gt_dir, "Segmentation %s %s"%(side, template), ".seg.nrrd", registration=None)
 	seg_names = get_segmentation_names(nrrd.read_header(template_seg_path))
 
+	# Initialize metric dictionaries
 	dice_dict, hausdorff_dict = dict(), dict()
 	dice_dict['Target'], hausdorff_dict['Target'] = [], []
-	for i in ids:
+	for i in ids: # seg_names are 0-indexed, while ids are 1-indexed (due to presence of background class in one-hot)
 		dice_dict[seg_names[i-1]], hausdorff_dict[seg_names[i-1]] = [], []
 		
 	for target in target_scan_id:
