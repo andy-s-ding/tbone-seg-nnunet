@@ -3267,3 +3267,6 @@ epoch:  299
  
 2021-04-16 04:17:03.667222: saving checkpoint... 
 2021-04-16 04:17:04.508774: done, saving took 0.86 seconds 
+2021-04-16 08:36:30.897800: finished prediction 
+2021-04-16 08:36:30.909822: evaluation of raw predictions 
+2021-04-16 08:42:36.654360: determining postprocessing 
