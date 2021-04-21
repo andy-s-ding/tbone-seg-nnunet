@@ -1,0 +1,4 @@
+Starting... 
+2021-04-20 03:08:58.833215: Using splits from existing split file: /media/andyding/18EA660EEA65E908/Users/andys/Desktop/jsad-tbone/02_ading/nnUnet/nnUNet_preprocessed/Task102_TemporalBone/splits_final.pkl 
+2021-04-20 03:08:58.834285: The split file contains 2 splits. 
+2021-04-20 03:08:58.834424: Desired fold for training: 0 
