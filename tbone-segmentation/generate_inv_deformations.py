@@ -41,7 +41,7 @@ def parse_command_line(args):
 	parser.add_argument('--base', 
 						action="store", 
 						type=str, 
-						default="/Volumes/Extreme SSD/ANTs-registration/"
+						default="/media/andyding/EXTREME SSD/ANTs-registration/"
 						)
 	parser.add_argument('--target',
 						action="store",
@@ -53,7 +53,7 @@ def parse_command_line(args):
 	parser.add_argument('--cached',
 						action="store",
 						type=str, 
-						default="/Volumes/Extreme SSD/ANTs-registration/transforms/"
+						default="/media/andyding/EXTREME SSD/ANTs-registration/transforms/"
 						)
 	parser.add_argument('--dry',
 						action="store_true"
@@ -65,7 +65,7 @@ def parse_command_line(args):
 	parser.add_argument('--downsample_size',
 						action="store",
 						type=int,
-						default=300
+						default=100
                     	)
 	parser.add_argument('--overwrite',
                      	action="store_true",

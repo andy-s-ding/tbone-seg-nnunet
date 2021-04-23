@@ -24,6 +24,7 @@ def main(argv):
     split = {'Train': train_files, 'Test': test_files}
     
     print(split)
+    print(f"There are {len(train_files)} train files and {len(test_files)} test files.")
     
     with open("datasplit_generated.pkl", "wb") as pickle_out:
         pickle.dump(split, pickle_out, protocol=4) # compatible with python 3.6+

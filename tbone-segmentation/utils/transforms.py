@@ -1,3 +1,7 @@
+import numpy as np
+import ants
+import nrrd
+
 def apply_transform_to_image(transform, target_image, template_image, interpolator='genericLabel'): 
 	"""apply_transform_to_image
 

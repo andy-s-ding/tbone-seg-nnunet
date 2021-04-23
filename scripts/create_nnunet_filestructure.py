@@ -171,11 +171,12 @@ def main(args):
         split = pkl.load(pickle_in)
     train_files = split['Train']
     test_files = split['Test']
+    print(f"There are {len(train_files)} and {len(test_files)} test files.")
     
     
     # Establish filenames
     base_dir = os.path.join(target_dir, "nnUnet")
-    task_dir = os.path.join(base_dir, "nnUNet_raw_data_base", "nnUNet_raw_data", "Task101_TemporalBone")
+    task_dir = os.path.join(base_dir, "nnUNet_raw_data_base", "nnUNet_raw_data", f"Task{args.task_num}_TemporalBone")
     train_dir = os.path.join(task_dir, "imagesTr")
     train_label_dir = os.path.join(task_dir, "labelsTr")
     test_dir = os.path.join(task_dir, "imagesTs")

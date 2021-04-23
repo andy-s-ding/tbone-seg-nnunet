@@ -11,7 +11,8 @@ from utils.file_io import *
 import glob
 
 side = 'RT'
-base = "/Volumes/Extreme SSD/ANTs-registration/"
+# base = "/Volumes/Extreme SSD/ANTs-registration/"
+base = "/media/andyding/172A-29C2/ANTs-registration/"
 seg_dir = os.path.join(base, 'segmentations')
 save_dir = os.path.join(seg_dir, 'NIFTI Segmentations')
 
