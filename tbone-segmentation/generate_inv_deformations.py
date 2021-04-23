@@ -16,8 +16,8 @@ import psutil
 import gc
 import time
 
-from utils.file_io import ants_image_to_file
-from utils.mask import flip_image
+from utils.file_io import *
+from utils.mask import *
 
 
 def parse_command_line(args):
@@ -78,47 +78,7 @@ def parse_command_line(args):
 	args = vars(parser.parse_args())
 	return args
 
-
-def adjust_file_path(save_dir, prefix, suffix, downsample=None, downsample_size=300, registration="syn80-demons", is_annotation=False, flip=False): 
-
-	path = os.path.join(save_dir, prefix)
-
-	if registration:
-		path += "-" + registration
-
-	if downsample: 
-		path += "-downsample%d"%(downsample_size)
-
-	if flip:
-		path += "-flipped"
-
-	if is_annotation: 
-		path += "-annotations"
-
-	path += suffix
-
-	print(" -- returning path: %s" % path)
-
-	return path
-
 def register_to_template(template, target, base, side, save_dir, downsample=False, downsample_size=300, flip=False):
-	"""Summary
-	
-	Args:
-	    template (TYPE): Description
-	    target (TYPE): Description
-	    base (TYPE): Description
-	    side (TYPE): Description
-	    save_dir (TYPE): Description
-	    dry (bool, optional): Description
-	    downsample (bool, optional): Description
-	    downsample_size (int, optional): Description
-	    write_transforms (bool, optional): Description
-	    write_annotations (bool, optional): Description
-	
-	Returns:
-	    TYPE: Description
-	"""
 	print("---"*10)
 	print("entering registration w/ template %s and target %s" % (template, target))
 

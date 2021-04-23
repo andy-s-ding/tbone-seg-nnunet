@@ -17,6 +17,20 @@ import pickle
 from .mask import get_bounding_box
 
 
+def adjust_file_path(save_dir, prefix, suffix, downsample=None, downsample_size=300, registration="syn80-demons", is_annotation=False, flip=False):
+	path = os.path.join(save_dir, prefix)
+	if registration:
+		path += "-" + registration
+	if downsample:
+		path += "-downsample%d" % (downsample_size)
+	if flip:
+		path += "-flipped"
+	if is_annotation:
+		path += "-annotations"
+	path += suffix
+	print(" -- returning path: %s" % path)
+	return path
+
 def get_segmentation_names(header, indices=None): 
 
 	if indices is None: 
@@ -154,7 +168,6 @@ def name_consistency_check(names1, names2):
 
 	return
 
-
 def read_vtk(file_path, use_vtk=False, as_pyvista=False):
 
 	if use_vtk: 
@@ -172,29 +185,6 @@ def read_vtk(file_path, use_vtk=False, as_pyvista=False):
 	mesh = pv.read(file_path)
 
 	return mesh
-
-
-def extract_landmarks(segmentation_nrrds, segmentation_dir, output_dir):
-	"""Summary
-	
-	return a dictionary {
-		Segment_Name: mesh 
-	}
-	
-	Args:
-	    segmentation_nrrds (TYPE): Description
-	    segmentation_dir (TYPE): Description
-	    output_dir (TYPE): Description
-	
-	
-	"""
-	landmark_indices = {
-		''
-	}
-	for i, nrrd_num in enumerate(segmentation_nrrds):
-		path_seg_nrrd = os.path.join(segmentation_dir, "Segmentation %s %s.seg.nrrd" % (side, nrrd_num)) 
-		data, header = nrrd.read(path_seg_nrrd)
-
 
 def ants_image_to_file(ants_img, template_header, spatial_header, file_name, segmentations=True, nifti=False): 
 	"""write out an ants image using nrrd 
@@ -267,25 +257,6 @@ def ants_image_to_file(ants_img, template_header, spatial_header, file_name, seg
 			nrrd.write(file_name, img_as_np, template_header)
 
 	return
-
-
-def adjust_path(path_input, folder="mesh_output"): 
-
-	adjusted_path = ""
-
-	if path_input is None: 
-		cur_outs = os.listdir(os.path.join(os.getcwd(), "test"))
-		next_avail = len([file for file in cur_outs if (".vtk" in file) and ("test" in file)])
-		adjusted_path = "test/test_%d.vtk" % (next_avail)
-
-	elif ".vtk" in path_input: 
-		adjusted_path = os.path.join(folder, path_input)
-
-	else: 
-		adjusted_path = os.path.join(folder, path_input + ".vtk")
-
-	return os.path.abspath(adjusted_path)
-
 
 def print_scores(scores, names=None): 
 
