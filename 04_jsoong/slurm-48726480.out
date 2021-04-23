@@ -1,4 +1,0 @@
-Restoring modules from user's deeplearning
-/scratch/groups/rtaylor2/jsad-tbone-segmentation/nnUNet_code/nnUNet/nnunet/evaluation/evaluator.py:381: RuntimeWarning: Mean of empty slice
-  all_scores["mean"][label][score] = float(np.nanmean(all_scores["mean"][label][score]))
-Finished with job 48726480

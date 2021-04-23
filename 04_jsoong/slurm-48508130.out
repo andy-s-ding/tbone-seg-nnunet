@@ -1,3 +1,0 @@
-Restoring modules from user's deeplearning
-/software/lmod/lmod/init/bash: line 70: conda: command not found
-slurmstepd: error: *** JOB 48508130 ON gpu050 CANCELLED AT 2021-03-26T19:27:16 DUE TO TIME LIMIT ***
