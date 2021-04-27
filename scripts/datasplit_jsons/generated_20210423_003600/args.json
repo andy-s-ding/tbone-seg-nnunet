@@ -1,0 +1,9 @@
+{
+    "dataset": "generated",
+    "generated_dataset_dir": "../nii_files/ablation1/",
+    "generated_label_dir": "../NIFTI_Segmentations/ablation1/",
+    "original_dataset_dir": "../registered_niftis/",
+    "output_dir": "../02_jsoong/",
+    "pickle_path": "./Ablation_1/datasplit_generated.pkl",
+    "task_num": "102"
+}
