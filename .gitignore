@@ -8,7 +8,6 @@
 *.npy
 prostate*.pkl
 jhu*.pkl
-02_jsoong/
 temp_holding_dir/
 test_jsoong/
 *.model*
