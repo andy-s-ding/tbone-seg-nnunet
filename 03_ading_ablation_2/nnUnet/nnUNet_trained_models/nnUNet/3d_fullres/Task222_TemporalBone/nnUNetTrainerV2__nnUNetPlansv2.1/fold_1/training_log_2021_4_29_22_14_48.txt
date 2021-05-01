@@ -1,0 +1,9 @@
+Starting... 
+2021-04-29 22:14:48.218861: Using splits from existing split file: /media/andyding/18EA660EEA65E908/Users/andys/Desktop/jsad-tbone/03_ading_ablation_2/nnUnet/nnUNet_preprocessed/Task222_TemporalBone/splits_final.pkl 
+2021-04-29 22:14:48.220221: The split file contains 5 splits. 
+2021-04-29 22:14:48.220358: Desired fold for training: 1 
+2021-04-29 22:14:48.220488: This split has 101 training and 10 validation cases. 
+2021-04-29 22:14:48.443705: TRAINING KEYS:
+ odict_keys(['jhu_008', 'jhu_019', 'jhu_020', 'jhu_026', 'jhu_027', 'jhu_028', 'jhu_029', 'jhu_031', 'jhu_032', 'jhu_033', 'jhu_034', 'jhu_042', 'jhu_043', 'jhu_044', 'jhu_046', 'jhu_048', 'jhu_049', 'jhu_050', 'jhu_051', 'jhu_053', 'jhu_054', 'jhu_055', 'jhu_057', 'jhu_059', 'jhu_060', 'jhu_062', 'jhu_063', 'jhu_066', 'jhu_068', 'jhu_069', 'jhu_071', 'jhu_073', 'jhu_074', 'jhu_081', 'jhu_082', 'jhu_084', 'jhu_088', 'jhu_093', 'jhu_096', 'jhu_097', 'jhu_099', 'jhu_104', 'jhu_105', 'jhu_108', 'jhu_109', 'jhu_110', 'jhu_112', 'jhu_113', 'jhu_114', 'jhu_117', 'jhu_118', 'jhu_120', 'jhu_121', 'jhu_122', 'jhu_123', 'jhu_125', 'jhu_128', 'jhu_129', 'jhu_131', 'jhu_132', 'jhu_133', 'jhu_134', 'jhu_135', 'jhu_137', 'jhu_138', 'jhu_139', 'jhu_142', 'jhu_147', 'jhu_151', 'jhu_153', 'jhu_163', 'jhu_168', 'jhu_169', 'jhu_173', 'jhu_174', 'jhu_176', 'jhu_177', 'jhu_180', 'jhu_181', 'jhu_183', 'jhu_186', 'jhu_187', 'jhu_188', 'jhu_189', 'jhu_191', 'jhu_192', 'jhu_194', 'jhu_196', 'jhu_198', 'jhu_199', 'jhu_200', 'jhu_201', 'jhu_202', 'jhu_204', 'jhu_206', 'jhu_208', 'jhu_209', 'jhu_210', 'jhu_212', 'jhu_213', 'jhu_214']) 
+2021-04-29 22:14:48.444067: VALIDATION KEYS:
+ odict_keys(['jhu_000', 'jhu_001', 'jhu_002', 'jhu_003', 'jhu_004', 'jhu_005', 'jhu_006', 'jhu_007', 'jhu_009', 'jhu_010']) 
