@@ -37,12 +37,12 @@ def parse_command_line(args):
 	parser.add_argument('--base', 
 						action="store", 
 						type=str, 
-						default="/Volumes/Extreme SSD/ANTs-registration/"
+						default="/media/andyding/EXTREME SSD/ANTs-registration/"
 						)
 	parser.add_argument('--cached',
 						action="store",
 						type=str, 
-						default="/Volumes/Extreme SSD/ANTs-registration/ssm_transforms/"
+						default="/media/andyding/EXTREME SSD/ANTs-registration/ssm_transforms/"
 						)
 	parser.add_argument('--downsample',
 						action="store_true",
@@ -57,6 +57,11 @@ def parse_command_line(args):
 						action="store",
 						type=int,
 						default=100
+						)
+	parser.add_argument('--start_id',
+						action="store",
+						type=int,
+						default=1
 						)
 	parser.add_argument('--overwrite',
 					 	action="store_true",
@@ -134,8 +139,9 @@ def main():
 	pred_nii_dir = os.path.join(pred_dir, 'NIFTI Predictions')
 	deformed_volumes_dir = os.path.join(base, 'deformed_volumes')
 	deformed_volumes_nii_dir = os.path.join(deformed_volumes_dir, 'NIFTI Volumes')
+	start_id = args['start_id']
 	num_deforms = args['num_deforms']
-	ids = range(1,num_deforms+1)
+	ids = range(start_id,start_id+num_deforms)
 
 	for deform_id in ids:
 		deform_path = adjust_file_path(args["cached"], "%s %s deform%d" % (side, template, deform_id), ".nii.gz", registration='inverse',

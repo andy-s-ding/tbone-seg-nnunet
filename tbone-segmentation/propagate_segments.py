@@ -207,7 +207,7 @@ def register_to_target(template, target, base, side, save_dir, downsample=False,
 	ants_image_to_file(predicted_targets_image, template_segmentations_header, target_image_header, predicted_targets_path)
 
 	if nifti:
-		predicted_nii_path = adjust_file_path(os.path.join(save_dir, 'NIFTI Predictions'), "%s %s %s"%(side, template, target), ".nii.gz", downsample, downsample_size, flip=flip)
+		predicted_nii_path = adjust_file_path(os.path.join(save_dir, 'NIFTI Predictions'), "Segmentation %s %s %s"%(side, template, target), ".nii.gz", downsample, downsample_size, flip=flip)
 		ants_image_to_file(predicted_targets_image, template_segmentations_header, target_image_header, predicted_nii_path, nifti=True)
 
 	if write_annotations:
