@@ -55,11 +55,7 @@ def return_label(file_id, args, dirpath=None):
     if args.dataset == 'generated':
         if "deform" in file_id:
             dirpath = args.generated_label_dir
-            if '153' in file_id:
-                label = os.path.join(dirpath, "Segmentation_" + os.path.basename(file_id))
-            else:
-                tmp = os.path.basename(file_id).split('reg_')[-1]
-                label = os.path.join(dirpath, "reg_Segmentation_" + tmp)
+            label = os.path.join(dirpath, "Segmentation_" + os.path.basename(file_id))
         else:
             dirpath = args.original_dataset_dir
             label = os.path.join(dirpath, "reg_Segmentation_" + os.path.basename(file_id).split('reg_')[-1] )

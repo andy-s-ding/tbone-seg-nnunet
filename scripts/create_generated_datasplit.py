@@ -17,6 +17,7 @@ def main(argv):
     original_train = og_datasplit['Train']
     original_train = [os.path.join(original_data_path, f"reg_{f}.nii.gz") for f in original_train]
     generated_train = glob.glob(os.path.join(generated_data_path, "*deform*-downsample*"))
+    print(f"There are {len(generated_train)} generated files.")
     
     test_files = [os.path.join(original_data_path, f"reg_{f}.nii.gz") for f in og_datasplit['Test']]
     train_files = original_train + generated_train
