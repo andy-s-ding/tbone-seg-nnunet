@@ -53,7 +53,7 @@ def return_label(file_id, args, dirpath=None):
         label = os.path.join(dirpath, "reg_Segmentation_" + file_id+ ".nii.gz")
         
     if args.dataset == 'generated':
-        if "deform" in file_id:
+        if "deform" in file_id and "153" in file_id:
             dirpath = args.generated_label_dir
             label = os.path.join(dirpath, "Segmentation_" + os.path.basename(file_id))
         else:

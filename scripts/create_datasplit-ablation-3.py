@@ -9,8 +9,8 @@ def main(argv):
     random.seed(0)
     data_path = argv[0]
     
-    excluded_ids = sorted(['153', '142', '152', '145', '151'])
-    SSM_templates = ['RT_153', 'RT_142', 'RT_152', 'LT_145', "LT_151"]
+    excluded_ids = sorted(['153', '142', '152', '145', '151', '146', '169', '144', '150' '138'])
+    SSM_templates = ['RT_153', 'RT_142', 'RT_152', 'LT_145', "LT_151, 'RT_146', 'RT_142', 'LT_169', 'LT_144', 'LT_151', 'RT_144', 'RT_150', 'RT_138']
 
     file_list = glob.glob(os.path.join(data_path, "reg_Segmentation_*.nii.gz"))
 

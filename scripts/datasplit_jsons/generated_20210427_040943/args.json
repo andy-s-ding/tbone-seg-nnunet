@@ -1,0 +1,9 @@
+{
+    "dataset": "generated",
+    "generated_dataset_dir": "../nii_files/Ablation_2/",
+    "generated_label_dir": "../NIFTI_Segmentations/20210411_ssm_segmentations_downsample100/",
+    "original_dataset_dir": "../registered_niftis/Ablation_2",
+    "output_dir": "../03_ading_ablation_2/",
+    "pickle_path": "./Ablation_2/datasplit_generated.pkl",
+    "task_num": "222"
+}

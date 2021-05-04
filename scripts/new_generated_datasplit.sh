@@ -1,3 +1,3 @@
-python create_generated_datasplit.py ./Ablation_3/datasplit.pkl \
+python create_generated_datasplit.py ./datasplit_70_30.pkl \
 ../registered_niftis/ \
-../nii_files/Ablation_3/5_template
+../nii_files/12_Mathias_Study

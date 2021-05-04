@@ -1,10 +1,9 @@
 function buildTransformSSM()
 
-clear all;
 addpath('./NIfTI_20140122/');
 
 %% 0. Housekeeping
-base_dir = '/Volumes/Extreme SSD/ANTs-registration';
+base_dir = '/media/andyding/EXTREME SSD/ANTs-registration';
 image_dir = fullfile(base_dir, 'images');
 downsampled_dir = fullfile(image_dir, 'downsampled');
 transform_dir = fullfile(base_dir, 'transforms');
@@ -25,24 +24,41 @@ if not(exist(ssm_meta_dir, 'dir'))
 end
 
 side = "RT";
+assert(side == "RT" || side == "LT", "Side is not specified correctly. Must be RT or LT.\n");
 downsample_size = 100;
-template = 153;
+template = 146;
 
+disp("Finding transforms...");
 side_files = dir(fullfile(transform_dir, sprintf('%s %d *-inverse-downsample%d.nii.gz', side, template, downsample_size)));
 other_side_files = dir(fullfile(transform_dir, sprintf('%s %d *-inverse-downsample%d-flipped.nii.gz', side, template, downsample_size)));
 
-% Exclude any datasets in the test set
-exclude_side = ["138", "142", "143", "144", "146", "147" "150", "152", "153"];
-exclude_other_side = ["138", "143", "144", "146", "147", "148", "150", "151", "152", "169", "171"];
+exclude_RT = ["134", "138", "142", "143", "144", "146", "147" "150", "152", "153"];
+exclude_LT = ["134", "138", "143", "144", "145", "146", "147", "148", "150", "151", "152", "169", "171"];
+if side == "RT"
+    other_side = "LT";
+    exclude_side = exclude_RT;
+    exclude_other_side = exclude_LT;
+else
+    other_side = "RT";
+    exclude_side = exclude_LT;
+    exclude_other_side = exclude_RT;
+end
+
 side_names = string(vertcat(side_files(:).name));
 other_side_names = string(vertcat(other_side_files(:).name));
+
+% Exclude any datasets in the test set
+disp("Excluding specified datasets...");
 side_names = exclude_indices(side_names, exclude_side);
-other_side_names = exclude_indices(other_side_names, exclude_side);
+other_side_names = exclude_indices(other_side_names, exclude_other_side);
 
 num_transforms = length(side_names) + length(other_side_names);
+fprintf("Final number of datasets included in SSM: %d\n", num_transforms);
+
 vectors = zeros(downsample_size^3*3,num_transforms);
 
 for i=1:length(side_names)
+    fprintf("Reading transform for: %s\n", side_names(i));
     if i==1
         deform_meta = load_nii(char(fullfile(transform_dir, side_names(i))));
     end
@@ -50,13 +66,16 @@ for i=1:length(side_names)
     vectors(:,i) = reshape(curr_transform, [numel(curr_transform), 1]);
 end
 for i=1:length(other_side_names)
+    fprintf("Reading transform for: %s\n", other_side_names(i));
     curr_transform = niftiread(fullfile(transform_dir, other_side_names(i)));
     vectors(:,length(side_names)+i) = reshape(curr_transform, [numel(curr_transform), 1]);
 end
 
+disp("Performing PCA on transforms...");
 [coeff,score,latent] = pca(vectors');
 pcaMean = mean(vectors,2);
 
+fprintf("Writing transform path for template %s %d\n", side, template);
 transform_H5_path = fullfile(ssm_H5_transform_dir, sprintf('%s %d inverse-downsample%d.h5', side, template, downsample_size));
 writeTransformH5(transform_H5_path, pcaMean, coeff, latent);
 
