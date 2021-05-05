@@ -13,6 +13,7 @@ import nrrd
 
 import shutil
 import gc
+import glob
 
 from utils.file_io import *
 from utils.mask import *
@@ -40,7 +41,7 @@ def parse_command_line(args):
 	parser.add_argument('--base', 
 						action="store", 
 						type=str, 
-                     default="/Volumes/Extreme SSD/ANTs-registration"
+                     	default="/Volumes/EXTREME SSD/ANTs-registration"
 						)
 	parser.add_argument('--target',
 						action="store",
@@ -57,7 +58,7 @@ def parse_command_line(args):
 	parser.add_argument('--cached',
 						action="store",
 						type=str, 
-                     default="/Volumes/Extreme SSD/ANTs-registration/transforms"
+                     	default="/Volumes/EXTREME SSD/ANTs-registration/transforms"
 						)
 	parser.add_argument('--dry',
 						action="store_true"
@@ -86,6 +87,10 @@ def parse_command_line(args):
 	parser.add_argument('--overwrite',
                      	action="store_true",
 						help="determines whether to overwrite existing output .seg.nrrds if present"
+                     	)
+	parser.add_argument('--resolve_missing_transforms',
+                     	action="store_true",
+						help="determines whether to register and write transforms that do not exist in the cached folder"
                      	)
 	parser.add_argument('--nifti',
                      action="store_true",
@@ -258,16 +263,53 @@ def main():
             '146',
             '147',
             '152',
-            '153'
+            '153',
+            '168',
+            '170',
+            '172',
+            '174',
+            '175',
+            '177',
+            '179',
+            '181',
+            '183',
+            '184',
+            '186',
+            '187',
+            '189',
+            '191',
+            '192',
+            '194',
+            '195'
         ]
 	LT = [	'138',
             '143',
             '144',
             '145',
             '146',
+            '147',
             '148',
             '151',
-            '171'
+            '152',
+            '168',
+            '169',
+            '170',
+            '171',
+            '172',
+            '173',
+            '175',
+            '176',
+            '177',
+            '181',
+            '183',
+            '184',
+            '185',
+            '186',
+            '191',
+            '192',
+            '193',
+            '194',
+            '195'
         ]
 	if side == 'RT':
 		scan_id = RT
@@ -289,15 +331,20 @@ def main():
 		if template in target: 
 			continue
 		else:
+			print("\n")
 			predicted_targets_path = adjust_file_path(save_dir, "Segmentation %s %s %s"%(side, template, target), ".seg.nrrd", args['downsample'], args['downsample_size'], flip=args['flip'])
 			predicted_annotations_path = adjust_file_path(save_dir, "Segmentation %s %s %s"%(side, template, target), ".seg.nrrd", args['downsample'], args['downsample_size'], is_annotation=True, flip=args['flip'])
-			if not args['overwrite'] and os.path.exists(predicted_targets_path) and os.path.exists(predicted_annotations_path):
-				print('output .seg.nrrds already exist')
+			need_segmentations = not args['no_segs']
+			need_annotations = args['annotations']
+			
+			if not args['overwrite'] and (not need_segmentations or os.path.exists(predicted_targets_path)) and (not need_annotations or os.path.exists(predicted_annotations_path)):
+				print('-- output .seg.nrrds already exist')
 				continue
 
-			if args['registration']:
+			elif args['registration']:
+				print("--registering template to target")
 				register_to_target(template, target, base, side, save_dir, 
-						dry=args['dry'], downsample=args['downsample'], downsample_size=args['downsample_size'],
+						downsample=args['downsample'], downsample_size=args['downsample_size'],
 						write_transforms=args['transforms'], write_annotations=args['annotations'], flip=args['flip'], nifti=args['nifti'])
 
 			else: 
@@ -306,23 +353,29 @@ def main():
 				deform_path = adjust_file_path(args["cached"], "%s %s %s" % (side, template, target), ".nii.gz", registration='forward',
                                    downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'])
 
-				if not (os.path.exists(deform_path) and os.path.exists(affine_path)): 
+				if not (os.path.exists(deform_path) and os.path.exists(affine_path)):
 					print('-- expected cached results at %s, %s' % (affine_path, deform_path))
-					return
-
-				need_segmentations = not args['no_segs']
-
-				if not args['overwrite']:
-					need_segmentations = need_segmentations and not os.path.exists(predicted_targets_path)
-					need_annotations = args['annotations'] and not os.path.exists(predicted_annotations_path)
-					propagate(template, target, base, side, save_dir, [deform_path, affine_path], 
-                            propagate_segmentations=need_segmentations, propagate_annotations=need_annotations,
-							downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'], nifti=args['nifti'])
-				
-				else: propagate(template, target, base, side, save_dir, [deform_path, affine_path], 
-							propagate_segmentations=need_segmentations, propagate_annotations=True,
-                            downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'], nifti=args['nifti'])
-
+					if args['resolve_missing_transforms']:
+						print('-- registering and writing transforms')
+						register_to_target(template, target, base, side, save_dir, 
+								downsample=args['downsample'], downsample_size=args['downsample_size'],
+								write_transforms=True, write_annotations=args['annotations'], flip=args['flip'], nifti=args['nifti'])
+					else:
+						print('-- skipping propagation')
+						continue
+				else:
+					print("-- propagating")
+					if args['overwrite']:
+						propagate(template, target, base, side, save_dir, [deform_path, affine_path], 
+									propagate_segmentations=need_segmentations, propagate_annotations=need_annotations,
+									downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'], nifti=args['nifti'])
+					
+					else:
+						need_segmentations = need_segmentations and not os.path.exists(predicted_targets_path)
+						need_annotations = need_annotations and not os.path.exists(predicted_annotations_path)
+						propagate(template, target, base, side, save_dir, [deform_path, affine_path], 
+									propagate_segmentations=need_segmentations, propagate_annotations=need_annotations,
+									downsample=args['downsample'], downsample_size=args['downsample_size'], flip=args['flip'], nifti=args['nifti'])
 	return 
 
 
