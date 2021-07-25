@@ -28,10 +28,10 @@ from propagate_segments import adjust_file_path
 def test_closest_points(): 
 
 	# read in mesh 1 
-	mesh1 = read_vtk("ssm_out/RT 153 Facial Nerve mesh.vtk")
+	mesh1 = read_vtk("ann_mesh_dir/RT 153 Facial Nerve mesh.vtk")
 
 	# read in mesh 2 
-	mesh2 = read_vtk("ssm_out/RT 153 Chorda Tympani mesh.vtk")
+	mesh2 = read_vtk("ann_mesh_dir/RT 153 Chorda Tympani mesh.vtk")
 
 	# get surface points of each 
 	surface1 = return_surface_points(mesh1)
@@ -85,7 +85,7 @@ def test_eac_dura_distance(seg_data, seg_header, ann_data, ann_header, cached=No
 	eac_landmarks = return_surface_points(eac_mesh)
 
 	# calculate distances
-	dd, ii = calculate_EAC_dura(eac_landmarks, dura, eac, plot=plot)
+	dd, ii = calculate_EAC_dura(dura, eac, eac_landmarks, plot=plot)
 
 	print("distance", dd)
 
@@ -210,7 +210,7 @@ def test_facial_recess(seg_data, seg_header, ann_data, ann_header, cached=None, 
 
 def test_facial_interpolation(seg_data, seg_header, ann_data, ann_header, cached=None, prefix=None):
 	# read in the mesh for 153 facial nerve
-	facial = read_vtk("ssm_out/RT 153 Facial Nerve mesh.vtk")
+	facial = read_vtk("ann_mesh_dir/RT 153 Facial Nerve mesh.vtk")
 
 	returned_points = surface_interpolation_1D(return_surface_points(facial), visualize=True)
 	p = pv.Plotter()
@@ -248,41 +248,66 @@ if __name__ == "__main__":
 	downsample_size = 300
 	include_other_side = True
 	write = True
-	base = '/Volumes/Extreme SSD/ANTs-registration'
+	base = '/media/andyding/EXTREME SSD/ANTs-registration'
 	seg_dir = os.path.join(base, 'segmentations')
 	ann_dir = os.path.join(base, 'annotations')
 	pred_dir = os.path.join(base, 'predictions')
+	ann_mesh_dir = os.path.join(base, 'annotation_meshes')
 
-	RT = [  # '138',
-            # '142',
-         			# '143',
-         			# '144',
-         			# '146',
-         			# '147',
-         			# '152',
-         			# '153',
-         			# '170',
-         			# '174',
-         			# '175',
-         			# '177',
-         			'179',
-         			'183',
-         			'189',
+	RT = [	'138',
+            '142',
+            '143',
+            '144',
+            '146',
+            '147',
+            '152',
+            '153',
+            '168',
+            '170',
+            '172',
+            '174',
+            '175',
+            '177',
+            '179',
+            '181',
+            '183',
+            '184',
+            '186',
+            '187',
+            '189',
+            '191',
+            '192',
+            '194',
+            '195'
         ]
-	LT = [  # '143',
-            # '145',
-         			# '146',
-         			# '151',
-         			# '169',
-         			'170',
-         			# '171',
-         			'172',
-         			'173',
-         			# '175',
-         			# '176',
-         			# '177',
-         			'183',
-         			'185'
+	LT = [	'138',
+            '143',
+            '144',
+            '145',
+            '146',
+            '147',
+            '148',
+            '151',
+            '152',
+            '168',
+            '169',
+            '170',
+            '171',
+            '172',
+            '173',
+            '175',
+            '176',
+            '177',
+            '181',
+            '183',
+            '184',
+            '185',
+            '186',
+            '191',
+            '192',
+            '193',
+            '194',
+            '195'
         ]
 
 	if side == 'RT':
@@ -301,51 +326,51 @@ if __name__ == "__main__":
 	ann_data, ann_header = nrrd.read(os.path.join(ann_dir, 'Annotations RT 153.seg.nrrd'))
 	ann_data = convert_to_one_hot(ann_data, ann_header)
 	
-	# ossicles = test_ossicle_calculations(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix='RT 153')
-	# facial = test_facial_angles(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix='RT 153')
-	# recess = test_facial_recess(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix='RT 153', plot=True)
-	# eac_dura = test_eac_dura_distance(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix='RT 153')
+	ossicles = test_ossicle_calculations(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix='RT 153')
+	facial = test_facial_angles(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix='RT 153')
+	recess = test_facial_recess(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix='RT 153', plot=False)
+	eac_dura = test_eac_dura_distance(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix='RT 153')
 
-	# print('malleus manubrium length: {}'.format(ossicles[0]))
-	# print('incus short process length: {}'.format(ossicles[1]))
-	# print('incus long process length: {}'.format(ossicles[2]))
-	# print('incus angle: {}'.format(ossicles[3]))
-	# print('facial nerve angles: {}'.format(facial))
-	# print('facial recess angle: {}'.format(recess[0]))
-	# print('facial recess area: {}'.format(recess[1]))
-	# print('facial recess span: {}'.format(recess[2]))
-	# print('eac-dura distance: {}'.format(eac_dura))
-
-	# output_dict = dict()
-	# output_dict['scan'] = [side + ' ' + template]
-	# output_dict['malleus manubrium length'] = [ossicles[0]]
-	# output_dict['incus short process length'] = [ossicles[1]]
-	# output_dict['incus long process length'] = [ossicles[2]]
-	# output_dict['incus angle'] = [ossicles[3]]
-	# output_dict['facial nerve genu1 angle'] = [facial[0]]
-	# output_dict['facial nerve genu2 angle'] = [facial[1]]
-	# output_dict['facial recess angle'] = [recess[0]]
-	# output_dict['facial recess area'] = [recess[1]]
-	# output_dict['facial recess span'] = [recess[2]]
-	# output_dict['eac-dura distance'] = [eac_dura]
+	print('malleus manubrium length: {}'.format(ossicles[0]))
+	print('incus short process length: {}'.format(ossicles[1]))
+	print('incus long process length: {}'.format(ossicles[2]))
+	print('incus angle: {}'.format(ossicles[3]))
+	print('facial nerve angles: {}'.format(facial))
+	print('facial recess angle: {}'.format(recess[0]))
+	print('facial recess area: {}'.format(recess[1]))
+	print('facial recess span: {}'.format(recess[2]))
+	print('eac-dura distance: {}'.format(eac_dura))
 
 	output_dict = dict()
-	output_dict['scan'] = []
-	output_dict['malleus manubrium length'] = []
-	output_dict['incus short process length'] = []
-	output_dict['incus long process length'] = []
-	output_dict['incus angle'] = []
-	output_dict['facial nerve genu1 angle'] = []
-	output_dict['facial nerve genu2 angle'] = []
-	output_dict['facial recess angle'] = []
-	output_dict['facial recess area'] = []
-	output_dict['facial recess span'] = []
-	output_dict['eac-dura distance'] = []
+	output_dict['scan'] = [side + ' ' + template]
+	output_dict['malleus manubrium length'] = [ossicles[0]]
+	output_dict['incus short process length'] = [ossicles[1]]
+	output_dict['incus long process length'] = [ossicles[2]]
+	output_dict['incus angle'] = [ossicles[3]]
+	output_dict['facial nerve genu1 angle'] = [facial[0]]
+	output_dict['facial nerve genu2 angle'] = [facial[1]]
+	output_dict['facial recess angle'] = [recess[0]]
+	output_dict['facial recess area'] = [recess[1]]
+	output_dict['facial recess span'] = [recess[2]]
+	output_dict['eac-dura distance'] = [eac_dura]
+
+	# output_dict = dict()
+	# output_dict['scan'] = []
+	# output_dict['malleus manubrium length'] = []
+	# output_dict['incus short process length'] = []
+	# output_dict['incus long process length'] = []
+	# output_dict['incus angle'] = []
+	# output_dict['facial nerve genu1 angle'] = []
+	# output_dict['facial nerve genu2 angle'] = []
+	# output_dict['facial recess angle'] = []
+	# output_dict['facial recess area'] = []
+	# output_dict['facial recess span'] = []
+	# output_dict['eac-dura distance'] = []
 
 	for target in scan_id:
 		if target == template: continue
 
-		seg_path = adjust_file_path(pred_dir, "%s %s %s"%(side, template, target), ".seg.nrrd", downsample=downsample)
+		seg_path = adjust_file_path(pred_dir, "Segmentation %s %s %s"%(side, template, target), ".seg.nrrd", downsample=downsample)
 		ann_path = adjust_file_path(pred_dir, "%s %s %s"%(side, template, target), ".seg.nrrd", downsample=downsample, is_annotation=True)
 
 		print('reading segmentations')
@@ -355,10 +380,10 @@ if __name__ == "__main__":
 		ann_data, ann_header = nrrd.read(ann_path)
 		ann_data = convert_to_one_hot(ann_data, ann_header)
 		
-		ossicles = test_ossicle_calculations(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix="{}_{}_{}".format(side, template, target))
-		facial = test_facial_angles(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix="{}_{}_{}".format(side, template, target))
-		recess = test_facial_recess(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix="{}_{}_{}".format(side, template, target))
-		eac_dura = test_eac_dura_distance(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix="{}_{}_{}".format(side, template, target))
+		ossicles = test_ossicle_calculations(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix="{}_{}_{}".format(side, template, target))
+		facial = test_facial_angles(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix="{}_{}_{}".format(side, template, target))
+		recess = test_facial_recess(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix="{}_{}_{}".format(side, template, target))
+		eac_dura = test_eac_dura_distance(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix="{}_{}_{}".format(side, template, target))
 
 		print('malleus manubrium length: {}'.format(ossicles[0]))
 		print('incus short process length: {}'.format(ossicles[1]))
@@ -385,7 +410,7 @@ if __name__ == "__main__":
 	if include_other_side:
 
 		for target in opposite_scan_id:
-			seg_path = adjust_file_path(pred_dir, "%s %s %s"%(side, template, target), ".seg.nrrd", downsample=downsample, flip=True)
+			seg_path = adjust_file_path(pred_dir, "Segmentation %s %s %s"%(side, template, target), ".seg.nrrd", downsample=downsample, flip=True)
 			ann_path = adjust_file_path(pred_dir, "%s %s %s"%(side, template, target), ".seg.nrrd", downsample=downsample, is_annotation=True, flip=True)
 
 			print('reading segmentations')
@@ -395,10 +420,10 @@ if __name__ == "__main__":
 			ann_data, ann_header = nrrd.read(ann_path)
 			ann_data = convert_to_one_hot(ann_data, ann_header)
 			
-			ossicles = test_ossicle_calculations(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix="{}_{}_{}_flipped".format(side, template, target))
-			facial = test_facial_angles(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix="{}_{}_{}_flipped".format(side, template, target))
-			recess = test_facial_recess(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix="{}_{}_{}_flipped".format(side, template, target))
-			eac_dura = test_eac_dura_distance(seg_data, seg_header, ann_data, ann_header, cached='ssm_out', prefix="{}_{}_{}_flipped".format(side, template, target))
+			ossicles = test_ossicle_calculations(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix="{}_{}_{}_flipped".format(side, template, target))
+			facial = test_facial_angles(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix="{}_{}_{}_flipped".format(side, template, target))
+			recess = test_facial_recess(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix="{}_{}_{}_flipped".format(side, template, target))
+			eac_dura = test_eac_dura_distance(seg_data, seg_header, ann_data, ann_header, cached=ann_mesh_dir, prefix="{}_{}_{}_flipped".format(side, template, target))
 
 			print('malleus manubrium length: {}'.format(ossicles[0]))
 			print('incus short process length: {}'.format(ossicles[1]))
@@ -423,8 +448,6 @@ if __name__ == "__main__":
 			output_dict['eac-dura distance'].append(eac_dura)
 
 	if write:
-		write_to_file('RT 153 Propagated 170-185 Dictionary', output_dict)
 		output_df = pd.DataFrame(output_dict).set_index('scan')
-		write_to_file('RT 153 Propagated 170-185 Dataframe', output_df)
-		output_df_path = os.path.join(os.getcwd(), "pickles/" + "RT 153 Propagated 170-185" + ".csv")
+		output_df_path = os.path.join(ann_mesh_dir, "RT 153 Propagated 138-195" + ".csv")
 		output_df.to_csv(output_df_path)

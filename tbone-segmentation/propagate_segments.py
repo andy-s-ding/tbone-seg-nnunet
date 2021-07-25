@@ -41,7 +41,7 @@ def parse_command_line(args):
 	parser.add_argument('--base', 
 						action="store", 
 						type=str, 
-                     	default="/Volumes/EXTREME SSD/ANTs-registration"
+                     	default="/media/andyding/EXTREME SSD/ANTs-registration"
 						)
 	parser.add_argument('--target',
 						action="store",
@@ -58,7 +58,7 @@ def parse_command_line(args):
 	parser.add_argument('--cached',
 						action="store",
 						type=str, 
-                     	default="/Volumes/EXTREME SSD/ANTs-registration/transforms"
+                     	default="/media/andyding/EXTREME SSD/ANTs-registration/transforms"
 						)
 	parser.add_argument('--dry',
 						action="store_true"
@@ -116,7 +116,8 @@ def propagate(template, target, base, side, save_dir, transform, downsample=Fals
 
 	propagated = []
 
-	if propagate_segmentations: 
+	if propagate_segmentations:
+		print('---- propagating segments')
 		template_segmentation_path = os.path.join(base, "segmentations/Segmentation %s %s.seg.nrrd" % (side, template))
 		template_segmentations = ants.image_read(template_segmentation_path, pixeltype="unsigned char")
 		template_segmentations_header = nrrd.read_header(template_segmentation_path)
@@ -134,7 +135,8 @@ def propagate(template, target, base, side, save_dir, transform, downsample=Fals
 
 		propagated.append(predicted_segmentations)
 
-	if propagate_annotations: 
+	if propagate_annotations:
+		print('---- propagating annotations')
 		template_annotation_path = os.path.join(base, "annotations/Annotations %s %s.seg.nrrd" % (side, template))
 		template_annotations = ants.image_read(template_annotation_path, pixeltype="unsigned char")
 		template_annotations_header = nrrd.read_header(template_annotation_path)
@@ -333,7 +335,7 @@ def main():
 		else:
 			print("\n")
 			predicted_targets_path = adjust_file_path(save_dir, "Segmentation %s %s %s"%(side, template, target), ".seg.nrrd", args['downsample'], args['downsample_size'], flip=args['flip'])
-			predicted_annotations_path = adjust_file_path(save_dir, "Segmentation %s %s %s"%(side, template, target), ".seg.nrrd", args['downsample'], args['downsample_size'], is_annotation=True, flip=args['flip'])
+			predicted_annotations_path = adjust_file_path(save_dir, "%s %s %s"%(side, template, target), ".seg.nrrd", args['downsample'], args['downsample_size'], is_annotation=True, flip=args['flip'])
 			need_segmentations = not args['no_segs']
 			need_annotations = args['annotations']
 			
