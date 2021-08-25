@@ -324,10 +324,12 @@ def main():
 	else: target_scan_id = scan_id
 	
 	if args['target'] is not None: 
-		if args['target'] not in target_scan_id: 
+		if set(args['target']).issubset(set(target_scan_id)):
+			target_scan_id = args['target']
+		else:
 			print('incorrectly specified target scan')
 			return
-		target_scan_id = [args['target']]
+		
 
 	for target in target_scan_id:
 		if template in target: 

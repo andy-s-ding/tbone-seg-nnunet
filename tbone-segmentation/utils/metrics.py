@@ -221,8 +221,8 @@ def calc_hausdorff(data_truth, header_truth, data_pred, header_pred,
 		# p = pv.Plotter()
 		# p.add_mesh(surf_truth, opacity=.4)
 		# p.add_mesh(surf_pred, opacity=.4)
-		# p.add_lines(np.array([pts_truth[idx_11], pts_pred[idx_12]]), color='red')
-		# p.add_lines(np.array([pts_pred[idx_21], pts_truth[idx_22]]), color='red')
+		# p.add_lines(np.array([pts_truth[idx_11], pts_pred[idx_12]]), color='black')
+		# p.add_lines(np.array([pts_pred[idx_21], pts_truth[idx_22]]), color='black')
 		# p.show()
 
 		computed_hausdorff = wrap_average_hausdorff(pts_truth, pts_pred, use_tree=construct_kd_tree(surf_truth))
@@ -245,34 +245,36 @@ def calc_volume(meshes):
 	return volumes
 
 
-def calculate_EAC_dura(dura, eac, eac_landmarks=None, plot=False): 
+def calculate_mesh_dist(mesh1, mesh2, mesh2_landmarks=None, plot=False, opacity=1): 
 
-	tree = construct_kd_tree(dura)
+	tree = construct_kd_tree(mesh1)
 	dd = None
 	ii = None
-	if eac_landmarks is not None: 
-		dd, ii = closest_points(eac_landmarks, dura.points, use_tree=tree)
+	if mesh2_landmarks is not None: 
+		dd, ii = closest_points(mesh2_landmarks, mesh1.points, use_tree=tree)
 	else: 
-		dd, ii = closest_points(eac.points, dura.points, use_tree=tree)
+		dd, ii = closest_points(mesh2.points, mesh1.points, use_tree=tree)
 
+	p = None
 	if plot: 
 		p = pv.Plotter()
-		p.add_mesh(dura, color=True)
-		p.add_mesh(eac, color=True)
+		p.background_color = 'white'
+
+		p.add_mesh(mesh1, color=True, opacity=opacity)
+		p.add_mesh(mesh2, color=True, opacity=opacity)
 
 		closest = np.argmin(dd)
 
-		p.add_points(dura.points[ii[closest]], point_size=30, color='black')
-		p.add_points(eac_landmarks[closest], point_size=30, color='red')
+		p.add_points(mesh1.points[ii[closest]], point_size=1, color='black')
+		p.add_points(mesh2_landmarks[closest], point_size=1, color='black')
 
-		p.add_lines(np.array([eac_landmarks[closest], dura.points[ii[closest]]]), label="min dist" + str(np.min(dd)), color='red')
-		p.add_legend()
-		p.show()
+		p.add_lines(np.array([mesh2_landmarks[closest], mesh1.points[ii[closest]]]), label="min dist: " + str(np.min(dd)) + " mm", color='black', width=10)
+		# p.add_legend()
 
-	return dd, ii
+	return dd, ii, p
 
 
-def calc_intra_ossicle_metrics(mesh_ossicle, landmark_short, landmark_long, plot=False):
+def calc_intra_ossicle_metrics(mesh_ossicle, landmark_short, landmark_long, plot=False, short=True, long=True, diag=True):
 	"""calc_incus_metrics
 	
 	Args:
@@ -295,13 +297,14 @@ def calc_intra_ossicle_metrics(mesh_ossicle, landmark_short, landmark_long, plot
 
 	if plot: 
 		p = pv.Plotter()
-		p.add_mesh(mesh_ossicle, opacity=.4, color=True)
-		p.add_points(short_point, point_size=30, color='black')
-		p.add_points(long_point, point_size=30, color='black')
+		p.background_color = 'white'
+		p.add_mesh(mesh_ossicle, opacity=.7, color=True)
+		p.add_points(short_point, point_size=1, color='black')
+		p.add_points(long_point, point_size=1, color='black')
 
-		p.add_lines(np.array([short_point, centroid]), color='red')
-		p.add_lines(np.array([long_point, centroid]), color='red')
-		p.add_lines(np.array([short_point, long_point]), color='blue')
+		if short: p.add_lines(np.array([short_point, centroid]), color='black', width=10)
+		if long: p.add_lines(np.array([long_point, centroid]), color='black', width=10)
+		if diag: p.add_lines(np.array([short_point, long_point]), color='black', width=10)
 		p.show()
 
 	return [calc_point_angle(centroid, short_point, long_point), dist_short, dist_long, dist_between]
