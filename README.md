@@ -93,3 +93,5 @@ Potential Error: You may need to edit the dataset.json file so that the labels a
 ```
 nnUNet_train 3d_fullres nnUNetTrainerV2 TaskXXX_TemporalBone Y --npz 
 ```
+XXX refers to <task_num>
+Y refers to the number of folds for cross-validation. If Y is set to "all" then all of the data will be used for training.
