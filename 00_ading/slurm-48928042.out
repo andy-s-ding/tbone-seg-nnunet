@@ -1,4 +1,0 @@
-Restoring modules from user's deeplearning
-/software/lmod/lmod/init/bash: line 70: conda: command not found
-OMP: Warning #190: Forking a process while a parallel region is active is potentially unsafe.
-slurmstepd: error: *** JOB 48928042 ON gpu076 CANCELLED AT 2021-04-07T13:23:37 DUE TO TIME LIMIT ***

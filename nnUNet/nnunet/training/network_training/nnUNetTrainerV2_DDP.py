@@ -45,6 +45,7 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.optim.lr_scheduler import _LRScheduler
 from tqdm import trange
 
+
 class nnUNetTrainerV2_DDP(nnUNetTrainerV2):
     def __init__(self, plans_file, fold, local_rank, output_folder=None, dataset_directory=None, batch_dice=True,
                  stage=None,
@@ -201,7 +202,6 @@ class nnUNetTrainerV2_DDP(nnUNetTrainerV2):
         self.was_initialized = True
 
     def run_iteration(self, data_generator, do_backprop=True, run_online_evaluation=False):
-        dl_start = time()
         data_dict = next(data_generator)
         data = data_dict['data']
         target = data_dict['target']
@@ -212,34 +212,30 @@ class nnUNetTrainerV2_DDP(nnUNetTrainerV2):
         if torch.cuda.is_available():
             data = to_cuda(data, gpu_id=None)
             target = to_cuda(target, gpu_id=None)
-        print("Load time:", time()-dl_start, "seconds.")
+
         self.optimizer.zero_grad()
-        fwd_start = time()
+
         if self.fp16:
             with autocast():
                 output = self.network(data)
                 del data
                 l = self.compute_loss(output, target)
-                print("Fwd:", time()-fwd_start, "seconds.")
+
             if do_backprop:
-                back_start = time()
                 self.amp_grad_scaler.scale(l).backward()
                 self.amp_grad_scaler.unscale_(self.optimizer)
                 torch.nn.utils.clip_grad_norm_(self.network.parameters(), 12)
                 self.amp_grad_scaler.step(self.optimizer)
                 self.amp_grad_scaler.update()
-                print("Back:", time()-back_start, "seconds.")
         else:
             output = self.network(data)
             del data
             l = self.compute_loss(output, target)
-            print("Fwd:", time()-fwd_start, "seconds")
+
             if do_backprop:
-                back_start = time()
                 l.backward()
                 torch.nn.utils.clip_grad_norm_(self.network.parameters(), 12)
                 self.optimizer.step()
-                print("Back:", time()-back_start, "seconds.")
 
         if run_online_evaluation:
             self.run_online_evaluation(output, target)
@@ -365,7 +361,7 @@ class nnUNetTrainerV2_DDP(nnUNetTrainerV2):
 
             # train one epoch
             self.network.train()
-            self.use_progress_bar = True
+
             if self.use_progress_bar:
                 with trange(self.num_batches_per_epoch) as tbar:
                     for b in tbar:

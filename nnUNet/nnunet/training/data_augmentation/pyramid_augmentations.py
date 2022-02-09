@@ -13,17 +13,18 @@
 #    limitations under the License.
 
 from copy import deepcopy
+
+from batchgenerators.transforms.abstract_transforms import AbstractTransform
 from skimage.morphology import label, ball
 from skimage.morphology.binary import binary_erosion, binary_dilation, binary_closing, binary_opening
 import numpy as np
-from batchgenerators.transforms import AbstractTransform
 
 
 class RemoveRandomConnectedComponentFromOneHotEncodingTransform(AbstractTransform):
     def __init__(self, channel_idx, key="data", p_per_sample=0.2, fill_with_other_class_p=0.25,
                  dont_do_if_covers_more_than_X_percent=0.25, p_per_label=1):
         """
-        :param dont_do_if_covers_more_than_X_percent: dont_do_if_covers_more_than_X_percent=0.25 is 25\%!
+        :param dont_do_if_covers_more_than_X_percent: dont_do_if_covers_more_than_X_percent=0.25 is 25%!
         :param channel_idx: can be list or int
         :param key:
         """

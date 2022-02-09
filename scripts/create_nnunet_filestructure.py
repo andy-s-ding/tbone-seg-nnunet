@@ -50,7 +50,7 @@ def rename_file(idx, path, file_type):
 def return_label(file_id, args, dirpath=None):
     # Return label path given corresponding image file
     if args.dataset == 'original':
-        label = os.path.join(dirpath, "reg_Segmentation_" + file_id+ ".nii.gz")
+        label = os.path.join(dirpath, "reg_Segmentation_" + file_id + ".nii.gz")
         
     if args.dataset == 'generated':
         if "deform" in file_id:
@@ -70,7 +70,7 @@ def return_image(file_id, dirpath):
     image = os.path.join(dirpath, "reg_" + file_id + ".nii.gz")
     return image
 
-def get_identifiers_from_splitted_files(folder: str):
+def get_identifiers_from_split_files(folder: str):
     # nnUNet generate_dataset_json helper function
     uniques = np.unique([i[:-12] for i in subfiles(folder, suffix='.nii.gz', join=False)])
     return uniques
@@ -95,10 +95,10 @@ def generate_dataset_json(output_file: str, imagesTr_dir: str, imagesTs_dir: str
     :param dataset_release:
     :return:
     """
-    train_identifiers = get_identifiers_from_splitted_files(imagesTr_dir)
+    train_identifiers = get_identifiers_from_split_files(imagesTr_dir)
 
     if imagesTs_dir is not None:
-        test_identifiers = get_identifiers_from_splitted_files(imagesTs_dir)
+        test_identifiers = get_identifiers_from_split_files(imagesTs_dir)
     else:
         test_identifiers = []
 
@@ -265,4 +265,4 @@ if __name__ == '__main__':
     ## For augmented dataset:
     # usage: python create_nnunet_filestructure.py --dataset generated --original_dataset_dir ../registered_niftis/ --generated_dataset_dir ../nii_files --generated_label_dir ../NIFTI_Segmentations --output_dir ../temp_jsoong/ --pickle_path ./datasplit_generated.pkl --task_num 999
     ## For original dataset:
-    # usage: python create_nnunet_filestructure.py --dataset original --original_dataset_dir ../registered_niftis/ --output_dir ../temp_jsoong/ --pickle_path ./datasplit.pkl, --task_num 999
+    # usage: python create_nnunet_filestructure.py --dataset original --original_dataset_dir ../registered_niftis/ --output_dir ../temp_ading/ --pickle_path ./datasplit_70_30.pkl --task_num 999

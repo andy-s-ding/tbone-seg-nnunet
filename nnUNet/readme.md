@@ -116,7 +116,7 @@ set a few of environment variables. Please follow the instructions [here](docume
 plots of the network topologies it generates (see [Model training](#model-training)). To install hiddenlayer, 
 run the following commands:
     ```bash
-    pip install --upgrade git+https://github.com/nanohanno/hiddenlayer.git@bugfix/get_trace_graph#egg=hiddenlayer
+    pip install --upgrade git+https://github.com/FabianIsensee/hiddenlayer.git@more_plotted_details#egg=hiddenlayer
     ```
 
 Installing nnU-Net will add several new commands to your terminal. These commands are used to run the entire nnU-Net 
@@ -247,7 +247,7 @@ nnUNet_train 3d_cascade_fullres nnUNetTrainerV2CascadeFullRes TaskXXX_MYTASK FOL
 Note that the 3D full resolution U-Net of the cascade requires the five folds of the low resolution U-Net to be 
 completed beforehand!
 
-The trained models will we written to the RESULTS_FOLDER/nnUNet folder. Each training obtains an automatically generated 
+The trained models will be written to the RESULTS_FOLDER/nnUNet folder. Each training obtains an automatically generated 
 output folder name:
 
 nnUNet_preprocessed/CONFIGURATION/TaskXXX_MYTASKNAME/TRAINER_CLASS_NAME__PLANS_FILE_NAME/FOLD
@@ -464,3 +464,9 @@ Click [here](documentation/expected_epoch_times.md).
 
 We have collected solutions to common [questions](documentation/common_questions.md) and 
 [problems](documentation/common_problems_and_solutions.md). Please consult these documents before you open a new issue.
+
+--------------------
+
+<img src="HIP_Logo.png" width="512px" />
+
+nnU-Net is developed and maintained by the Applied Computer Vision Lab (ACVL) of the [Helmholtz Imaging Platform](http://helmholtz-imaging.de).

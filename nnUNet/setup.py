@@ -2,7 +2,7 @@ from setuptools import setup, find_namespace_packages
 
 setup(name='nnunet',
       packages=find_namespace_packages(include=["nnunet", "nnunet.*"]),
-      version='1.6.6',
+      version='1.7.0',
       description='nnU-Net. Framework for out-of-the box biomedical image segmentation.',
       url='https://github.com/MIC-DKFZ/nnUNet',
       author='Division of Medical Image Computing, German Cancer Research Center',
@@ -15,13 +15,15 @@ setup(name='nnunet',
             "scikit-image>=0.14",
             "medpy",
             "scipy",
-            "batchgenerators>=0.21",
+            "batchgenerators>=0.23",
             "numpy",
             "sklearn",
             "SimpleITK",
             "pandas",
             "requests",
-            "nibabel", 'tifffile'
+            "nibabel", 
+            "tifffile", 
+            "matplotlib",
       ],
       entry_points={
           'console_scripts': [

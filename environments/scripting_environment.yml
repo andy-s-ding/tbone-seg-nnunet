@@ -156,4 +156,4 @@ dependencies:
     - tifffile==2021.2.1
     - urllib3==1.26.3
     - webcolors==1.11.1
-prefix: /home/jpsoong/anaconda3/envs/cis-ii
+prefix: /home/ading/anaconda3/envs/cis-ii

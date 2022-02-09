@@ -32,16 +32,16 @@ def save_segmentation_nifti_from_softmax(segmentation_softmax: Union[str, np.nda
                                          non_postprocessed_fname: str = None, force_separate_z: bool = None,
                                          interpolation_order_z: int = 0, verbose: bool = True):
     """
-    This is a utility for writing segmentations to nifto and npz. It requires the data to have been preprocessed by
+    This is a utility for writing segmentations to nifty and npz. It requires the data to have been preprocessed by
     GenericPreprocessor because it depends on the property dictionary output (dct) to know the geometry of the original
     data. segmentation_softmax does not have to have the same size in pixels as the original data, it will be
     resampled to match that. This is generally useful because the spacings our networks operate on are most of the time
     not the native spacings of the image data.
     If seg_postprogess_fn is not None then seg_postprogess_fnseg_postprogess_fn(segmentation, *seg_postprocess_args)
-    will be called before nifto export
-    There is a problem with python process communication that prevents us from communicating obejcts
+    will be called before nifty export
+    There is a problem with python process communication that prevents us from communicating objects
     larger than 2 GB between processes (basically when the length of the pickle string that will be sent is
-    communicated by the multiprocessing.Pipe object then the placeholder (\%i I think) does not allow for long
+    communicated by the multiprocessing.Pipe object then the placeholder (I think) does not allow for long
     enough strings (lol). This could be fixed by changing i to l (for long) but that would require manually
     patching system python code.) We circumvent that problem here by saving softmax_pred to a npy file that will
     then be read (and finally deleted) by the Process. save_segmentation_nifti_from_softmax can take either
@@ -102,7 +102,7 @@ def save_segmentation_nifti_from_softmax(segmentation_softmax: Union[str, np.nda
 
         if verbose: print("separate z:", do_separate_z, "lowres axis", lowres_axis)
         seg_old_spacing = resample_data_or_seg(segmentation_softmax, shape_original_after_cropping, is_seg=False,
-                                               axis=lowres_axis, order=order, do_separate_z=do_separate_z, cval=0,
+                                               axis=lowres_axis, order=order, do_separate_z=do_separate_z,
                                                order_z=interpolation_order_z)
         # seg_old_spacing = resize_softmax_output(segmentation_softmax, shape_original_after_cropping, order=order)
     else:
@@ -186,7 +186,7 @@ def save_segmentation_nifti(segmentation, out_fname, dct, order=1, force_separat
 
     if np.any(np.array(current_shape) != np.array(shape_original_after_cropping)):
         if order == 0:
-            seg_old_spacing = resize_segmentation(segmentation, shape_original_after_cropping, 0, 0)
+            seg_old_spacing = resize_segmentation(segmentation, shape_original_after_cropping, 0)
         else:
             if force_separate_z is None:
                 if get_do_separate_z(dct.get('original_spacing')):
@@ -207,7 +207,7 @@ def save_segmentation_nifti(segmentation, out_fname, dct, order=1, force_separat
 
             print("separate z:", do_separate_z, "lowres axis", lowres_axis)
             seg_old_spacing = resample_data_or_seg(segmentation[None], shape_original_after_cropping, is_seg=True,
-                                                   axis=lowres_axis, order=order, do_separate_z=do_separate_z, cval=0,
+                                                   axis=lowres_axis, order=order, do_separate_z=do_separate_z,
                                                    order_z=order_z)[0]
     else:
         seg_old_spacing = segmentation

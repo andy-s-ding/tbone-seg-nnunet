@@ -34,7 +34,7 @@ from torch import nn
 from torch.cuda.amp import autocast
 from nnunet.training.learning_rate.poly_lr import poly_lr
 from batchgenerators.utilities.file_and_folder_operations import *
-import time
+
 
 class nnUNetTrainerV2(nnUNetTrainer):
     """
@@ -52,8 +52,6 @@ class nnUNetTrainerV2(nnUNetTrainer):
 
         self.pin_memory = True
 
-        self.num_batches_per_epoch = 2
-        self.num_val_batches_per_epoch = 2
         self.save_every = 1
 
     def initialize(self, training=True, force_load_plans=False):
@@ -181,7 +179,6 @@ class nnUNetTrainerV2(nnUNetTrainer):
         """
         target = target[0]
         output = output[0]
-        
         return super().run_online_evaluation(output, target)
 
     def validate(self, do_mirroring: bool = True, use_sliding_window: bool = True,
@@ -234,7 +231,6 @@ class nnUNetTrainerV2(nnUNetTrainer):
         :param run_online_evaluation:
         :return:
         """
-        dl_start = time.time()
         data_dict = next(data_generator)
         data = data_dict['data']
         target = data_dict['target']
@@ -246,34 +242,29 @@ class nnUNetTrainerV2(nnUNetTrainer):
             data = to_cuda(data)
             target = to_cuda(target)
 
-        print("Time to load data: ", dl_start - time.time(), "seconds.")
         self.optimizer.zero_grad()
-        f_start = time.time()
+
         if self.fp16:
             with autocast():
                 output = self.network(data)
                 del data
                 l = self.loss(output, target)
-                print("Forward pass time:", f_start - time.time(), "seconds.")
+
             if do_backprop:
-                b_start = time.time()
                 self.amp_grad_scaler.scale(l).backward()
                 self.amp_grad_scaler.unscale_(self.optimizer)
                 torch.nn.utils.clip_grad_norm_(self.network.parameters(), 12)
                 self.amp_grad_scaler.step(self.optimizer)
                 self.amp_grad_scaler.update()
-                print("Backward pass time:", b_start - time.time(), "seconds.")
         else:
             output = self.network(data)
             del data
             l = self.loss(output, target)
-            print("Forward pass time:", f_start - time.time(), "seconds.")
+
             if do_backprop:
-                b_start = time.time()
                 l.backward()
                 torch.nn.utils.clip_grad_norm_(self.network.parameters(), 12)
                 self.optimizer.step()
-                print("Backward pass time:", b_start - time.time(), "seconds.")
 
         if run_online_evaluation:
             self.run_online_evaluation(output, target)
@@ -386,18 +377,16 @@ class nnUNetTrainerV2(nnUNetTrainer):
                                                              self.data_aug_params['rotation_z'],
                                                              self.data_aug_params['scale_range'])
             self.basic_generator_patch_size = np.array([self.patch_size[0]] + list(self.basic_generator_patch_size))
-            patch_size_for_spatialtransform = self.patch_size[1:]
         else:
             self.basic_generator_patch_size = get_patch_size(self.patch_size, self.data_aug_params['rotation_x'],
                                                              self.data_aug_params['rotation_y'],
                                                              self.data_aug_params['rotation_z'],
                                                              self.data_aug_params['scale_range'])
-            patch_size_for_spatialtransform = self.patch_size
 
         self.data_aug_params["scale_range"] = (0.7, 1.4)
         self.data_aug_params["do_elastic"] = False
         self.data_aug_params['selected_seg_channels'] = [0]
-        self.data_aug_params['patch_size_for_spatialtransform'] = patch_size_for_spatialtransform
+        self.data_aug_params['patch_size_for_spatialtransform'] = self.patch_size
 
         self.data_aug_params["num_cached_per_thread"] = 2
 

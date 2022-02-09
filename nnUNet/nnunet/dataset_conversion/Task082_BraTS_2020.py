@@ -11,27 +11,22 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
+import shutil
+from collections import OrderedDict
 from copy import deepcopy
 from multiprocessing.pool import Pool
+from typing import Tuple
 
+import SimpleITK as sitk
 import numpy as np
-from collections import OrderedDict
-
-from batchgenerators.utilities.file_and_folder_operations import *
-from meddec.paper_plot.nature_methods.challenge_visualization_stuff.own_implementation.ranking import \
-    rank_then_aggregate
 import scipy.stats as ss
-
+from batchgenerators.utilities.file_and_folder_operations import *
+from medpy.metric import dc, hd95
 from nnunet.dataset_conversion.Task032_BraTS_2018 import convert_labels_back_to_BraTS_2018_2019_convention
 from nnunet.dataset_conversion.Task043_BraTS_2019 import copy_BraTS_segmentation_and_convert_labels
 from nnunet.evaluation.region_based_evaluation import get_brats_regions, evaluate_regions
 from nnunet.paths import nnUNet_raw_data
-import SimpleITK as sitk
-import shutil
-from medpy.metric import dc, hd95
-
 from nnunet.postprocessing.consolidate_postprocessing import collect_cv_niftis
-from typing import Tuple
 
 
 def apply_brats_threshold(fname, out_dir, threshold, replace_with):
@@ -749,3 +744,8 @@ if __name__ == "__main__":
     #  nnUNet_ensemble -f nnUNetTrainerV2BraTSRegions_DA3_BN_BD__nnUNetPlansv2.1_bs5_5fold nnUNetTrainerV2BraTSRegions_DA4_BN_BD__nnUNetPlansv2.1_bs5_5fold nnUNetTrainerV2BraTSRegions_DA4_BN__nnUNetPlansv2.1_bs5_15fold -o ensembled_nnUNetTrainerV2BraTSRegions_DA3_BN_BD__nnUNetPlansv2.1_bs5_5fold__nnUNetTrainerV2BraTSRegions_DA4_BN_BD__nnUNetPlansv2.1_bs5_5fold__nnUNetTrainerV2BraTSRegions_DA4_BN__nnUNetPlansv2.1_bs5_15fold
     # apply_threshold_to_folder('ensembled_nnUNetTrainerV2BraTSRegions_DA3_BN_BD__nnUNetPlansv2.1_bs5_5fold__nnUNetTrainerV2BraTSRegions_DA4_BN_BD__nnUNetPlansv2.1_bs5_5fold__nnUNetTrainerV2BraTSRegions_DA4_BN__nnUNetPlansv2.1_bs5_15fold/', 'ensemble_PP200/', 200, 2)
     # convert_labels_back_to_BraTS_2018_2019_convention('ensemble_PP200/', 'ensemble_PP200_converted')
+
+    # export for publication of weights
+    # nnUNet_export_model_to_zip -tr nnUNetTrainerV2BraTSRegions_DA4_BN -pl nnUNetPlansv2.1_bs5 -f 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 -t 82 -o nnUNetTrainerV2BraTSRegions_DA4_BN__nnUNetPlansv2.1_bs5_15fold.zip --disable_strict
+    # nnUNet_export_model_to_zip -tr nnUNetTrainerV2BraTSRegions_DA3_BN_BD -pl nnUNetPlansv2.1_bs5 -f 0 1 2 3 4 -t 82 -o nnUNetTrainerV2BraTSRegions_DA3_BN_BD__nnUNetPlansv2.1_bs5_5fold.zip --disable_strict
+    # nnUNet_export_model_to_zip -tr nnUNetTrainerV2BraTSRegions_DA4_BN_BD -pl nnUNetPlansv2.1_bs5 -f 0 1 2 3 4 -t 82 -o nnUNetTrainerV2BraTSRegions_DA4_BN_BD__nnUNetPlansv2.1_bs5_5fold.zip --disable_strict
