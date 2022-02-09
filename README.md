@@ -4,7 +4,7 @@ Instructions for Temporal Bone Dataset Use:
 
 ## Step 0: Clone github through
 ```
-git clone https://github.com/jpsoong/jsad-tbone
+git clone https://github.com/andy-s-ding/jsad-tbone
 ```
 
 ## Step 1: Set up two environments using .yml files in environments/
@@ -71,8 +71,15 @@ After updating this you will need to source your bashrc file.
 ```
 source ~/.bashrc
 ```
+This will deactivate your conda environment.
 
 ## Step 6: Verify and preprocess data.
+Activate scripting environment
+```
+conda activate nnUNet-11.2
+```
+
+Run nnUNet preprocessing script
 ```
 nnUNet_plan_and_preprocess -t <task_num> --verify_dataset_integrity
 ```
@@ -86,3 +93,6 @@ Potential Error: You may need to edit the dataset.json file so that the labels a
 ```
 nnUNet_train 3d_fullres nnUNetTrainerV2 TaskXXX_TemporalBone Y --npz 
 ```
+XXX refers to <task_num>
+
+Y refers to the number of folds for cross-validation. If Y is set to "all" then all of the data will be used for training.
