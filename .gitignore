@@ -8,12 +8,7 @@
 *.npy
 prostate*.pkl
 jhu*.pkl
-temp_holding_dir/
-test_jsoong/
 *.model*
 *checkpoint*
-Task05_Prostate/
 registered_niftis/
-inconsistent_registered_niftis/
-registered_niftis/
-registered_niftis/transforms1/
+scripts/datasplit_jsons/
