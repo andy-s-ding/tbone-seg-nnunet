@@ -1769,3 +1769,48 @@ epoch:  102
  
 2022-02-09 21:14:24.531417: 
 epoch:  103 
+2022-02-09 21:19:22.827159: train loss : -0.1132 
+2022-02-09 21:19:41.804636: validation loss: -0.1495 
+2022-02-09 21:19:41.805782: Average global foreground Dice: [0.9589, 0.8862, 0.8521, 0.5406, 0.9433, 0.8946, 0.5031, 0.2219, 0.7221, 0.8654, 0.3513, 0.7582, 0.7955, 0.4842, 0.902, 0.8355] 
+2022-02-09 21:19:41.805995: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-02-09 21:19:42.165053: lr: 0.006817 
+2022-02-09 21:19:42.165314: saving scheduled checkpoint file... 
+2022-02-09 21:19:42.192994: saving checkpoint... 
+2022-02-09 21:19:43.064733: done, saving took 0.90 seconds 
+2022-02-09 21:19:43.068026: done 
+2022-02-09 21:19:43.097413: saving checkpoint... 
+2022-02-09 21:19:43.947676: done, saving took 0.88 seconds 
+2022-02-09 21:19:43.951324: This epoch took 319.419780 s
+ 
+2022-02-09 21:19:43.951472: 
+epoch:  104 
+2022-02-09 21:24:42.722240: train loss : -0.1081 
+2022-02-09 21:25:01.790602: validation loss: -0.1006 
+2022-02-09 21:25:01.791715: Average global foreground Dice: [0.9558, 0.904, 0.8909, 0.4693, 0.9455, 0.9231, 0.492, 0.2614, 0.7497, 0.8369, 0.373, 0.8688, 0.7558, 0.551, 0.8345, 0.9077] 
+2022-02-09 21:25:01.791993: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-02-09 21:25:02.159282: lr: 0.006786 
+2022-02-09 21:25:02.159537: saving scheduled checkpoint file... 
+2022-02-09 21:25:02.191711: saving checkpoint... 
+2022-02-09 21:25:03.081641: done, saving took 0.92 seconds 
+2022-02-09 21:25:03.082443: done 
+2022-02-09 21:25:03.104339: saving checkpoint... 
+2022-02-09 21:25:03.958036: done, saving took 0.88 seconds 
+2022-02-09 21:25:03.958828: This epoch took 320.007231 s
+ 
+2022-02-09 21:25:03.958964: 
+epoch:  105 
+2022-02-09 21:30:05.338387: train loss : -0.1017 
+2022-02-09 21:30:24.565444: validation loss: -0.1381 
+2022-02-09 21:30:24.566602: Average global foreground Dice: [0.9565, 0.8691, 0.8603, 0.5369, 0.9217, 0.9212, 0.4868, 0.1841, 0.7289, 0.8134, 0.3259, 0.8694, 0.7899, 0.5368, 0.8649, 0.8893] 
+2022-02-09 21:30:24.566809: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-02-09 21:30:24.938228: lr: 0.006755 
+2022-02-09 21:30:24.938464: saving scheduled checkpoint file... 
+2022-02-09 21:30:24.969954: saving checkpoint... 
+2022-02-09 21:30:25.812972: done, saving took 0.87 seconds 
+2022-02-09 21:30:25.813797: done 
+2022-02-09 21:30:25.835560: saving checkpoint... 
+2022-02-09 21:30:26.698651: done, saving took 0.88 seconds 
+2022-02-09 21:30:26.702986: This epoch took 322.743893 s
+ 
+2022-02-09 21:30:26.703136: 
+epoch:  106 
