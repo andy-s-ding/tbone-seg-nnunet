@@ -1,10 +1,10 @@
-# jsad-tbone
+# tbone-seg-nnunet
 
 Instructions for Temporal Bone Dataset Use:
 
 ## Step 0: Clone github through
 ```
-git clone https://github.com/andy-s-ding/jsad-tbone
+git clone https://github.com/andy-s-ding/tbone-seg-nnunet
 ```
 
 ## Step 1: Set up two environments using .yml files in environments/
@@ -42,7 +42,7 @@ python generate_registration_sh.py ../../nii_files/20210404 ../../NIFTI_Segmenta
 
 For the general dataset, this is done by:
 ```
-cd <path to github>/jsad-tbone/scripts/
+cd <path to github>/tbone-seg-nnunet/scripts/
 python create_datasplit.py
 ```
 For the SSM generated dataset, this is done by:
@@ -91,8 +91,8 @@ Potential Error: You may need to edit the dataset.json file so that the labels a
 
 ## Step 7: Begin Training.
 ```
-nnUNet_train 3d_fullres nnUNetTrainerV2 TaskXXX_TemporalBone Y --npz 
+nnUNet_train 3d_fullres nnUNetTrainerV2 Task<task_num>_TemporalBone Y --npz
 ```
-XXX refers to <task_num>
+`Y` refers to the number of folds for cross-validation. If `Y` is set to `all` then all of the data will be used for training.
 
-Y refers to the number of folds for cross-validation. If Y is set to "all" then all of the data will be used for training.
+`--npz` makes the models save the softmax outputs (uncompressed, large files) during the final validation. It should only be used if you are training multiple configurations, which requires `nnUNet_find_best_configuration` to find the best model. We omit this by default.
