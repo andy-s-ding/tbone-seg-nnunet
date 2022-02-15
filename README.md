@@ -2,9 +2,9 @@
 
 Instructions for Temporal Bone Dataset Use:
 
-## Step 0: Clone github through
+## Step 0: Fork this GktHub repo
 ```
-git clone https://github.com/andy-s-ding/tbone-seg-nnunet
+git clone https://github.com/<your-username>/tbone-seg-nnunet
 ```
 
 ## Step 1: Set up two environments using .yml files in environments/
