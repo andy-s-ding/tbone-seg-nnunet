@@ -1,7 +1,7 @@
 """
-compute_accuracy_metrics.py
+compute_hausdorff_distance.py
 
-Compute dice scores and Hausdorff distances for segment ids
+Compute Hausdorff distances for segment ids
 
 """
 import os
@@ -10,10 +10,12 @@ import argparse
 import numpy as np
 import pandas as pd
 import nibabel as nib
-import nrrd
+import glob
+import fnmatch
 import surface_distance
 from surface_distance.metrics import *
 from utils.file_io import *
+import time
 
 seg_names = {
     0: "Background",
@@ -38,7 +40,7 @@ seg_names = {
 def parse_command_line(args):
     '''
 
-	'''
+    '''
 
     print('parsing command line')
 
@@ -46,29 +48,36 @@ def parse_command_line(args):
     parser.add_argument('--base',
                         action="store",
                         type=str,
-                        default="/Volumes/Extreme SSD/ANTs-registration"
+                        default="/media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/01_ading"
                         )
-    parser.add_argument('--prediction',
+    parser.add_argument('--task_num',
+                        action="store",
+                        type=int,
+                        default=101
+                        )
+    parser.add_argument('--targets',
                         action="store",
                         type=str,
-                        )
-    parser.add_argument('--target',
-                        action="store",
-                        type=str,
-                        help="specify which scan should be the target scan. \
+                        nargs='*',
+                        help="Specify which scan should be the target scan. \
                         If a scan is specified, only the registration of the specified target scan onto the template scan will be performed. \
                         If the target scan is not specified, the entire list of scans will be registered onto the template."
                         )
-    parser.add_argument('--target_nrrd',
+    parser.add_argument('--folds',
+                        action="store",
+                        type=int,
+                        nargs='*'
+                        )
+    parser.add_argument('--ids',
+                        type=int,
+                        nargs='+',
+                        help="Segment indices (1-indexed) to calculate accuracy metrics. If no ids are specified, all foreground ids \
+                        will be included.")
+    parser.add_argument('--save_name',
                         action="store",
                         type=str,
-                        )
-    parser.add_argument('--fold',
-                        action="store",
-                        type=str,
-                        )
-    parser.add_argument('--dry',
-                        action="store_true"
+                        default="Hausdorff Distances",
+                        help="Name of the .csv file containing Hausdorff distances that will be saved in --base"
                         )
 
     args = vars(parser.parse_args())
@@ -78,52 +87,70 @@ def parse_command_line(args):
 def main():
     args = parse_command_line(sys.argv)
 
-    base = args['base']
-    prediction = args['prediction']
-    target = args['target']
-    ids = [i for i in range(0, 17)]
-    print(ids)
-    gt_nii_path = os.path.join(base, 'gt_niftis', target)
-    pred_path = os.path.join(base, f"fold_{args['fold']}", 'validation_raw_postprocessed', prediction)
-    gt_seg_path_nrrd = os.path.join(os.path.dirname(gt_nii_path), args['target_nrrd'])
+    base = os.path.join(args['base'], f"nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task{args['task_num']}_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1")
+    gt_folder = os.path.join(base, 'gt_niftis')
 
+    # Determine segment ids to analyze
+    if args['ids'] is None: # Do all segment ids
+        ids = list(range(1,len(seg_names))) # Exclude background
+    else: ids = args['ids'] # Otherwise, do specified segment ids
+    print(f"Segment IDs: {ids}")
+    
     # Initialize metric dictionaries
     hausdorff_dict = dict()
+    hausdorff_dict['Fold'] = []
     hausdorff_dict['Target'] = []
     for i in ids:  # seg_names are 0-indexed, while ids are 1-indexed (due to presence of background class in one-hot)
         hausdorff_dict[seg_names[i]] = []
 
+    # Determine fold numbers to analyze
+    if args['folds'] is None: # Do all existing folds
+        folds = [folder[-1] for folder in os.listdir(base) if fnmatch.fnmatch(folder, 'fold_*')]
+    else: folds = args['folds'] # Otherwise, do specified folds
 
-    print('-- Evaluating %s' % (target))
+    for fold in folds:
+        print(f"Fold: {fold}")
+        val_path = os.path.join(base, f"fold_{fold}", 'validation_raw_postprocessed')
 
-    pred_seg = np.array(nib.load(pred_path).dataobj) #s
-    gt_seg = np.array(nib.load(gt_nii_path).dataobj)
-    spacing = np.linalg.norm(nrrd.read_header(gt_seg_path_nrrd)['space directions'][1:], axis=0)
+        # Determine targets in fold
+        if args['targets'] is None: # Do all targets
+            targets = [target.split('.nii.gz')[0] for target in os.listdir(val_path) if fnmatch.fnmatch(target, '*.nii.gz')]
+        else: targets = args['targets'] # Otherwise, do specified targets
+        print(f"Targets in fold: {targets}")
 
-    pred_one_hot = np.moveaxis((np.arange(pred_seg.max() + 1) == pred_seg[..., None]), -1, 0)
-    gt_one_hot = np.moveaxis((np.arange(gt_seg.max() + 1) == gt_seg[..., None]), -1, 0)
+        for target in targets:
+            pred_path = os.path.join(val_path, f"{target}.nii.gz")
+            gt_path = os.path.join(gt_folder, f"{target}.nii.gz")
 
-    print(pred_one_hot.shape)
-    print(gt_one_hot.shape)
+            print('-- Evaluating %s' % (target))
+            gt_nii = nib.load(gt_path)
+            gt_seg = np.array(gt_nii.dataobj)
+            gt_header = gt_nii.header
+            pred_nii = nib.load(pred_path)
+            pred_seg = np.array(pred_nii.dataobj)
+            spacing = np.asarray(gt_header.get_zooms())
+            print(f"---- Spacing for {target}: {spacing}")
 
-    hausdorff_dict['Target'].append(target)
+            pred_one_hot = np.moveaxis((np.arange(pred_seg.max() + 1) == pred_seg[..., None]), -1, 0)
+            gt_one_hot = np.moveaxis((np.arange(gt_seg.max() + 1) == gt_seg[..., None]), -1, 0)
 
-    for i in ids:
-        seg_name = seg_names[i]
-        print('---- Computing metrics for segment: %s' % seg_name)
-        # breakpoint()
-        surface_distances = compute_surface_distances(gt_one_hot[i], pred_one_hot[i], spacing)
-        mod_hausdorff_distance = max(compute_average_surface_distance(surface_distances))
-
-        hausdorff_dict[seg_name].append(mod_hausdorff_distance)
+            # Update output metric dictionary
+            hausdorff_dict['Fold'].append(fold)
+            hausdorff_dict['Target'].append(target)
+            for i in ids:
+                seg_name = seg_names[i]
+                print(f"---- Computing metrics for segment: {seg_name}")
+                surface_distances = compute_surface_distances(gt_one_hot[i], pred_one_hot[i], spacing)
+                mod_hausdorff_distance = max(compute_average_surface_distance(surface_distances))
+                print(f"------ Distance: {mod_hausdorff_distance}")
+                hausdorff_dict[seg_name].append(mod_hausdorff_distance)
 
     hausdorff_df = pd.DataFrame.from_dict(hausdorff_dict)
 
     print('Modified Hausdorff Distances')
     print(hausdorff_df)
 
-    hausdorff_path = os.path.join(base, f'{target[:8]}_hausdorff.csv')
-
+    hausdorff_path = os.path.join(base, f"{args['save_name']}.csv")
     hausdorff_df.to_csv(hausdorff_path)
 
     return
@@ -131,3 +158,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# internal use: python compute_hausdorff_distance.py

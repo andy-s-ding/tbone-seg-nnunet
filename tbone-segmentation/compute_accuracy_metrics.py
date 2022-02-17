@@ -1,7 +1,8 @@
 """
 compute_accuracy_metrics.py
 
-Compute dice scores and Hausdorff distances for segment ids
+Compute dice scores and Hausdorff distances for segment ids.
+This code only works for NRRD files.
 
 """
 import os 

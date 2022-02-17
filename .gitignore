@@ -12,3 +12,5 @@ jhu*.pkl
 *checkpoint*
 registered_niftis/
 scripts/datasplit_jsons/
+*.xls*
+*.csv

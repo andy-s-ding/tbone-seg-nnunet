@@ -28,10 +28,12 @@ def main(argv):
 
     if "nrrd" not in path_truth:
         print("Not .nrrd files, converting nifti to .nrrd...")
-        header_truth = nib.load(path_truth)
-        data_truth = header_truth.get_fdata()
-        header_pred = nib.load(path_pred)
-        data_pred = header_pred.get_fdata()
+        truth = nib.load(path_truth)
+        pred = nib.load(path_pred)
+        header_truth = dict(truth.header)
+        data_truth = truth.get_fdata()
+        header_pred = dict(pred.header)
+        data_pred = pred.get_fdata()
         print("Finding num classes...")
 
     else:

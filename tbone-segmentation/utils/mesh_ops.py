@@ -96,6 +96,7 @@ def obtain_surface_mesh(data, header, idx=None, is_annotation=False, check_if_ca
 	    TYPE: Description
 	"""
 	print('-- meshing surfaces')
+	print(header)
 
 	if idx is None: 
 		idx = 1

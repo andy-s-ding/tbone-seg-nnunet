@@ -1,9 +1,0 @@
-Starting... 
-2021-04-07 09:11:28.634732: Using splits from existing split file: /scratch/groups/rtaylor2/jsad-tbone-segmentation/00_jsoong/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl 
-2021-04-07 09:11:28.830614: The split file contains 5 splits. 
-2021-04-07 09:11:28.831128: Desired fold for training: 4 
-2021-04-07 09:11:28.831540: This split has 12 training and 3 validation cases. 
-2021-04-07 09:11:29.190819: TRAINING KEYS:
- odict_keys(['jhu_000', 'jhu_003', 'jhu_004', 'jhu_006', 'jhu_007', 'jhu_008', 'jhu_009', 'jhu_010', 'jhu_011', 'jhu_012', 'jhu_013', 'jhu_014']) 
-2021-04-07 09:11:29.191463: VALIDATION KEYS:
- odict_keys(['jhu_001', 'jhu_002', 'jhu_005']) 

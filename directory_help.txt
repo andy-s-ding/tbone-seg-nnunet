@@ -1,6 +1,3 @@
-00_ading - Contains SSM data with labels/SSM data from 2021_04_04
-01_ading - Contains SSM data from 100 downsample and finalized labels from 4/15.
-00_jsoong -  Contains nnUNet stuff for vanilla data, 5-fold validation, completely trained. This has the updated labels from 2021_04_04
-04_jsoong - Contains nnUNet stuff for vanilla data, 5-fold validation, completely trained. This has the inconsistent labels
+01_ading - Vanilla 70-30 datasplit with 5-fold cross-validation.
 
 If there is no description I cannot remember what is in there and I assume I can delete it. At this point in time, these files should be removed:

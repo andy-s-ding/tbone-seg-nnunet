@@ -1,5 +1,0 @@
-Starting... 
-2021-04-25 18:30:57.984254: Using splits from existing split file: /media/jpsoong/New Volume/jsad-tbone/01_jsoong/nnUnet/nnUNet_preprocessed/Task102_TemporalBone/splits_final.pkl 
-2021-04-25 18:30:57.985494: The split file contains 5 splits. 
-2021-04-25 18:30:57.985705: Desired fold for training: 1 
-2021-04-25 18:30:57.985898: This split has 1 training and 1 validation cases. 
