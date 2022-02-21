@@ -1,7 +1,7 @@
 {
     "author": "Fabian",
     "description": "",
-    "id": "8358f9e77b8a",
+    "id": "2ced7a5f7de5",
     "name": "",
     "results": {
         "all": [
@@ -246,8 +246,8 @@
                     "Total Positives Test": 8786,
                     "True Negative Rate": 0.9999886227952188
                 },
-                "reference": "/media/andyding/SAMSUNG 4TB/jsad-tbone/01_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/gt_segmentations/jhu_003.nii.gz",
-                "test": "/media/andyding/SAMSUNG 4TB/jsad-tbone/01_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_1/validation_raw_postprocessed/jhu_003.nii.gz"
+                "reference": "/media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/01_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/gt_segmentations/jhu_003.nii.gz",
+                "test": "/media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/01_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_1/validation_raw_postprocessed/jhu_003.nii.gz"
             },
             {
                 "1": {
@@ -490,8 +490,8 @@
                     "Total Positives Test": 9082,
                     "True Negative Rate": 0.9999782370764281
                 },
-                "reference": "/media/andyding/SAMSUNG 4TB/jsad-tbone/01_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/gt_segmentations/jhu_006.nii.gz",
-                "test": "/media/andyding/SAMSUNG 4TB/jsad-tbone/01_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_1/validation_raw_postprocessed/jhu_006.nii.gz"
+                "reference": "/media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/01_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/gt_segmentations/jhu_006.nii.gz",
+                "test": "/media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/01_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_1/validation_raw_postprocessed/jhu_006.nii.gz"
             },
             {
                 "1": {
@@ -734,8 +734,8 @@
                     "Total Positives Test": 12144,
                     "True Negative Rate": 0.9999869770633791
                 },
-                "reference": "/media/andyding/SAMSUNG 4TB/jsad-tbone/01_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/gt_segmentations/jhu_008.nii.gz",
-                "test": "/media/andyding/SAMSUNG 4TB/jsad-tbone/01_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_1/validation_raw_postprocessed/jhu_008.nii.gz"
+                "reference": "/media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/01_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/gt_segmentations/jhu_008.nii.gz",
+                "test": "/media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/01_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_1/validation_raw_postprocessed/jhu_008.nii.gz"
             }
         ],
         "mean": {
@@ -982,5 +982,5 @@
         }
     },
     "task": "",
-    "timestamp": "2022-02-10 14:48:06.025459"
+    "timestamp": "2022-02-18 03:52:47.559554"
 }

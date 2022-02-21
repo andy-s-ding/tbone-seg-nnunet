@@ -1,0 +1,24 @@
+Train: 
+jhu_000: RT_152
+jhu_001: LT_146
+jhu_002: RT_146
+jhu_003: LT_145
+jhu_004: RT_142
+jhu_005: LT_169
+jhu_006: LT_144
+jhu_007: LT_151
+jhu_008: RT_153
+jhu_009: RT_144
+jhu_010: RT_150
+jhu_011: RT_138
+jhu_012: LT_152
+jhu_013: LT_138
+jhu_014: LT_150
+
+Test:
+jhu_015: RT_143
+jhu_016: LT_148
+jhu_017: LT_171
+jhu_018: LT_147
+jhu_019: LT_143
+jhu_020: RT_147

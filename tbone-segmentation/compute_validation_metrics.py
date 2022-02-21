@@ -1,7 +1,7 @@
 """
-compute_hausdorff_distance.py
+compute_validation_metrics.py
 
-Compute Hausdorff distances for segment ids
+Compute Hausdorff distances and/or Dice Scores for segment ids
 
 """
 import os
@@ -23,7 +23,7 @@ seg_names = {
     2: "Malleus",
     3: "Incus",
     4: "Stapes",
-    5: "Vestibule_and_Cochlea",
+    5: "Bony_Labyrinth",
     6: "Vestibular_Nerve",
     7: "Superior_Vestibular_Nerve",
     8: "Inferior_Vestibular_Nerve",
@@ -33,7 +33,7 @@ seg_names = {
     12: "ICA",
     13: "Sinus_and_Dura",
     14: "Vestibular_Aqueduct",
-    15: "TMJ",
+    15: "Mandible",
     16: "EAC",
 }
 
@@ -73,11 +73,29 @@ def parse_command_line(args):
                         nargs='+',
                         help="Segment indices (1-indexed) to calculate accuracy metrics. If no ids are specified, all foreground ids \
                         will be included.")
-    parser.add_argument('--save_name',
+    parser.add_argument('--hausdorff',
+                        action="store_true",
+                        help="True if evaluating modified Hausdorff distances"
+                        )
+    parser.add_argument('--hausdorff_out',
                         action="store",
                         type=str,
                         default="Hausdorff Distances",
                         help="Name of the .csv file containing Hausdorff distances that will be saved in --base"
+                        )
+    parser.add_argument('--dice',
+                        action="store_true",
+                        help="True if evaluating Dice scores"
+                        )
+    parser.add_argument('--dice_out',
+                        action="store",
+                        type=str,
+                        default="Dice Scores",
+                        help="Name of the .csv file containing Dice scores that will be saved in --base"
+                        )
+    parser.add_argument('--overwrite',
+                        action="store_true",
+                        help="True if overwriting output files"
                         )
 
     args = vars(parser.parse_args())
@@ -89,19 +107,45 @@ def main():
 
     base = os.path.join(args['base'], f"nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task{args['task_num']}_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1")
     gt_folder = os.path.join(base, 'gt_niftis')
+    hausdorff = args['hausdorff']
+    dice = args['dice']
+    assert(hausdorff or dice), "Metric not specified!"
+
+    # Determine output file paths and their existence
+    hausdorff_path = os.path.join(base, f"{args['hausdorff_out']}.csv")
+    dice_path = os.path.join(base, f"{args['dice_out']}.csv")
+
+    if args['overwrite']: print("CAUTION: Will overwrite existing output files!")
+    else:
+        if hausdorff and os.path.exists(hausdorff_path):
+            hausdorff = False
+            print("Hausdorff output file exists. Will not perform Hausdorff analysis.")
+        if dice and os.path.exists(dice_path):
+            dice = False
+            print("Dice output file exists. Will not perform Hausdorff analysis.")
+    if not hausdorff and not dice:
+        print("Existing output files present. Rerun with --overwrite to continue.")
+        return
 
     # Determine segment ids to analyze
     if args['ids'] is None: # Do all segment ids
-        ids = list(range(1,len(seg_names))) # Exclude background
+        ids = list(range(1,len(seg_names))) # Exclude background (segments are 1-indexed)
     else: ids = args['ids'] # Otherwise, do specified segment ids
     print(f"Segment IDs: {ids}")
     
     # Initialize metric dictionaries
-    hausdorff_dict = dict()
-    hausdorff_dict['Fold'] = []
-    hausdorff_dict['Target'] = []
-    for i in ids:  # seg_names are 0-indexed, while ids are 1-indexed (due to presence of background class in one-hot)
-        hausdorff_dict[seg_names[i]] = []
+    if hausdorff:
+        hausdorff_dict = dict()
+        hausdorff_dict['Fold'] = []
+        hausdorff_dict['Target'] = []
+        for i in ids:
+            hausdorff_dict[seg_names[i]] = []
+    if dice:
+        dice_dict = dict()
+        dice_dict['Fold'] = []
+        dice_dict['Target'] = []
+        for i in ids:
+            dice_dict[seg_names[i]] = []
 
     # Determine fold numbers to analyze
     if args['folds'] is None: # Do all existing folds
@@ -134,24 +178,38 @@ def main():
             pred_one_hot = np.moveaxis((np.arange(pred_seg.max() + 1) == pred_seg[..., None]), -1, 0)
             gt_one_hot = np.moveaxis((np.arange(gt_seg.max() + 1) == gt_seg[..., None]), -1, 0)
 
-            # Update output metric dictionary
-            hausdorff_dict['Fold'].append(fold)
-            hausdorff_dict['Target'].append(target)
+            # Update output metric dictionaries
+            if hausdorff:
+                hausdorff_dict['Fold'].append(fold)
+                hausdorff_dict['Target'].append(target)
+            if dice:
+                dice_dict['Fold'].append(fold)
+                dice_dict['Target'].append(target)
+            
             for i in ids:
                 seg_name = seg_names[i]
                 print(f"---- Computing metrics for segment: {seg_name}")
-                surface_distances = compute_surface_distances(gt_one_hot[i], pred_one_hot[i], spacing)
-                mod_hausdorff_distance = max(compute_average_surface_distance(surface_distances))
-                print(f"------ Distance: {mod_hausdorff_distance}")
-                hausdorff_dict[seg_name].append(mod_hausdorff_distance)
+                if hausdorff:
+                    surface_distances = compute_surface_distances(gt_one_hot[i], pred_one_hot[i], spacing)
+                    mod_hausdorff_distance = max(compute_average_surface_distance(surface_distances))
+                    print(f"------ Distance: {mod_hausdorff_distance}")
+                    hausdorff_dict[seg_name].append(mod_hausdorff_distance)
+                if dice:
+                    dice_coeff = compute_dice_coefficient(gt_one_hot[i], pred_one_hot[i])
+                    print(f"------ Dice Score: {dice_coeff}")
+                    dice_dict[seg_name].append(dice_coeff)
 
-    hausdorff_df = pd.DataFrame.from_dict(hausdorff_dict)
+    if hausdorff:
+        hausdorff_df = pd.DataFrame.from_dict(hausdorff_dict)
+        print('Modified Hausdorff Distances')
+        print(hausdorff_df)
+        hausdorff_df.to_csv(hausdorff_path)
+    if dice:
+        dice_df = pd.DataFrame.from_dict(dice_dict)
+        print('Dice Scores')
+        print(dice_df)
+        dice_df.to_csv(dice_path)
 
-    print('Modified Hausdorff Distances')
-    print(hausdorff_df)
-
-    hausdorff_path = os.path.join(base, f"{args['save_name']}.csv")
-    hausdorff_df.to_csv(hausdorff_path)
 
     return
 
@@ -159,4 +217,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-# internal use: python compute_hausdorff_distance.py
+# internal use: python compute_validation_metrics.py

@@ -51,10 +51,10 @@ class Evaluator:
     ]
 
     default_advanced_metrics = [
-        #"Hausdorff Distance",
+        "Hausdorff Distance",
         "Hausdorff Distance 95",
-        #"Avg. Surface Distance",
-        #"Avg. Symmetric Surface Distance"
+        "Avg. Surface Distance",
+        "Avg. Symmetric Surface Distance"
     ]
 
     def __init__(self,

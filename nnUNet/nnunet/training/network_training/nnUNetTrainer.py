@@ -643,7 +643,7 @@ class nnUNetTrainer(NetworkTrainer):
                              json_output_file=join(output_folder, "summary.json"),
                              json_name=job_name + " val tiled %s" % (str(use_sliding_window)),
                              json_author="Fabian",
-                             json_task=task, num_threads=default_num_threads)
+                             json_task=task, num_threads=default_num_threads, advanced=True)
 
         if run_postprocessing_on_folds:
             # in the old nnunet we would stop here. Now we add a postprocessing. This postprocessing can remove everything
