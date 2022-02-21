@@ -10,7 +10,6 @@ prostate*.pkl
 jhu*.pkl
 *.model*
 *checkpoint*
-registered_niftis/
 scripts/datasplit_jsons/
 *.xls*
 *.csv
