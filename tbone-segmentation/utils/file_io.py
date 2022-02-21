@@ -205,7 +205,7 @@ def ants_image_to_file(ants_img, template_header, spatial_header, file_name, seg
 	"""
 	print(ants_img.shape)
 	img_as_np = ants_img.view(single_components=segmentations)
-	print('image as numpy shape', img_as_np.shape)
+	# print('image as numpy shape', img_as_np.shape)
 
 	if nifti:
 		if segmentations:
