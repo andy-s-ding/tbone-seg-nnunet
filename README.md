@@ -39,6 +39,7 @@ python generate_registration_sh.py ../../nii_files/20210404 ../../NIFTI_Segmenta
 ```
 
 ## Step 3: Create datasplit for training/testing. Validation will automatically be chosen. 
+The datasplit file will be a `.pkl` file that will be referenced when creating the final file structure for nnUNet training.
 
 For the general (default) dataset without deformation field SSM augmentation, this is done by:
 ```
@@ -52,21 +53,25 @@ python create_generated_datasplit.py
 Note that in order to create the generated datasplit, the general datasplit.pkl file needs to exist first. This is because the generated datasplit uses the same test set as the general split.
 
 ## Step 4: Create file structure required for nnUNet github. 
+Create a base directory `tbone-seg-nnunet/<BASE_DIR>` that will serve as the root directory for the nnUNet training file structure.
+
+In the `scripts/` folder, run `create_nnunet_filestructure.py` to copy training and test data over based on the datasplit `.pkl` generated in Step 3.
+
 For the general temporal bone dataset:
 ```
-python create_nnunet_filestructure.py --dataset original --original_dataset_dir <registered original images> --output_dir <output_dir> --pickle_path ./datasplit.pkl, --task_num <task num>```
+python create_nnunet_filestructure.py --dataset original --original_dataset_dir <registered original images> --output_dir <BASE_DIR> --pickle_path ./datasplit.pkl, --task_num <task num>```
 ```
 For the SSM generated datasplit, this is done by:
 ```
-python create_nnunet_filestructure.py --dataset generated --original_dataset_dir <registered original images dir> --generated_dataset_dir <generated dataset dir>--generated_label_dir <dir to SSM labels> --output_dir <output dir> --pickle_path ./datasplit_generated.pkl --task_num <task num>
+python create_nnunet_filestructure.py --dataset generated --original_dataset_dir <registered original images dir> --generated_dataset_dir <generated dataset dir>--generated_label_dir <dir to SSM labels> --output_dir <BASE_DIR> --pickle_path ./datasplit_generated.pkl --task_num <task num>
 ```
 
 ## Step 5: Setup bashrc.
 Edit your `~/.bashrc` file with `gedit ~/.bashrc` or `nano ~/.bashrc`. At the end of the file, add the following lines:
 ```
-export nnUNet_raw_data_base="<PATH TO FILESTRUCTURE>/nnUnet/nnUNet_raw_data_base" 
-export nnUNet_preprocessed="<PATH TO FILESTRUCTURE>/nnUNet_preprocessed" 
-export RESULTS_FOLDER="<PATH TO FILESTRUCTURE>nnUnet/nnUNet_trained_models"
+export nnUNet_raw_data_base="<ABSOLUTE PATH TO BASE_DIR>/nnUnet/nnUNet_raw_data_base" 
+export nnUNet_preprocessed="<ABSOLUTE PATH TO BASE_DIR>/nnUNet_preprocessed" 
+export RESULTS_FOLDER="<ABSOLUTE PATH TO BASE_DIR>/nnUnet/nnUNet_trained_models"
 ```
 After updating this you will need to source your `~/.bashrc` file.
 ```
