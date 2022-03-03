@@ -13,3 +13,4 @@ jhu*.pkl
 scripts/datasplit_jsons/
 *.xls*
 *.csv
+*(backup)

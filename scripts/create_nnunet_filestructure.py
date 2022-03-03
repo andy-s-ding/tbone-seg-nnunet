@@ -23,7 +23,7 @@ label_key = {
     2: "Malleus",
     3: "Incus",
     4: "Stapes",
-    5: "Vestibule_and_Cochlea",
+    5: "Bony_Labyrinth",
     6: "Vestibular_Nerve",
     7: "Superior_Vestibular_Nerve",
     8: "Inferior_Vestibular_Nerve",
@@ -33,7 +33,7 @@ label_key = {
     12: "ICA",
     13: "Sinus_and_Dura",
     14: "Vestibular_Aqueduct",
-    15: "TMJ",
+    15: "Mandible",
     16: "EAC",
 }
 

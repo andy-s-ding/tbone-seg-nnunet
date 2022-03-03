@@ -20,6 +20,7 @@ from nnunet.utilities.nd_softmax import softmax_helper
 from nnunet.utilities.tensor_utilities import sum_tensor
 from torch import nn
 import numpy as np
+import time as time
 
 
 class GDL(nn.Module):
@@ -156,7 +157,7 @@ def get_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
 
 
 class SoftDiceLoss(nn.Module):
-    def __init__(self, apply_nonlin=None, batch_dice=False, do_bg=True, smooth=1.):
+    def __init__(self, apply_nonlin=None, batch_dice=False, do_bg=True, smooth=1e-5):
         """
         """
         super(SoftDiceLoss, self).__init__()
@@ -167,6 +168,7 @@ class SoftDiceLoss(nn.Module):
         self.smooth = smooth
 
     def forward(self, x, y, loss_mask=None):
+        start = time.time()
         shp_x = x.shape
 
         if self.batch_dice:
@@ -190,6 +192,9 @@ class SoftDiceLoss(nn.Module):
             else:
                 dc = dc[:, 1:]
         dc = dc.mean()
+
+        end = time.time()
+        print(f"Soft Dice time: {end-start} seconds")
 
         return -dc
 
@@ -243,7 +248,7 @@ class MCCLoss(nn.Module):
 
 
 class SoftDiceLossSquared(nn.Module):
-    def __init__(self, apply_nonlin=None, batch_dice=False, do_bg=True, smooth=1.):
+    def __init__(self, apply_nonlin=None, batch_dice=False, do_bg=True, smooth=1e-5):
         """
         squares the terms in the denominator as proposed by Milletari et al.
         """

@@ -1,0 +1,102 @@
+{
+    "description": "",
+    "labels": {
+        "0": "Background",
+        "1": "Bone",
+        "2": "Malleus",
+        "3": "Incus",
+        "4": "Stapes",
+        "5": "Bony_Labyrinth",
+        "6": "Vestibular_Nerve",
+        "7": "Superior_Vestibular_Nerve",
+        "8": "Inferior_Vestibular_Nerve",
+        "9": "Cochlear_Nerve",
+        "10": "Facial_Nerve",
+        "11": "Chorda_Tympani",
+        "12": "ICA",
+        "13": "Sinus_and_Dura",
+        "14": "Vestibular_Aqueduct",
+        "15": "Mandible",
+        "16": "EAC"
+    },
+    "licence": "hands off!",
+    "modality": {
+        "0": "CT"
+    },
+    "name": "Task101_TemporalBone",
+    "numTest": [],
+    "numTraining": 15,
+    "reference": "",
+    "release": "0.0",
+    "tensorImageSize": "4D",
+    "test": [
+        "./imagesTs/jhu_015.nii.gz",
+        "./imagesTs/jhu_016.nii.gz",
+        "./imagesTs/jhu_017.nii.gz",
+        "./imagesTs/jhu_018.nii.gz",
+        "./imagesTs/jhu_019.nii.gz",
+        "./imagesTs/jhu_020.nii.gz"
+    ],
+    "training": [
+        {
+            "image": "./imagesTr/jhu_000.nii.gz",
+            "label": "./labelsTr/jhu_000.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_001.nii.gz",
+            "label": "./labelsTr/jhu_001.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_002.nii.gz",
+            "label": "./labelsTr/jhu_002.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_003.nii.gz",
+            "label": "./labelsTr/jhu_003.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_004.nii.gz",
+            "label": "./labelsTr/jhu_004.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_005.nii.gz",
+            "label": "./labelsTr/jhu_005.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_006.nii.gz",
+            "label": "./labelsTr/jhu_006.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_007.nii.gz",
+            "label": "./labelsTr/jhu_007.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_008.nii.gz",
+            "label": "./labelsTr/jhu_008.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_009.nii.gz",
+            "label": "./labelsTr/jhu_009.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_010.nii.gz",
+            "label": "./labelsTr/jhu_010.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_011.nii.gz",
+            "label": "./labelsTr/jhu_011.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_012.nii.gz",
+            "label": "./labelsTr/jhu_012.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_013.nii.gz",
+            "label": "./labelsTr/jhu_013.nii.gz"
+        },
+        {
+            "image": "./imagesTr/jhu_014.nii.gz",
+            "label": "./labelsTr/jhu_014.nii.gz"
+        }
+    ]
+}
