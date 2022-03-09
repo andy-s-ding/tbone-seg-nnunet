@@ -228,3 +228,16 @@ printing the network instead:
  
 2022-03-09 17:10:06.633985: 
 epoch:  0 
+2022-03-09 17:16:32.861058: train loss : 1.1772 
+2022-03-09 17:17:04.396382: validation loss: 0.8604 
+2022-03-09 17:17:04.407359: Average global foreground Dice: [0.9131, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+2022-03-09 17:17:04.409469: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-03-09 17:17:04.953535: lr: 0.00997 
+2022-03-09 17:17:04.953894: saving scheduled checkpoint file... 
+2022-03-09 17:17:04.989341: saving checkpoint... 
+2022-03-09 17:17:05.888395: done, saving took 0.93 seconds 
+2022-03-09 17:17:05.893045: done 
+2022-03-09 17:17:05.893225: This epoch took 419.259049 s
+ 
+2022-03-09 17:17:05.893350: 
+epoch:  1 

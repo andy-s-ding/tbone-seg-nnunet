@@ -4,28 +4,8 @@ from nnunet.utilities.nd_softmax import softmax_helper
 from nnunet.utilities.tensor_utilities import sum_tensor
 from torch import nn
 import numpy as np
-from scipy.ndimage import distance_transform_edt
-from skimage.segmentation import find_boundaries
 import time as time
-from .surface_distance import *
 import edt
-
-def compute_edts_forPenalizedLoss(GT, smooth=1e-8):
-    """
-    GT.shape = (batch_size, x,y,z)
-    only for binary segmentation
-    """
-    res = np.zeros(GT.shape)
-    for i in range(GT.shape[0]):
-        posmask = GT[i]
-        negmask = ~posmask
-        pos_edt = distance_transform_edt(posmask)
-        pos_edt = (np.max(pos_edt)-pos_edt)*posmask 
-        neg_edt =  distance_transform_edt(negmask)
-        neg_edt = (np.max(neg_edt)-neg_edt)*negmask
-        
-        res[i] = pos_edt/(np.max(pos_edt) + smooth) + neg_edt/(np.max(neg_edt) + smooth)
-    return res
 
 def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
     """
@@ -68,19 +48,19 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
         gt_resized = torch.argmax(y_onehot, dim=1).view((num_batches*shp_x[2], *shp_x[3:])).cpu().numpy().astype(float)
         
         # dt is then resized back to (b, 1, x, y(, z))
-        dt = torch.from_numpy(edt.edt(gt_resized)).view(num_batches, 1, *shp_x[2:])
-        if net_output.device.type == "cuda":
-            dt = dt.cuda(net_output.device.index)
-        
-        # multiplying the distance transform by a labelmap reveals distance transform for each label
-        # adding 1 so there are no divide by 0s
-        dt = (dt * y_onehot + 1)
+    dt = torch.from_numpy(edt.edt(gt_resized)).view(num_batches, 1, *shp_x[2:])
+    if net_output.device.type == "cuda":
+        dt = dt.cuda(net_output.device.index)
+    
+    # multiplying the distance transform by a labelmap reveals distance transform for each label
+    # adding 1 so there are no divide by 0s
+    dt = (dt * y_onehot + 1)
 
-        # normalize the values
-        # dt_tp rewards true positives
-        # dt_fp_fn penalizes false positives and false negatives
-        dt_tp = dt / torch.amax(dt, dim=(tuple(range(2,len(shp_x))))).view(num_batches, num_classes, *len(shp_x[2:])*(1,))
-        dt_fp_fn = 1.0 / dt
+    # normalize the values
+    # dt_tp rewards true positives
+    # dt_fp_fn penalizes false positives and false negatives
+    dt_tp = dt / torch.amax(dt, dim=(tuple(range(2,len(shp_x))))).view(num_batches, num_classes, *len(shp_x[2:])*(1,))
+    dt_fp_fn = 1.0 / dt
     
     tp = net_output * y_onehot
     fp = net_output * (1 - y_onehot)
