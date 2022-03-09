@@ -3,7 +3,7 @@ from nnunet.training.loss_functions.dice_loss import SoftDiceLoss, SoftDiceLossS
 from nnunet.utilities.nd_softmax import softmax_helper
 from nnunet.utilities.tensor_utilities import sum_tensor
 from torch import nn
-import numpy as np
+import cupy as np
 from scipy.ndimage import distance_transform_edt
 import time as time
 
@@ -74,25 +74,24 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
         fn = fn ** 2
         tn = tn ** 2
 
-    dist_tp = torch.zeros(tp.size())
-    if net_output.device.type == "cuda":
-        dist_tp = dist_tp.cuda(net_output.device.index)
     for c in range(num_classes):
         # print(f"Iteration for class #{c}")
         # start = time.time()
         gt_c = y_onehot[:,c,...].type(torch.float32)
         with torch.no_grad():
-            dist = compute_edts_forPenalizedLoss(gt_c.cpu().numpy()>0.5) + 1.0
+            dist = compute_edts_forPenalizedLoss(gt_c.numpy()>0.5) + 1.0
         dist = torch.from_numpy(dist)
         if net_output.device.type == "cuda":
             dist = dist.cuda(net_output.device.index)
         # end = time.time()
         # print(f"Time for distance mapping: {end-start} seconds")
 
-        dist_tp[:,c,...] = tp[:,c,...] * dist
+        tp[:,c,...] = tp[:,c,...] * dist
+        # fp[:,c,...] = fp[:,c,...] * dist
+        # fn[:,c,...] = fn[:,c,...] * dist
 
     if len(axes) > 0:
-        dist_tp = sum_tensor(dist_tp, axes, keepdim=False)
+        tp = sum_tensor(tp, axes, keepdim=False)
         fp = sum_tensor(fp, axes, keepdim=False)
         fn = sum_tensor(fn, axes, keepdim=False)
         tn = sum_tensor(tn, axes, keepdim=False)
@@ -163,7 +162,7 @@ class DistDC_and_CE_loss(DC_and_CE_loss):
         :param target:
         :return:
         """
-        breakpoint()
+        start = time.time()
         if self.ignore_label is not None:
             assert target.shape[1] == 1, 'not implemented for one hot encoding'
             mask = target != self.ignore_label
@@ -185,6 +184,9 @@ class DistDC_and_CE_loss(DC_and_CE_loss):
             result = self.weight_ce * ce_loss + self.weight_dice * dc_loss
         else:
             raise NotImplementedError("nah son") # reserved for other stuff (later)
+
+        end = time.time()
+        print(f"Dist Dice Score: {end-start}")
         return result
 
 class DistBinaryDiceLoss(nn.Module):

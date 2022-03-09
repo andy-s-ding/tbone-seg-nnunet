@@ -191,8 +191,52 @@ class HausdorffERLoss(BinaryHausdorffERLoss):
         cross = np.array([cv.getStructuringElement(cv.MORPH_CROSS, (3, 3))])
         bound = np.array([[[0, 0, 0], [0, 1, 0], [0, 0, 0]]])
 
-        self.kernel2D = cross * 0.2
-        self.kernel3D = np.array([bound, cross, bound]) * (1 / 7)
+        self.kernel2D = torch.from_numpy(cross * 0.2)
+        self.kernel3D = torch.from_numpy(np.array([bound, cross, bound]) * (1 / 7))
+
+    # @torch.no_grad()
+    def perform_erosion(self, pred: torch.Tensor, target: torch.Tensor, debug) -> torch.Tensor:
+        bound = (pred - target) ** 2
+
+        if bound.ndim == 5:
+            convolve = F.conv3d
+            kernel = self.kernel3D
+        elif bound.ndim == 4:
+            convolve = F.conv2d
+            kernel = self.kernel2D
+        else:
+            raise ValueError(f"Dimension {bound.ndim} is nor supported.")
+
+        eroted = torch.zeros_like(bound)
+        erosions = []
+
+        for batch in range(len(bound)):
+
+            if debug: erosions.append(np.copy(bound[batch][0]))
+
+            for k in range(self.erosions):
+                breakpoint()
+                # compute convolution with kernel
+                dilation = convolve(bound[batch], kernel, stride=1)
+
+                # apply soft thresholding at 0.5 and normalize
+                erosion = dilation - 0.5
+                erosion[erosion < 0] = 0
+
+                if torch.max(erosion) > torch.min(erosion):
+                    erosion = (erosion - torch.min(erosion)) / (torch.max(erosion)-torch.min(erosion))
+
+                # save erosion and add to loss
+                bound[batch] = erosion
+                eroted[batch] += erosion * (k + 1) ** self.alpha
+
+                if debug: erosions.append(np.copy(erosion[0]))
+
+        # image visualization in debug mode
+        if debug:
+            return eroted, erosions
+        else:
+            return eroted
 
     def forward(
         self, pred: torch.Tensor, target: torch.Tensor, debug=False
@@ -229,8 +273,7 @@ class HausdorffERLoss(BinaryHausdorffERLoss):
 
         loss = 0
         for c in range(shp_x[1]):
-            eroted = torch.from_numpy(self.perform_erosion(pred[:,c,...].detach().cpu().numpy(), 
-                                      y_onehot[:,c,...].detach().cpu().numpy(), debug)).float()
+            eroted = self.perform_erosion(pred[:,c,...], y_onehot[:,c,...], debug)
 
             loss += eroted.mean()
 
