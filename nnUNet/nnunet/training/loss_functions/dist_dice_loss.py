@@ -3,9 +3,12 @@ from nnunet.training.loss_functions.dice_loss import SoftDiceLoss, SoftDiceLossS
 from nnunet.utilities.nd_softmax import softmax_helper
 from nnunet.utilities.tensor_utilities import sum_tensor
 from torch import nn
-import cupy as np
+import numpy as np
 from scipy.ndimage import distance_transform_edt
+from skimage.segmentation import find_boundaries
 import time as time
+from .surface_distance import *
+import edt
 
 def compute_edts_forPenalizedLoss(GT, smooth=1e-8):
     """
@@ -41,22 +44,44 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
 
     shp_x = net_output.shape
     shp_y = gt.shape
-    num_classes = net_output.shape[1]
+    num_batches = shp_x[0]
+    num_classes = shp_x[1]
 
     with torch.no_grad():
+        dists = torch.zeros(shp_x)
         if len(shp_x) != len(shp_y):
-            gt = gt.view((shp_y[0], 1, *shp_y[1:]))
+            # gt is likely (b, x, y(, z))
+            gt = gt.view((num_batches, 1, *shp_x[2:]))
 
         if all([i == j for i, j in zip(net_output.shape, gt.shape)]):
             # if this is the case then gt is probably already a one hot encoding
             y_onehot = gt
         else:
+            # gt is likely (b, 1, x, y(, z))
             gt = gt.long()
             y_onehot = torch.zeros(shp_x)
             if net_output.device.type == "cuda":
                 y_onehot = y_onehot.cuda(net_output.device.index)
             y_onehot.scatter_(1, gt, 1)
 
+        # gt_resized is of shape (b*x, y(, z)) since batches not supported in edt
+        gt_resized = torch.argmax(y_onehot, dim=1).view((num_batches*shp_x[2], *shp_x[3:])).cpu().numpy().astype(float)
+        
+        # dt is then resized back to (b, 1, x, y(, z))
+        dt = torch.from_numpy(edt.edt(gt_resized)).view(num_batches, 1, *shp_x[2:])
+        if net_output.device.type == "cuda":
+            dt = dt.cuda(net_output.device.index)
+        
+        # multiplying the distance transform by a labelmap reveals distance transform for each label
+        # adding 1 so there are no divide by 0s
+        dt = (dt * y_onehot + 1)
+
+        # normalize the values
+        # dt_tp rewards true positives
+        # dt_fp_fn penalizes false positives and false negatives
+        dt_tp = dt / torch.amax(dt, dim=(tuple(range(2,len(shp_x))))).view(num_batches, num_classes, *len(shp_x[2:])*(1,))
+        dt_fp_fn = 1.0 / dt
+    
     tp = net_output * y_onehot
     fp = net_output * (1 - y_onehot)
     fn = (1 - net_output) * y_onehot
@@ -73,22 +98,10 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
         fp = fp ** 2
         fn = fn ** 2
         tn = tn ** 2
-
-    for c in range(num_classes):
-        # print(f"Iteration for class #{c}")
-        # start = time.time()
-        gt_c = y_onehot[:,c,...].type(torch.float32)
-        with torch.no_grad():
-            dist = compute_edts_forPenalizedLoss(gt_c.numpy()>0.5) + 1.0
-        dist = torch.from_numpy(dist)
-        if net_output.device.type == "cuda":
-            dist = dist.cuda(net_output.device.index)
-        # end = time.time()
-        # print(f"Time for distance mapping: {end-start} seconds")
-
-        tp[:,c,...] = tp[:,c,...] * dist
-        # fp[:,c,...] = fp[:,c,...] * dist
-        # fn[:,c,...] = fn[:,c,...] * dist
+    
+    tp = tp * dt_tp
+    fp = fp * dt_fp_fn
+    fn = fn * dt_fp_fn
 
     if len(axes) > 0:
         tp = sum_tensor(tp, axes, keepdim=False)
@@ -96,7 +109,7 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
         fn = sum_tensor(fn, axes, keepdim=False)
         tn = sum_tensor(tn, axes, keepdim=False)
 
-    return dist_tp, fp, fn, tn
+    return tp, fp, fn, tn
 
 class DistDiceLoss(SoftDiceLoss):
     def __init__(self, apply_nonlin=None, batch_dice=False, do_bg=False, smooth=1e-5):
@@ -120,10 +133,10 @@ class DistDiceLoss(SoftDiceLoss):
         if self.apply_nonlin is not None:
             x = self.apply_nonlin(x)
 
-        dist_tp, fp, fn, _ = get_dist_tp_fp_fn_tn(x, y, axes, loss_mask, False)
+        tp, fp, fn, _ = get_dist_tp_fp_fn_tn(x, y, axes, loss_mask, False)
 
-        nominator = 2 * dist_tp + self.smooth
-        denominator = 2 * dist_tp + fp + fn + self.smooth
+        nominator = 2 * tp + self.smooth
+        denominator = 2 * tp + fp + fn + self.smooth
 
         dc = nominator / (denominator + 1e-8)
 
