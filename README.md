@@ -15,7 +15,7 @@ Create environment from scripting_environment.yml file:
 ```
 conda env create -f scripting_environment.yml
 ```
-Create environment from nnUNet_environment.yml file:
+Create environment from nnUNet-cuda-11.2_environment.yml file:
 ```
 conda env create -f nnUNet_environment.yml
 ```
