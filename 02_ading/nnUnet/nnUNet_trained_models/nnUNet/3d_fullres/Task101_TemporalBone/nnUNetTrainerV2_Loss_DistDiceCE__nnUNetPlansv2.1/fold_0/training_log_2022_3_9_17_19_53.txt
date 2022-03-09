@@ -1,19 +1,19 @@
 Starting... 
-2022-03-01 21:19:23.981386: Using splits from existing split file: /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl 
-2022-03-01 21:19:23.982290: The split file contains 5 splits. 
-2022-03-01 21:19:23.982445: Desired fold for training: 0 
-2022-03-01 21:19:23.982594: This split has 12 training and 3 validation cases. 
-2022-03-01 21:19:24.053785: TRAINING KEYS:
+2022-03-09 17:19:53.117194: Using splits from existing split file: /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl 
+2022-03-09 17:19:53.118220: The split file contains 5 splits. 
+2022-03-09 17:19:53.118374: Desired fold for training: 0 
+2022-03-09 17:19:53.118527: This split has 12 training and 3 validation cases. 
+2022-03-09 17:19:53.186159: TRAINING KEYS:
  odict_keys(['jhu_001', 'jhu_002', 'jhu_003', 'jhu_004', 'jhu_005', 'jhu_006', 'jhu_008', 'jhu_009', 'jhu_010', 'jhu_012', 'jhu_013', 'jhu_014']) 
-2022-03-01 21:19:24.054019: VALIDATION KEYS:
+2022-03-09 17:19:53.186404: VALIDATION KEYS:
  odict_keys(['jhu_000', 'jhu_007', 'jhu_011']) 
-2022-03-01 21:19:25.748239: lr: 0.01 
-2022-03-01 21:19:36.959250: Unable to plot network architecture: 
-2022-03-01 21:19:37.029103: No module named 'hiddenlayer' 
-2022-03-01 21:19:37.091680: 
+2022-03-09 17:19:55.632243: lr: 0.01 
+2022-03-09 17:19:58.916811: Unable to plot network architecture: 
+2022-03-09 17:19:58.934294: No module named 'hiddenlayer' 
+2022-03-09 17:19:58.954642: 
 printing the network instead:
  
-2022-03-01 21:19:37.155347: Generic_UNet(
+2022-03-09 17:19:58.984468: Generic_UNet(
   (conv_blocks_localization): ModuleList(
     (0): Sequential(
       (0): StackedConvLayers(
@@ -224,7 +224,7 @@ printing the network instead:
     (4): Conv3d(32, 17, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
   )
 ) 
-2022-03-01 21:19:37.239718: 
+2022-03-09 17:19:59.023332: 
  
-2022-03-01 21:19:37.288536: 
+2022-03-09 17:19:59.032385: 
 epoch:  0 
