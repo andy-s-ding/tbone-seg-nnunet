@@ -17,7 +17,7 @@ conda env create -f scripting_environment.yml
 ```
 Create environment from nnUNet-cuda-11.2_environment.yml file:
 ```
-conda env create -f nnUNet_environment.yml
+conda env create -f nnUNet-cuda-11.2_environment.yml
 ```
 For internal use, the scripting environment is named `cis-ii` and the nnUNet environment is named `nnUNet-11.2`.
 
