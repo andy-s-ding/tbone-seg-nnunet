@@ -16,8 +16,12 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
     :param gt:
     :param axes: can be (, ) = no summation
     :param mask: mask must be 1 for valid pixels and 0 for invalid pixels
-    :param square: if True then fp, tp and fn will be squared before summation
-    :return: Dice score scaled by voxel-wise distance maps for each class
+    :param square: if True then fp, tp and fn will be squared
+    :return: Confusion matrix Tensors scaled by voxel-wise distance maps for each class
+
+    NOTE: This is different from get_tp_fp_fn_tn, which returns the summed values.
+
+    Heavily influenced by: https://github.com/seung-lab/euclidean-distance-transform-3d
     """
     if axes is None:
         axes = tuple(range(2, len(net_output.size())))
@@ -28,7 +32,6 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
     num_classes = shp_x[1]
 
     with torch.no_grad():
-        dists = torch.zeros(shp_x)
         if len(shp_x) != len(shp_y):
             # gt is likely (b, x, y(, z))
             gt = gt.view((num_batches, 1, *shp_x[2:]))
@@ -45,23 +48,45 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
             y_onehot.scatter_(1, gt, 1)
 
         # gt_resized is of shape (b*x, y(, z)) since batches not supported in edt
-        gt_resized = torch.argmax(y_onehot, dim=1).view((num_batches*shp_x[2], *shp_x[3:])).cpu().numpy().astype(float)
+        gt_resized = gt.squeeze()
+        if num_batches > 1: gt_resized = torch.cat((*gt_resized[:,...],))
+        assert gt_resized.shape[0] == num_batches * shp_x[2], 'Batches were not concatenated properly!'
+                
+        # dt penalizes false negatives (distance-penalization in foreground)
+        dt = edt.edt(gt_resized.cpu().numpy(), anisotropy=(0.096, 0.096, 0.096), parallel=0)
+
+        # # find the background for each class (background is where false positives lie)
+        # # y_onehot_resized and bg_onehot_resized are of shape (c, b*x, y(, z)) since batches not supported in edt
+        # y_onehot_resized = torch.cat((*y_onehot[:,...],), dim=1)
+        # bg_onehot_resized = (y_onehot_resized < 0.5).cpu().numpy()
         
-        # dt is then resized back to (b, 1, x, y(, z))
-    dt = torch.from_numpy(edt.edt(gt_resized)).view(num_batches, 1, *shp_x[2:])
+        # # bg_dt penalizes false positives (distance-penalization in background)
+        # bg_dt = np.zeros(bg_onehot_resized.shape)
+        # for c in range(num_classes):
+        #     if bg_onehot_resized[c,...].min(): # If everything is background:
+        #         bg_dt[c,...] = 1
+        #     else:
+        #         bg_dt[c,...] = edt.edt(bg_onehot_resized[c,...], anisotropy=(0.096, 0.096, 0.096), parallel=0) + 1 # add 1 to make boundary values 1 instead of 0
+
+        bg_dt = edt.edt((gt_resized < 0.5).cpu().numpy(), anisotropy=(0.096, 0.096, 0.096), parallel=0)
+
+    dt = torch.from_numpy(dt) # (b*x, y(, z))
+    # bg_dt = torch.from_numpy(bg_dt) # (c, b*x, y(, z))
+    bg_dt = torch.from_numpy(bg_dt) # (b*x, y(, z))
     if net_output.device.type == "cuda":
         dt = dt.cuda(net_output.device.index)
-    
-    # multiplying the distance transform by a labelmap reveals distance transform for each label
-    # adding 1 so there are no divide by 0s
-    dt = (dt * y_onehot + 1)
+        bg_dt = bg_dt.cuda(net_output.device.index)
 
-    # normalize the values
-    # dt_tp rewards true positives
-    # dt_fp_fn penalizes false positives and false negatives
-    dt_tp = dt / torch.amax(dt, dim=(tuple(range(2,len(shp_x))))).view(num_batches, num_classes, *len(shp_x[2:])*(1,))
-    dt_fp_fn = 1.0 / dt
-    
+    # dt is then resized back to (b, 1, x, y(, z))
+    dt = torch.stack(torch.split(dt, num_batches*[shp_x[2]], dim=0), dim=0).unsqueeze(dim=1)
+    # multiply dt by y_onehot to get multiclass distance transform (b, c, x, y(, z))
+    dt = dt * y_onehot + 1 # add 1 to make boundary values 1 instead of 0
+
+    # bg_dt is resized back to (b, c, x, y(, z))
+    # bg_dt = torch.stack(torch.split(bg_dt, num_batches*[shp_x[2]], dim=1), dim=0)
+    bg_dt = torch.stack(torch.split(bg_dt, num_batches*[shp_x[2]], dim=0), dim=0).unsqueeze(dim=1)
+    bg_dt = bg_dt * (1-y_onehot) + 1
+
     tp = net_output * y_onehot
     fp = net_output * (1 - y_onehot)
     fn = (1 - net_output) * y_onehot
@@ -78,18 +103,47 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
         fp = fp ** 2
         fn = fn ** 2
         tn = tn ** 2
-    
-    tp = tp * dt_tp
-    fp = fp * dt_fp_fn
-    fn = fn * dt_fp_fn
 
-    if len(axes) > 0:
-        tp = sum_tensor(tp, axes, keepdim=False)
-        fp = sum_tensor(fp, axes, keepdim=False)
-        fn = sum_tensor(fn, axes, keepdim=False)
-        tn = sum_tensor(tn, axes, keepdim=False)
+    fp = fp * dt
+    fn = fn * bg_dt
 
     return tp, fp, fn, tn
+
+class DistancePenalization(SoftDiceLoss):
+    def __init__(self, apply_nonlin=None, batch_dice=False, do_bg=False, smooth=1e-5):
+        """
+        """
+        super(DistancePenalization, self).__init__(apply_nonlin, batch_dice, do_bg, smooth)
+
+    def forward(self, x, y, loss_mask=None):
+        shp_x = x.shape
+
+        if self.batch_dice:
+            axes = [0] + list(range(2, len(shp_x)))
+        else:
+            axes = list(range(2, len(shp_x)))
+
+        if self.apply_nonlin is not None:
+            x = self.apply_nonlin(x)
+
+        _, fp, fn, _ = get_dist_tp_fp_fn_tn(x, y, axes, loss_mask, False)
+        
+        if len(axes) > 0:
+            fp = sum_tensor(fp, axes, keepdim=False)
+            fn = sum_tensor(fn, axes, keepdim=False)
+
+        if not self.do_bg:
+            if self.batch_dice:
+                fp = fp[1:]
+                fn = fn[1:]
+            else:
+                fp = fp[:, 1:]
+                fn = fn[:, 1:]
+                
+        fp = fp.mean()
+        fn = fn.mean()
+
+        return fp + fn + self.smooth
 
 class DistDiceLoss(SoftDiceLoss):
     def __init__(self, apply_nonlin=None, batch_dice=False, do_bg=False, smooth=1e-5):
@@ -99,10 +153,9 @@ class DistDiceLoss(SoftDiceLoss):
         Distance Map Loss Penalty Term for Semantic Segmentation
         Adapted from the Binary version: https://github.com/JunMa11/SegLoss/blob/master/losses_pytorch/boundary_loss.py
         """
-        super(DistDiceLoss, self).__init__(apply_nonlin, batch_dice, False, smooth)
+        super(DistDiceLoss, self).__init__(apply_nonlin, batch_dice, do_bg, smooth)
 
     def forward(self, x, y, loss_mask=None):
-        start = time.time()
         shp_x = x.shape
 
         if self.batch_dice:
@@ -114,6 +167,11 @@ class DistDiceLoss(SoftDiceLoss):
             x = self.apply_nonlin(x)
 
         tp, fp, fn, _ = get_dist_tp_fp_fn_tn(x, y, axes, loss_mask, False)
+
+        if len(axes) > 0:
+            tp = sum_tensor(tp, axes, keepdim=False)
+            fp = sum_tensor(fp, axes, keepdim=False)
+            fn = sum_tensor(fn, axes, keepdim=False)
 
         nominator = 2 * tp + self.smooth
         denominator = 2 * tp + fp + fn + self.smooth
@@ -127,8 +185,6 @@ class DistDiceLoss(SoftDiceLoss):
                 dc = dc[:, 1:]
         dc = dc.mean()
 
-        end = time.time()
-        print(f"Dist Dice Loss time: {end-start} seconds")
         return -dc
 
 class DistDC_and_CE_loss(DC_and_CE_loss):
@@ -168,6 +224,59 @@ class DistDC_and_CE_loss(DC_and_CE_loss):
         if self.log_dice:
             dc_loss = -torch.log(-dc_loss)
 
+        print(f"Dist Dice: {-dc_loss}")
+        ce_loss = self.ce(net_output, target[:, 0].long()) if self.weight_ce != 0 else 0
+        if self.ignore_label is not None:
+            ce_loss *= mask[:, 0]
+            ce_loss = ce_loss.sum() / mask.sum()
+
+        if self.aggregate == "sum":
+            result = self.weight_ce * ce_loss + self.weight_dice * dc_loss
+        else:
+            raise NotImplementedError("nah son") # reserved for other stuff (later)
+
+        end = time.time()
+        print(f"Dist Dice Time: {end-start} seconds")
+        return result
+
+class DC_CE_DP_loss(DC_and_CE_loss):
+    def __init__(self, soft_dice_kwargs, ce_kwargs, aggregate="sum", square_dice=False, weight_ce=1, weight_dice=1,
+                 weight_dp=1, log_dice=False, ignore_label=None):
+        """
+        CAREFUL. Weights for CE, Dice and distance penalization do not need to sum to one. You can set whatever you want.
+        :param soft_dice_kwargs:
+        :param ce_kwargs:
+        :param aggregate:
+        :param square_dice:
+        :param weight_ce:
+        :param weight_dice:
+        :param weight_dp:
+        """
+        super().__init__(soft_dice_kwargs, ce_kwargs, aggregate, square_dice, weight_ce, weight_dice,
+                         log_dice, ignore_label)
+
+        self.dp = DistancePenalization(apply_nonlin=softmax_helper)
+
+    def forward(self, net_output, target):
+        """
+        target must be b, c, x, y(, z) with c=1
+        :param net_output:
+        :param target:
+        :return:
+        """
+        start = time.time()
+        if self.ignore_label is not None:
+            assert target.shape[1] == 1, 'not implemented for one hot encoding'
+            mask = target != self.ignore_label
+            target[~mask] = 0
+            mask = mask.float()
+        else:
+            mask = None
+
+        dc_loss = self.dc(net_output, target) if self.weight_dice != 0 else 0
+        if self.log_dice:
+            dc_loss = -torch.log(-dc_loss)
+
         ce_loss = self.ce(net_output, target[:, 0].long()) if self.weight_ce != 0 else 0
         if self.ignore_label is not None:
             ce_loss *= mask[:, 0]
@@ -181,55 +290,3 @@ class DistDC_and_CE_loss(DC_and_CE_loss):
         end = time.time()
         print(f"Dist Dice Score: {end-start}")
         return result
-
-class DistBinaryDiceLoss(nn.Module):
-    """
-    Distance map penalized Binary Dice loss
-    Motivated by: https://openreview.net/forum?id=B1eIcvS45V
-    Distance Map Loss Penalty Term for Semantic Segmentation
-    Taken from: https://github.com/JunMa11/SegLoss/blob/master/losses_pytorch/boundary_loss.py        
-    """
-    def __init__(self, smooth=1e-5):
-        super(DistBinaryDiceLoss, self).__init__()
-        self.smooth = smooth
-
-    def forward(self, net_output, gt, loss_mask=None):
-        """
-        net_output: (batch_size, 2, x,y,z)
-        target: ground truth, shape: (batch_size, 1, x,y,z)
-        """
-        net_output = softmax_helper(net_output)
-        # one hot code for gt
-        with torch.no_grad():
-            if len(net_output.shape) != len(gt.shape):
-                gt = gt.view((gt.shape[0], 1, *gt.shape[1:]))
-
-            if all([i == j for i, j in zip(net_output.shape, gt.shape)]):
-                # if this is the case then gt is probably already a one hot encoding
-                y_onehot = gt
-            else:
-                gt = gt.long()
-                y_onehot = torch.zeros(net_output.shape)
-                if net_output.device.type == "cuda":
-                    y_onehot = y_onehot.cuda(net_output.device.index)
-                y_onehot.scatter_(1, gt, 1)
-        print(f"GT after one-hot: {y_onehot.size()}")
-        
-        gt_temp = gt[:,0, ...].type(torch.float32)
-        with torch.no_grad():
-            dist = compute_edts_forPenalizedLoss(gt_temp.cpu().numpy()>0.5) + 1.0
-        # print('dist.shape: ', dist.shape)
-        dist = torch.from_numpy(dist)
-        print(f"Distances: {dist.size()}")
-
-        if dist.device != net_output.device:
-            dist = dist.to(net_output.device).type(torch.float32)
-        
-        tp = net_output * y_onehot
-        tp = torch.sum(tp[:,1,...] * dist, (1,2,3))
-        
-        dc = (2 * tp + self.smooth) / (torch.sum(net_output[:,1,...], (1,2,3)) + torch.sum(y_onehot[:,1,...], (1,2,3)) + self.smooth)
-
-        dc = dc.mean()
-
-        return -dc
