@@ -7,9 +7,11 @@ Instructions for Temporal Bone Dataset Use:
 git clone https://github.com/<your-username>/tbone-seg-nnunet
 ```
 
-## Step 1: Set up two environments using .yml files in environments/
-Navigate to environments/ folder
-
+## Step 1: Set up scripting and nnUNet environments
+Navigate to the `environments` folder:
+```
+cd <path to github>/tbone-seg-nnunet/environments
+```
 ### Step 1.1: Creating scripting and nnUNet environments
 Create environment from scripting_environment.yml file:
 ```
@@ -19,38 +21,48 @@ Create environment from nnUNet-cuda-11.2_environment.yml file:
 ```
 conda env create -f nnUNet-cuda-11.2_environment.yml
 ```
-For internal use, the scripting environment is named `cis-ii` and the nnUNet environment is named `nnUNet-11.2`.
+For internal use, the scripting environment is named `cis-ii` and the nnUNet environment is named `nnUNet-11.2`. The scripting environment is used for setting up the file structure for nnUNet training while the nnUNet environment is used for nnUNet training, validation, and inference.
 
 Environment names can be changed in the `.yml` files.
 
 ## Step 2: Register data to some template.
-Activate scripting environment
+Image registration is done in the `image_preprocessing` folder:
 ```
-cd scripts/image_preprocessing
+cd <path to github>/tbone-seg-nnunet/scripts/image_preprocessing
+```
+Activate the scripting environment:
+```
 conda activate cis-ii
 ```
-Register data to template
+Images and their segmentations (labels) are in .`nii.gz` format. The naming convention for images is `<LT/RT>_<ID>.nii.gz` while the naming convention for segmentations is `Segmentation_<LT/RT>_<ID>`.
+
+`tbone-seg-nnunet/scripts/register.py` is a subroutine that registers one target image and its segmentations to a designated template image. `generate_registration_sh.py` will create a `.sh` script that will iteratively call `register.py` to co-register all target images to a designated template (currently hard-coded). Within `generate_registration_sh.py`, first set `template` to be the basename of the image file you would like to use as the template. Then run the following code:
 ```
 python generate_registration_sh.py <path to nifti images dir> <path to nifti segmentations dir> <path to output dir>
 ```
 For internal use, this works:
 ```
-python generate_registration_sh.py ../../nii_files/20210404 ../../NIFTI_Segmentations/20210404 <OUTPUT DIR>
+python generate_registration_sh.py ../../nii_images ../../nii_segmentations ../../registered_niftis
 ```
+We highly recommend checking the last registered image, since data may not be completely written. If this is the case, run `register.py` for just the last image.
 
 ## Step 3: Create datasplit for training/testing. Validation will automatically be chosen. 
-The datasplit file will be a `.pkl` file that will be referenced when creating the final file structure for nnUNet training.
-
-For the general (default) dataset without deformation field SSM augmentation, this is done by:
+Navigate to the `scripts` folder:
 ```
 cd <path to github>/tbone-seg-nnunet/scripts/
+```
+
+The datasplit file will be a `.pkl` file that will be referenced when creating the final file structure for nnUNet training.
+
+For the general (default) dataset without deformation field SSM generation, this is done by:
+```
 python create_datasplit.py
 ```
-For the deformation field SSM-augmented (generated) dataset, this is done by:
+For the deformation field SSM-generated dataset, this is done by:
 ```
 python create_generated_datasplit.py
 ```
-Note that in order to create the generated datasplit, the general datasplit.pkl file needs to exist first. This is because the generated datasplit uses the same test set as the general split.
+Note that in order to create the SSM-generated datasplit, the general `datasplit.pkl` file needs to exist first. This is because the generated datasplit uses the same test set as the general split.
 
 ## Step 4: Create file structure required for nnUNet github. 
 Create a base directory `tbone-seg-nnunet/<BASE_DIR>` that will serve as the root directory for the nnUNet training file structure.
@@ -59,7 +71,7 @@ In the `scripts/` folder, run `create_nnunet_filestructure.py` to copy training 
 
 For the general temporal bone dataset:
 ```
-python create_nnunet_filestructure.py --dataset original --original_dataset_dir <registered original images> --output_dir <BASE_DIR> --pickle_path ./datasplit.pkl, --task_num <task num>```
+python create_nnunet_filestructure.py --dataset original --original_dataset_dir <registered original images> --output_dir <BASE_DIR> --pickle_path ./datasplit.pkl, --task_num <task num>
 ```
 For the SSM generated datasplit, this is done by:
 ```
@@ -73,18 +85,17 @@ export nnUNet_raw_data_base="<ABSOLUTE PATH TO BASE_DIR>/nnUnet/nnUNet_raw_data_
 export nnUNet_preprocessed="<ABSOLUTE PATH TO BASE_DIR>/nnUNet_preprocessed" 
 export RESULTS_FOLDER="<ABSOLUTE PATH TO BASE_DIR>/nnUnet/nnUNet_trained_models"
 ```
-After updating this you will need to source your `~/.bashrc` file.
+After updating this you will need to source your `~/.bashrc` file:
 ```
 source ~/.bashrc
 ```
-This will deactivate your current conda environment.
 
 ## Step 6: Verify and preprocess data.
-Activate scripting environment.
+Activate the nnUNet environment:
 ```
 conda activate nnUNet-11.2
 ```
-Run nnUNet preprocessing script.
+Run the nnUNet preprocessing script:
 ```
 nnUNet_plan_and_preprocess -t <task_num> --verify_dataset_integrity
 ```
@@ -95,9 +106,17 @@ interact -p shared -c 12 -t 3:0:0
 Potential Error: You may need to edit the dataset.json file so that the labels are sequential. If you have at least 10 labels, then labels `10, 11, 12,...` will be arranged before labels `2, 3, 4, ...`. Doing this in a text editor is completely fine!
 
 ## Step 7: Begin Training.
+For vanilla training on a 3D nnUNet, run:
 ```
 nnUNet_train 3d_fullres nnUNetTrainerV2 Task<task_num>_TemporalBone Y --npz
 ```
 `Y` refers to the number of folds for cross-validation. If `Y` is set to `all` then all of the data will be used for training.
 
 `--npz` makes the models save the softmax outputs (uncompressed, large files) during the final validation. It should only be used if you are training multiple configurations, which requires `nnUNet_find_best_configuration` to find the best model. We omit this by default.
+
+Variants of the `nnUNetTrainerV2` class can be made and saved in `tbone-seg-nnunet/nnUNet/nnunet/training/network_training`. Refer to other variants in the `network_training/nnUNet_variants` folder for examples. Training with a custom `nnUNetTrainerV2` variant can then be run as:
+
+```
+nnUNet_train 3d_fullres <nnUNetTrainerV2 Variant Name> Task<task_num>_TemporalBone Y --npz
+```
+Multiple variants can be trained on the same dataset.
