@@ -7,7 +7,9 @@ import numpy as np
 import time as time
 import edt
 
-def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
+ANISOTROPY = (0.096, 0.096, 0.096)
+
+def get_dist_tp_fp_fn_tn(net_output, gt, mask=None, square=False):
     """
     net_output must be (b, c, x, y(, z)))
     gt must be a label map (shape (b, 1, x, y(, z)) OR shape (b, x, y(, z))) or one hot encoding (b, c, x, y(, z))
@@ -23,9 +25,6 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
 
     Heavily influenced by: https://github.com/seung-lab/euclidean-distance-transform-3d
     """
-    if axes is None:
-        axes = tuple(range(2, len(net_output.size())))
-
     shp_x = net_output.shape
     shp_y = gt.shape
     num_batches = shp_x[0]
@@ -48,44 +47,23 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
             y_onehot.scatter_(1, gt, 1)
 
         # gt_resized is of shape (b*x, y(, z)) since batches not supported in edt
-        gt_resized = gt.squeeze()
-        if num_batches > 1: gt_resized = torch.cat((*gt_resized[:,...],))
-        assert gt_resized.shape[0] == num_batches * shp_x[2], 'Batches were not concatenated properly!'
-                
-        # dt penalizes false negatives (distance-penalization in foreground)
-        dt = edt.edt(gt_resized.cpu().numpy(), anisotropy=(0.096, 0.096, 0.096), parallel=0)
-
-        # # find the background for each class (background is where false positives lie)
-        # # y_onehot_resized and bg_onehot_resized are of shape (c, b*x, y(, z)) since batches not supported in edt
-        # y_onehot_resized = torch.cat((*y_onehot[:,...],), dim=1)
-        # bg_onehot_resized = (y_onehot_resized < 0.5).cpu().numpy()
+        # gt_resized = gt.squeeze()
+        # if num_batches > 1: gt_resized = torch.cat((*gt_resized[:,...],))
+        # assert gt_resized.shape[0] == num_batches * shp_x[2], 'Batches were not concatenated properly!'
         
-        # # bg_dt penalizes false positives (distance-penalization in background)
-        # bg_dt = np.zeros(bg_onehot_resized.shape)
-        # for c in range(num_classes):
-        #     if bg_onehot_resized[c,...].min(): # If everything is background:
-        #         bg_dt[c,...] = 1
-        #     else:
-        #         bg_dt[c,...] = edt.edt(bg_onehot_resized[c,...], anisotropy=(0.096, 0.096, 0.096), parallel=0) + 1 # add 1 to make boundary values 1 instead of 0
+        dt = np.zeros(shp_y) # (b, 1, x, y(, z))
+        gt_resized = gt.squeeze().cpu().numpy() + 1 # +1 to turn background into foreground segmentation for distance mapping
+        if num_batches > 1:
+            for b in range(num_batches):
+                dt[b,0,...] = edt.edt(gt_resized[b,...], anisotropy=ANISOTROPY, parallel=0) + 1
+        else: dt[0,0,...] = edt.edt(gt_resized, anisotropy=ANISOTROPY, parallel=0) + 1
 
-        bg_dt = edt.edt((gt_resized < 0.5).cpu().numpy(), anisotropy=(0.096, 0.096, 0.096), parallel=0)
-
-    dt = torch.from_numpy(dt) # (b*x, y(, z))
-    # bg_dt = torch.from_numpy(bg_dt) # (c, b*x, y(, z))
-    bg_dt = torch.from_numpy(bg_dt) # (b*x, y(, z))
+    dt = torch.nan_to_num(torch.from_numpy(dt), nan=1.0, posinf=1.0, neginf=1.0)
     if net_output.device.type == "cuda":
         dt = dt.cuda(net_output.device.index)
-        bg_dt = bg_dt.cuda(net_output.device.index)
 
-    # dt is then resized back to (b, 1, x, y(, z))
-    dt = torch.stack(torch.split(dt, num_batches*[shp_x[2]], dim=0), dim=0).unsqueeze(dim=1)
-    # multiply dt by y_onehot to get multiclass distance transform (b, c, x, y(, z))
-    dt = dt * y_onehot + 1 # add 1 to make boundary values 1 instead of 0
-
-    # bg_dt is resized back to (b, c, x, y(, z))
-    # bg_dt = torch.stack(torch.split(bg_dt, num_batches*[shp_x[2]], dim=1), dim=0)
-    bg_dt = torch.stack(torch.split(bg_dt, num_batches*[shp_x[2]], dim=0), dim=0).unsqueeze(dim=1)
-    bg_dt = bg_dt * (1-y_onehot) + 1
+    # dt is resized from (b*x, y(, z)) to (b, 1, x, y(, z))
+    # dt = torch.stack(torch.split(dt, num_batches*[shp_x[2]], dim=0), dim=0).unsqueeze(dim=1)
 
     tp = net_output * y_onehot
     fp = net_output * (1 - y_onehot)
@@ -105,33 +83,26 @@ def get_dist_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
         tn = tn ** 2
 
     fp = fp * dt
-    fn = fn * bg_dt
+    fn = fn * dt
 
     return tp, fp, fn, tn
 
-class DistancePenalization(SoftDiceLoss):
-    def __init__(self, apply_nonlin=None, batch_dice=False, do_bg=False, smooth=1e-5):
+class DistancePenalization(nn.Module):
+    def __init__(self, apply_nonlin=None, do_bg=False, smooth=1e-5):
         """
         """
-        super(DistancePenalization, self).__init__(apply_nonlin, batch_dice, do_bg, smooth)
+        super(DistancePenalization, self).__init__()
+
+        self.do_bg = do_bg
+        self.apply_nonlin = apply_nonlin
+        self.smooth = smooth
 
     def forward(self, x, y, loss_mask=None):
-        shp_x = x.shape
-
-        if self.batch_dice:
-            axes = [0] + list(range(2, len(shp_x)))
-        else:
-            axes = list(range(2, len(shp_x)))
-
         if self.apply_nonlin is not None:
             x = self.apply_nonlin(x)
 
-        _, fp, fn, _ = get_dist_tp_fp_fn_tn(x, y, axes, loss_mask, False)
+        _, fp, fn, _ = get_dist_tp_fp_fn_tn(x, y, loss_mask, False)
         
-        if len(axes) > 0:
-            fp = sum_tensor(fp, axes, keepdim=False)
-            fn = sum_tensor(fn, axes, keepdim=False)
-
         if not self.do_bg:
             if self.batch_dice:
                 fp = fp[1:]
@@ -140,8 +111,8 @@ class DistancePenalization(SoftDiceLoss):
                 fp = fp[:, 1:]
                 fn = fn[:, 1:]
                 
-        fp = fp.mean()
-        fn = fn.mean()
+        fp = torch.mean(fp)
+        fn = torch.mean(fn)
 
         return fp + fn + self.smooth
 
@@ -166,7 +137,7 @@ class DistDiceLoss(SoftDiceLoss):
         if self.apply_nonlin is not None:
             x = self.apply_nonlin(x)
 
-        tp, fp, fn, _ = get_dist_tp_fp_fn_tn(x, y, axes, loss_mask, False)
+        tp, fp, fn, _ = get_dist_tp_fp_fn_tn(x, y, loss_mask, False)
 
         if len(axes) > 0:
             tp = sum_tensor(tp, axes, keepdim=False)
@@ -256,6 +227,7 @@ class DC_CE_DP_loss(DC_and_CE_loss):
                          log_dice, ignore_label)
 
         self.dp = DistancePenalization(apply_nonlin=softmax_helper)
+        self.weight_dp = weight_dp
 
     def forward(self, net_output, target):
         """
@@ -277,16 +249,18 @@ class DC_CE_DP_loss(DC_and_CE_loss):
         if self.log_dice:
             dc_loss = -torch.log(-dc_loss)
 
+        dp_loss = self.dp(net_output, target) if self.weight_dp != 0 else 0
+
         ce_loss = self.ce(net_output, target[:, 0].long()) if self.weight_ce != 0 else 0
         if self.ignore_label is not None:
             ce_loss *= mask[:, 0]
             ce_loss = ce_loss.sum() / mask.sum()
 
         if self.aggregate == "sum":
-            result = self.weight_ce * ce_loss + self.weight_dice * dc_loss
+            result = self.weight_ce * ce_loss + self.weight_dice * dc_loss + self.weight_dp * dp_loss
         else:
             raise NotImplementedError("nah son") # reserved for other stuff (later)
 
         end = time.time()
-        print(f"Dist Dice Score: {end-start}")
+        print(f"Loss Calculation Time: {end-start}")
         return result

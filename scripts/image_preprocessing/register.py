@@ -97,10 +97,6 @@ def register_to_target(template_path, target_path, target_segmentation_path, sid
 
             affine_path = os.path.join(transform_dir, folder_name + "_affine")
             
-#             try:
-#                 os.mkdir(deform_path)
-#             except:
-#                 print(f"{deform_path} already exists") 
             try:
                 os.mkdir(affine_path)
             except:

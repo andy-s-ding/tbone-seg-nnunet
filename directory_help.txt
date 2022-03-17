@@ -1,3 +1,4 @@
 01_ading - Vanilla 70-30 datasplit with 5-fold cross-validation.
+02_ading - Updated registered segmentations (removed anterior portion of chorda tympani). Vanilla 70-30 datasplit with 5-fold cross-validation.
 
 If there is no description I cannot remember what is in there and I assume I can delete it. At this point in time, these files should be removed:

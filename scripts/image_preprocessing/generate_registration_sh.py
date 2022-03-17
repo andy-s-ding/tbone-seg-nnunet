@@ -8,13 +8,12 @@ import sys
         
 def main(argv):
     # Read in data dir
-    input_path = argv[0]
+    image_path = argv[0]
     segmentation_path = argv[1]
     output_dir = argv[2]
     
     # Get all nifti file names
     in_seg_path_list = glob.glob(segmentation_path + "/*.nii.gz")
-    in_seg_path_list = [path for path in in_seg_path_list if "deform" not in path and "153" not in path]
     print(f"There are {len(in_seg_path_list)} files to register.")
 
     # Prepare list to write to
@@ -22,14 +21,14 @@ def main(argv):
     string_base = "python register.py"
     
     # Template path
-    template = '../../nii_files/20210404_images/RT_153.nii.gz'
+    template = 'RT_153.nii.gz'
+    template_path = os.path.join(image_path, template)
 
-    for path in in_seg_path_list:
+    for seg_path in in_seg_path_list:
         try:
-            seg_file_name = os.path.basename(path)
+            seg_file_name = os.path.basename(seg_path)
             nii_file_name = seg_file_name.split('Segmentation_')[-1]
-            
-            command = string_base + " " +  template + " " + os.path.join(input_path, nii_file_name) + " " + path + " " + output_dir
+            command = string_base + " " +  template_path + " " + os.path.join(image_path, nii_file_name) + " " + seg_path + " " + output_dir
             command_list.append(command)
         except Exception as e:
             print("~"*10)
@@ -43,4 +42,4 @@ def main(argv):
         
 if __name__ == '__main__':
     main(sys.argv[1:])
-    # example usage:  python generate_registration_sh.py ../../nii_files/20210404 ../../NIFTI_Segmentations/20210404 <OUTPUT DIR>
+    # example usage:  python generate_registration_sh.py ../../nii_images ../../nii_segmentations/20220316_updated_gt_segmentations ../../registered_niftis

@@ -1,9 +1,0 @@
-Starting... 
-2022-03-02 23:16:48.547360: Using splits from existing split file: /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl 
-2022-03-02 23:16:48.548137: The split file contains 5 splits. 
-2022-03-02 23:16:48.548258: Desired fold for training: 0 
-2022-03-02 23:16:48.548373: This split has 12 training and 3 validation cases. 
-2022-03-02 23:16:48.613506: TRAINING KEYS:
- odict_keys(['jhu_001', 'jhu_002', 'jhu_003', 'jhu_004', 'jhu_005', 'jhu_006', 'jhu_008', 'jhu_009', 'jhu_010', 'jhu_012', 'jhu_013', 'jhu_014']) 
-2022-03-02 23:16:48.613735: VALIDATION KEYS:
- odict_keys(['jhu_000', 'jhu_007', 'jhu_011']) 
