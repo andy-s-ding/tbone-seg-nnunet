@@ -12,7 +12,6 @@ Navigate to the `environments` folder:
 ```
 cd <path to github>/tbone-seg-nnunet/environments
 ```
-### Step 1.1: Creating scripting and nnUNet environments
 Create environment from scripting_environment.yml file:
 ```
 conda env create -f scripting_environment.yml
@@ -25,7 +24,7 @@ For internal use, the scripting environment is named `cis-ii` and the nnUNet env
 
 Environment names can be changed in the `.yml` files.
 
-## Step 2: Register data to some template.
+## Step 2: Register data to some template
 Image registration is done in the `image_preprocessing` folder:
 ```
 cd <path to github>/tbone-seg-nnunet/scripts/image_preprocessing
@@ -46,7 +45,7 @@ python generate_registration_sh.py ../../nii_images ../../nii_segmentations ../.
 ```
 We highly recommend checking the last registered image, since data may not be completely written. If this is the case, run `register.py` for just the last image.
 
-## Step 3: Create datasplit for training/testing. Validation will automatically be chosen. 
+## Step 3: Create datasplit for training/testing. Validation will automatically be chosen
 Navigate to the `scripts` folder:
 ```
 cd <path to github>/tbone-seg-nnunet/scripts/
@@ -64,7 +63,7 @@ python create_generated_datasplit.py
 ```
 Note that in order to create the SSM-generated datasplit, the general `datasplit.pkl` file needs to exist first. This is because the generated datasplit uses the same test set as the general split.
 
-## Step 4: Create file structure required for nnUNet github. 
+## Step 4: Create file structure required for nnUNet
 Create a base directory `tbone-seg-nnunet/<BASE_DIR>` that will serve as the root directory for the nnUNet training file structure.
 
 In the `scripts/` folder, run `create_nnunet_filestructure.py` to copy training and test data over based on the datasplit `.pkl` generated in Step 3.
@@ -78,7 +77,7 @@ For the SSM generated datasplit, this is done by:
 python create_nnunet_filestructure.py --dataset generated --original_dataset_dir <registered original images dir> --generated_dataset_dir <generated dataset dir>--generated_label_dir <dir to SSM labels> --output_dir <BASE_DIR> --pickle_path ./datasplit_generated.pkl --task_num <task num>
 ```
 
-## Step 5: Setup bashrc.
+## Step 5: Setup bashrc
 Edit your `~/.bashrc` file with `gedit ~/.bashrc` or `nano ~/.bashrc`. At the end of the file, add the following lines:
 ```
 export nnUNet_raw_data_base="<ABSOLUTE PATH TO BASE_DIR>/nnUnet/nnUNet_raw_data_base" 
@@ -90,7 +89,7 @@ After updating this you will need to source your `~/.bashrc` file:
 source ~/.bashrc
 ```
 
-## Step 6: Verify and preprocess data.
+## Step 6: Verify and preprocess data
 Activate the nnUNet environment:
 ```
 conda activate nnUNet-11.2
@@ -105,7 +104,7 @@ interact -p shared -c 12 -t 3:0:0
 ```
 Potential Error: You may need to edit the dataset.json file so that the labels are sequential. If you have at least 10 labels, then labels `10, 11, 12,...` will be arranged before labels `2, 3, 4, ...`. Doing this in a text editor is completely fine!
 
-## Step 7: Begin Training.
+## Step 7: Begin Training
 For vanilla training on a 3D nnUNet, run:
 ```
 nnUNet_train 3d_fullres nnUNetTrainerV2 Task<task_num>_TemporalBone Y --npz
