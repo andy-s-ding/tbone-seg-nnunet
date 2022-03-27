@@ -1,5 +1,7 @@
 # tbone-seg-nnunet
 
+**Important:** This pipeline has been validated for Ubuntu 18.04 LTS and CUDA 11.2. Other Linux distros or versions of Ubuntu, as well as versions of CUDA may not be compatible with this repo out of the box.
+
 Instructions for Temporal Bone Dataset Use:
 
 ## Step 0: Fork this GitHub repo
