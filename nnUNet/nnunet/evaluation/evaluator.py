@@ -149,7 +149,7 @@ class Evaluator:
         if metric not in self.metrics:
             self.metrics.append(metric)
 
-    def evaluate(self, test=None, reference=None, advanced=False, **metric_kwargs):
+    def evaluate(self, test=None, reference=None, advanced=True, **metric_kwargs):
         """Compute metrics for segmentations."""
         if test is not None:
             self.set_test(test)

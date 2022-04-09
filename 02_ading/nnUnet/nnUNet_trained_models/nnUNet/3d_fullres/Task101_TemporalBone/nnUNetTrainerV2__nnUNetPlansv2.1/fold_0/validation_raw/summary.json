@@ -1,7 +1,7 @@
 {
     "author": "Fabian",
     "description": "",
-    "id": "1464fa6037a0",
+    "id": "6eaf3825a5eb",
     "name": "nnUNetTrainerV2 val tiled True",
     "results": {
         "all": [
@@ -1314,5 +1314,5 @@
         }
     },
     "task": "Task101_TemporalBone",
-    "timestamp": "2022-03-18 03:19:32.228090"
+    "timestamp": "2022-04-08 17:31:41.425276"
 }

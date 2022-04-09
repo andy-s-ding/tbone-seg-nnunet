@@ -55,6 +55,11 @@ def parse_command_line(args):
                         type=int,
                         default=101
                         )
+    parser.add_argument('--model',
+                        action="store",
+                        type=str,
+                        default='nnUNetTrainerV2'
+                        )
     parser.add_argument('--targets',
                         action="store",
                         type=str,
@@ -105,7 +110,7 @@ def parse_command_line(args):
 def main():
     args = parse_command_line(sys.argv)
 
-    base = os.path.join(args['base'], f"nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task{args['task_num']}_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1")
+    base = os.path.join(args['base'], f"nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task{args['task_num']}_TemporalBone/{args['model']}__nnUNetPlansv2.1")
     gt_folder = os.path.join(base, 'gt_niftis')
     hausdorff = args['hausdorff']
     dice = args['dice']
@@ -156,48 +161,50 @@ def main():
         print(f"Fold: {fold}")
         val_path = os.path.join(base, f"fold_{fold}", 'validation_raw_postprocessed')
 
-        # Determine targets in fold
-        if args['targets'] is None: # Do all targets
-            targets = [target.split('.nii.gz')[0] for target in os.listdir(val_path) if fnmatch.fnmatch(target, '*.nii.gz')]
-        else: targets = args['targets'] # Otherwise, do specified targets
-        print(f"Targets in fold: {targets}")
+        try:
+            # Determine targets in fold
+            if args['targets'] is None: # Do all targets
+                targets = [target.split('.nii.gz')[0] for target in os.listdir(val_path) if fnmatch.fnmatch(target, '*.nii.gz')]
+            else: targets = args['targets'] # Otherwise, do specified targets
+            print(f"Targets in fold: {targets}")
 
-        for target in targets:
-            pred_path = os.path.join(val_path, f"{target}.nii.gz")
-            gt_path = os.path.join(gt_folder, f"{target}.nii.gz")
+            for target in targets:
+                pred_path = os.path.join(val_path, f"{target}.nii.gz")
+                gt_path = os.path.join(gt_folder, f"{target}.nii.gz")
 
-            print('-- Evaluating %s' % (target))
-            gt_nii = nib.load(gt_path)
-            gt_seg = np.array(gt_nii.dataobj)
-            gt_header = gt_nii.header
-            pred_nii = nib.load(pred_path)
-            pred_seg = np.array(pred_nii.dataobj)
-            spacing = np.asarray(gt_header.get_zooms())
-            print(f"---- Spacing for {target}: {spacing}")
+                print('-- Evaluating %s' % (target))
+                gt_nii = nib.load(gt_path)
+                gt_seg = np.array(gt_nii.dataobj)
+                gt_header = gt_nii.header
+                pred_nii = nib.load(pred_path)
+                pred_seg = np.array(pred_nii.dataobj)
+                spacing = np.asarray(gt_header.get_zooms())
+                print(f"---- Spacing for {target}: {spacing}")
 
-            pred_one_hot = np.moveaxis((np.arange(pred_seg.max() + 1) == pred_seg[..., None]), -1, 0)
-            gt_one_hot = np.moveaxis((np.arange(gt_seg.max() + 1) == gt_seg[..., None]), -1, 0)
+                pred_one_hot = np.moveaxis((np.arange(pred_seg.max() + 1) == pred_seg[..., None]), -1, 0)
+                gt_one_hot = np.moveaxis((np.arange(gt_seg.max() + 1) == gt_seg[..., None]), -1, 0)
 
-            # Update output metric dictionaries
-            if hausdorff:
-                hausdorff_dict['Fold'].append(fold)
-                hausdorff_dict['Target'].append(target)
-            if dice:
-                dice_dict['Fold'].append(fold)
-                dice_dict['Target'].append(target)
-            
-            for i in ids:
-                seg_name = seg_names[i]
-                print(f"---- Computing metrics for segment: {seg_name}")
+                # Update output metric dictionaries
                 if hausdorff:
-                    surface_distances = compute_surface_distances(gt_one_hot[i], pred_one_hot[i], spacing)
-                    mod_hausdorff_distance = max(compute_average_surface_distance(surface_distances))
-                    print(f"------ Distance: {mod_hausdorff_distance}")
-                    hausdorff_dict[seg_name].append(mod_hausdorff_distance)
+                    hausdorff_dict['Fold'].append(fold)
+                    hausdorff_dict['Target'].append(target)
                 if dice:
-                    dice_coeff = compute_dice_coefficient(gt_one_hot[i], pred_one_hot[i])
-                    print(f"------ Dice Score: {dice_coeff}")
-                    dice_dict[seg_name].append(dice_coeff)
+                    dice_dict['Fold'].append(fold)
+                    dice_dict['Target'].append(target)
+                
+                for i in ids:
+                    seg_name = seg_names[i]
+                    print(f"---- Computing metrics for segment: {seg_name}")
+                    if hausdorff:
+                        surface_distances = compute_surface_distances(gt_one_hot[i], pred_one_hot[i], spacing)
+                        mod_hausdorff_distance = max(compute_average_surface_distance(surface_distances))
+                        print(f"------ Distance: {mod_hausdorff_distance}")
+                        hausdorff_dict[seg_name].append(mod_hausdorff_distance)
+                    if dice:
+                        dice_coeff = compute_dice_coefficient(gt_one_hot[i], pred_one_hot[i])
+                        print(f"------ Dice Score: {dice_coeff}")
+                        dice_dict[seg_name].append(dice_coeff)
+        except: break
 
     if hausdorff:
         hausdorff_df = pd.DataFrame.from_dict(hausdorff_dict)
@@ -217,4 +224,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-# internal use: python compute_validation_metrics.py
+# internal use: python compute_validation_metrics.py --base '/media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading' --model nnUNetTrainerV2 --dice --hausdorff

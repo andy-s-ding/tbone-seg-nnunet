@@ -29,7 +29,7 @@ import shutil
 
 def load_remove_save(input_file: str, output_file: str, for_which_classes: list,
                      minimum_valid_object_size: dict = None):
-    # Only objects larger than minimum_valid_object_size will be removed. Keys in minimum_valid_object_size must
+    # Only objects smaller than minimum_valid_object_size will be removed. Keys in minimum_valid_object_size must
     # match entries in for_which_classes
     img_in = sitk.ReadImage(input_file)
     img_npy = sitk.GetArrayFromImage(img_in)
@@ -123,7 +123,7 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
                              temp_folder="temp",
                              final_subf_name="validation_final", processes=default_num_threads,
                              dice_threshold=0, debug=False,
-                             advanced_postprocessing=False,
+                             advanced_postprocessing=True,
                              pp_filename="postprocessing.json"):
     """
     :param base:
@@ -165,10 +165,13 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
     pp_results = {}
     pp_results['dc_per_class_raw'] = {}
     pp_results['dc_per_class_pp_all'] = {}  # dice scores after treating all foreground classes as one
-    pp_results['dc_per_class_pp_per_class'] = {}  # dice scores after removing everything except larges cc
+    pp_results['dc_per_class_pp_per_class'] = {}  # dice scores after removing everything except largest cc
     # independently for each class after we already did dc_per_class_pp_all
     pp_results['for_which_classes'] = []
     pp_results['min_valid_object_sizes'] = {}
+
+    pp_results['ahd_per_class_raw'] = {}
+    pp_results['ahd_per_class_pp_per_class'] = {}  # ahd scores after removing everything except largest cc
 
 
     validation_result_raw = load_json(join(base, raw_subfolder_name, "summary.json"))['results']
@@ -239,6 +242,12 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
         dc_pp = validation_result_PP_test[str(c)]['Dice']
         pp_results['dc_per_class_raw'][str(c)] = dc_raw
         pp_results['dc_per_class_pp_all'][str(c)] = dc_pp
+        try:
+            ahd_raw = validation_result_raw[str(c)]['Avg. Symmetric Surface Distance']
+            ahd_pp = validation_result_PP_test[str(c)]['Avg. Symmetric Surface Distance']
+            pp_results['ahd_per_class_raw'][str(c)] = ahd_raw
+            pp_results['ahd_per_class_pp_all'][str(c)] = ahd_pp
+        except: print('Avg. Symmetric Surface Distance not calculated for either raw or postprocessed outputs')
 
     # true if new is better
     do_fg_cc = False
@@ -253,8 +262,8 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
         # at least one class improved - yay!
         # now check if another got worse
         # true if new is worse
-        any_worse = any(
-            [pp_results['dc_per_class_pp_all'][str(cl)] < pp_results['dc_per_class_raw'][str(cl)] for cl in classes])
+        comp_worse = [pp_results['dc_per_class_pp_all'][str(cl)] < pp_results['dc_per_class_raw'][str(cl)] for cl in classes]
+        any_worse = any(comp_worse)
         if not any_worse:
             pp_results['for_which_classes'].append(classes)
             if min_size_kept is not None:
@@ -265,7 +274,8 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
             print('min_valid_object_sizes', min_size_kept)
     else:
         # did not improve things - don't do it
-        pass
+        print("Removing all but the largest foreground region worsened results for some classes!")
+        print('for_which_classes', [cl+1 for cl, worse in enumerate(comp_worse) if worse]) # Class ids that resulted in worse performance
 
     if len(classes) > 1:
         # now depending on whether we do remove all but the largest foreground connected component we define the source dir
@@ -338,10 +348,19 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
             dc_pp = validation_result_PP_test[str(c)]['Dice']
             pp_results['dc_per_class_pp_per_class'][str(c)] = dc_pp
             print(c)
-            print("before:", dc_raw)
-            print("after: ", dc_pp)
+            print("dice before:", dc_raw)
+            print("dice after: ", dc_pp)
+            ahd_calculated = False
+            try:
+                ahd_raw = old_res[str(c)]['Avg. Symmetric Surface Distance']
+                ahd_pp = validation_result_PP_test[str(c)]['Avg. Symmetric Surface Distance']
+                pp_results['ahd_per_class_pp_per_class'][str(c)] = ahd_pp
+                print("avg. symm surface distance before:", ahd_raw)
+                print("avg. symm surface distance after: ", ahd_pp)
+                ahd_calculated = True
+            except: print('Avg. Symmetric Surface Distance not calculated for either raw or postprocessed outputs')
 
-            if dc_pp > (dc_raw + dice_threshold):
+            if dc_pp > (dc_raw + dice_threshold) or (ahd_calculated and ahd_pp < ahd_raw and ahd_pp/ahd_raw <= dc_pp/dc_raw): # dc increased or ahd decreased more than dc decreased
                 pp_results['for_which_classes'].append(int(c))
                 if min_size_kept is not None:
                     pp_results['min_valid_object_sizes'].update({c: min_size_kept[c]})
