@@ -14,12 +14,11 @@ Navigate to the `environments` folder:
 ```
 cd <path to github>/tbone-seg-nnunet/environments
 ```
-Create environment from scripting_environment.yml file:
+Make sure to modify the prefix in each of the environment `.yml` files. Replace `/home/andyding/` with the path to your `anaconda3` folder.
+
+Create scripting and nnUNet environments:
 ```
 conda env create -f scripting_environment.yml
-```
-Create environment from nnUNet-cuda-11.2_environment.yml file:
-```
 conda env create -f nnUNet-cuda-11.2_environment.yml
 ```
 For internal use, the scripting environment is named `cis-ii` and the nnUNet environment is named `nnUNet-11.2`. The scripting environment is used for setting up the file structure for nnUNet training while the nnUNet environment is used for nnUNet training, validation, and inference.
