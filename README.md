@@ -4,9 +4,9 @@
 
 Instructions for Temporal Bone Dataset Use:
 
-## Step 0: Fork this GitHub repo
+## Step 0: Clone repo
 ```
-git clone https://github.com/<your-username>/tbone-seg-nnunet
+git clone https://github.com/andy-s-ding/tbone-seg-nnunet
 ```
 
 ## Step 1: Set up scripting and nnUNet environments
@@ -25,6 +25,15 @@ conda env create -f nnUNet-cuda-11.2_environment.yml
 For internal use, the scripting environment is named `cis-ii` and the nnUNet environment is named `nnUNet-11.2`. The scripting environment is used for setting up the file structure for nnUNet training while the nnUNet environment is used for nnUNet training, validation, and inference.
 
 Environment names can be changed in the `.yml` files.
+
+## Step 1.1: Install custom nnUNet package
+This repo contains a custom version of [nnUNet](https://github.com/MIC-DKFZ/nnUNet) with additional experimental loss functions and postprocessing methods. Navigate to the `nnUNet` folder and install in the nnUNet-11.2 environment:
+```
+cd <path to github>/tbone-seg-nnunet/nnUNet
+conda activate nnUNet-11.2
+pip install -e .
+```
+Running nnUNet will point to this folder, rather than `conda/env/bin`, allowing for easy customization in the future.
 
 ## Step 2: Register data to some template
 Image registration is done in the `image_preprocessing` folder:
