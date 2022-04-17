@@ -1,0 +1,9 @@
+Starting... 
+2022-04-10 14:24:18.000673: loading checkpoint /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_1/model_final_checkpoint.model train= False 
+2022-04-10 14:24:18.897874: Using splits from existing split file: /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl 
+2022-04-10 14:24:18.898336: The split file contains 5 splits. 
+2022-04-10 14:24:18.898485: Desired fold for training: 1 
+2022-04-10 14:24:18.898621: This split has 12 training and 3 validation cases. 
+2022-04-10 14:24:19.041305: finished prediction 
+2022-04-10 14:24:19.041535: evaluation of raw predictions 
+2022-04-10 15:28:41.846285: determining postprocessing 

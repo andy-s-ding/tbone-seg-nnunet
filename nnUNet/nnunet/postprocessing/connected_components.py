@@ -28,7 +28,7 @@ import shutil
 
 
 def load_remove_save(input_file: str, output_file: str, for_which_classes: list,
-                     minimum_valid_object_size: dict = None):
+                     minimum_valid_object_size: dict = None, minimum_valid_object_proportion: float = None):
     # Only objects smaller than minimum_valid_object_size will be removed. Keys in minimum_valid_object_size must
     # match entries in for_which_classes
     img_in = sitk.ReadImage(input_file)
@@ -37,7 +37,8 @@ def load_remove_save(input_file: str, output_file: str, for_which_classes: list,
 
     image, largest_removed, kept_size = remove_all_but_the_largest_connected_component(img_npy, for_which_classes,
                                                                                        volume_per_voxel,
-                                                                                       minimum_valid_object_size)
+                                                                                       minimum_valid_object_size,
+                                                                                       minimum_valid_object_proportion)
     # print(input_file, "kept:", kept_size)
     img_out_itk = sitk.GetImageFromArray(image)
     img_out_itk = copy_geometry(img_out_itk, img_in)
@@ -46,15 +47,16 @@ def load_remove_save(input_file: str, output_file: str, for_which_classes: list,
 
 
 def remove_all_but_the_largest_connected_component(image: np.ndarray, for_which_classes: list, volume_per_voxel: float,
-                                                   minimum_valid_object_size: dict = None):
+                                                   minimum_valid_object_size: dict = None, minimum_valid_object_proportion: float = None):
     """
     removes all but the largest connected component, individually for each class
     :param image:
     :param for_which_classes: can be None. Should be list of int. Can also be something like [(1, 2), 2, 4].
     Here (1, 2) will be treated as a joint region, not individual classes (example LiTS here we can use (1, 2)
     to use all foreground classes together)
-    :param minimum_valid_object_size: Only objects larger than minimum_valid_object_size will be removed. Keys in
+    :param minimum_valid_object_size: Only objects smaller than minimum_valid_object_size will be removed. Keys in
     minimum_valid_object_size must match entries in for_which_classes
+    :param minimum_valid_object_proportion: Only objects smaller than a percentage of the total volume will be removed.
     :return:
     """
     if for_which_classes is None:
@@ -88,6 +90,9 @@ def remove_all_but_the_largest_connected_component(image: np.ndarray, for_which_
             # than minimum_valid_object_size in the future but we don't do that now.
             maximum_size = max(object_sizes.values())
             kept_size[c] = maximum_size
+            
+            # get total class volume
+            total_volume = sum(object_sizes.values())
 
             for object_id in range(1, num_objects + 1):
                 # we only remove objects that are not the largest
@@ -96,6 +101,8 @@ def remove_all_but_the_largest_connected_component(image: np.ndarray, for_which_
                     remove = True
                     if minimum_valid_object_size is not None:
                         remove = object_sizes[object_id] < minimum_valid_object_size[c]
+                    if minimum_valid_object_proportion is not None:
+                        remove = remove and object_sizes[object_id] < minimum_valid_object_proportion * total_volume
                     if remove:
                         image[(lmap == object_id) & mask] = 0
                         if largest_removed[c] is None:
@@ -122,8 +129,8 @@ def load_postprocessing(json_file):
 def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validation_raw",
                              temp_folder="temp",
                              final_subf_name="validation_final", processes=default_num_threads,
-                             dice_threshold=0, debug=False,
-                             advanced_postprocessing=True,
+                             dice_threshold=0, debug=True,
+                             advanced_postprocessing=False,
                              pp_filename="postprocessing.json"):
     """
     :param base:
@@ -178,6 +185,8 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
     pp_results['num_samples'] = len(validation_result_raw['all'])
     validation_result_raw = validation_result_raw['mean']
 
+    min_proportion_kept = 0.1
+    
     if advanced_postprocessing:
         # first treat all foreground classes as one and remove all but the largest foreground connected component
         results = []
@@ -212,7 +221,7 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
 
     else:
         min_size_kept = None
-
+    
     # we need to rerun the step from above, now with the size constraint
     pred_gt_tuples = []
     results = []
@@ -221,8 +230,7 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
         predicted_segmentation = join(base, raw_subfolder_name, f)
         # now remove all but the largest connected component for each class
         output_file = join(folder_all_classes_as_fg, f)
-        results.append(
-            p.starmap_async(load_remove_save, ((predicted_segmentation, output_file, (classes,), min_size_kept),)))
+        results.append(p.starmap_async(load_remove_save, ((predicted_segmentation, output_file, (classes,), min_size_kept),)))
         pred_gt_tuples.append([output_file, join(gt_labels_folder, f)])
 
     _ = [i.get() for i in results]
@@ -243,11 +251,11 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
         pp_results['dc_per_class_raw'][str(c)] = dc_raw
         pp_results['dc_per_class_pp_all'][str(c)] = dc_pp
         try:
-            ahd_raw = validation_result_raw[str(c)]['Avg. Symmetric Surface Distance']
-            ahd_pp = validation_result_PP_test[str(c)]['Avg. Symmetric Surface Distance']
+            ahd_raw = validation_result_raw[str(c)]['Average (Modified) Hausdorff Distance']
+            ahd_pp = validation_result_PP_test[str(c)]['Average (Modified) Hausdorff Distance']
             pp_results['ahd_per_class_raw'][str(c)] = ahd_raw
             pp_results['ahd_per_class_pp_all'][str(c)] = ahd_pp
-        except: print('Avg. Symmetric Surface Distance not calculated for either raw or postprocessed outputs')
+        except: print('Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs')
 
     # true if new is better
     do_fg_cc = False
@@ -272,10 +280,10 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
             print("Removing all but the largest foreground region improved results!")
             print('for_which_classes', classes)
             print('min_valid_object_sizes', min_size_kept)
-    else:
-        # did not improve things - don't do it
-        print("Removing all but the largest foreground region worsened results for some classes!")
-        print('for_which_classes', [cl+1 for cl, worse in enumerate(comp_worse) if worse]) # Class ids that resulted in worse performance
+        else:
+            # did not improve things - don't do it
+            print("Removing all but the largest foreground region worsened results for some classes!")
+            print('for_which_classes', [cl+1 for cl, worse in enumerate(comp_worse) if worse]) # Class ids that resulted in worse performance
 
     if len(classes) > 1:
         # now depending on whether we do remove all but the largest foreground connected component we define the source dir
@@ -325,7 +333,7 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
         for f in fnames:
             predicted_segmentation = join(source, f)
             output_file = join(folder_per_class, f)
-            results.append(p.starmap_async(load_remove_save, ((predicted_segmentation, output_file, classes, min_size_kept),)))
+            results.append(p.starmap_async(load_remove_save, ((predicted_segmentation, output_file, classes, min_size_kept, min_proportion_kept),)))
             pred_gt_tuples.append([output_file, join(gt_labels_folder, f)])
 
         _ = [i.get() for i in results]
@@ -352,19 +360,23 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
             print("dice after: ", dc_pp)
             ahd_calculated = False
             try:
-                ahd_raw = old_res[str(c)]['Avg. Symmetric Surface Distance']
-                ahd_pp = validation_result_PP_test[str(c)]['Avg. Symmetric Surface Distance']
+                ahd_raw = old_res[str(c)]['Average (Modified) Hausdorff Distance']
+                ahd_pp = validation_result_PP_test[str(c)]['Average (Modified) Hausdorff Distance']
                 pp_results['ahd_per_class_pp_per_class'][str(c)] = ahd_pp
-                print("avg. symm surface distance before:", ahd_raw)
-                print("avg. symm surface distance after: ", ahd_pp)
+                print("average hausdorff distance before:", ahd_raw)
+                print("average hausdorff distance after: ", ahd_pp)
                 ahd_calculated = True
-            except: print('Avg. Symmetric Surface Distance not calculated for either raw or postprocessed outputs')
+            except: print('Hausdorff Distance not calculated for either raw or postprocessed outputs')
 
-            if dc_pp > (dc_raw + dice_threshold) or (ahd_calculated and ahd_pp < ahd_raw and ahd_pp/ahd_raw <= dc_pp/dc_raw): # dc increased or ahd decreased more than dc decreased
+            if dc_pp > (dc_raw + dice_threshold):
+            # if dc_pp > (dc_raw + dice_threshold) or (ahd_calculated and ahd_pp < ahd_raw and ahd_pp/ahd_raw < dc_pp/dc_raw): # dc increased or ahd decreased more than dc decreased
                 pp_results['for_which_classes'].append(int(c))
                 if min_size_kept is not None:
                     pp_results['min_valid_object_sizes'].update({c: min_size_kept[c]})
-                print("Removing all but the largest region for class %d improved results!" % c)
+
+                print("Removing regions smaller than {}% total volume for class {} improved dice results!".format(int(min_proportion_kept*100), c))
+                # print("Removing all but the largest region for class %d improved dice results!" % c)
+                # print("Removing all but the largest region for class %d improved dice and/or ahd results!" % c)
                 print('min_valid_object_sizes', min_size_kept)
     else:
         print("Only one class present, no need to do each class separately as this is covered in fg vs bg")
@@ -387,11 +399,12 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
     for f in fnames:
         predicted_segmentation = join(base, raw_subfolder_name, f)
 
-        # now remove all but the largest connected component for each class
+        # now remove islands for each class
         output_file = join(base, final_subf_name, f)
         results.append(p.starmap_async(load_remove_save, (
             (predicted_segmentation, output_file, pp_results['for_which_classes'],
-             pp_results['min_valid_object_sizes']),)))
+             pp_results['min_valid_object_sizes'],
+             min_proportion_kept),)))
 
         pred_gt_tuples.append([output_file,
                                join(gt_labels_folder, f)])
@@ -403,6 +416,7 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
                          json_author="Fabian", num_threads=processes)
 
     pp_results['min_valid_object_sizes'] = str(pp_results['min_valid_object_sizes'])
+    pp_results['min_proportion_kept'] = str(min_proportion_kept)
 
     save_json(pp_results, join(base, pp_filename))
 

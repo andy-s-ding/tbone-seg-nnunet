@@ -1,0 +1,862 @@
+nnUNet_train 3d_fullres nnUNetTrainerV2 Task101_TemporalBone 0 -val --npz --val_disable_overwrite && nnUNet_train 3d_fullres nnUNetTrainerV2 Task101_TemporalBone 1 -val --npz --val_disable_overwrite && nnUNet_train 3d_fullres nnUNetTrainerV2 Task101_TemporalBone 2 -val --npz --val_disable_overwrite && nnUNet_train 3d_fullres nnUNetTrainerV2 Task101_TemporalBone 3 -val --npz --val_disable_overwrite && nnUNet_train 3d_fullres nnUNetTrainerV2 Task101_TemporalBone 4 -val --npz --val_disable_overwrite
+
+
+Please cite the following paper when using nnUNet:
+
+Isensee, F., Jaeger, P.F., Kohl, S.A.A. et al. "nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation." Nat Methods (2020). https://doi.org/10.1038/s41592-020-01008-z
+
+
+If you have questions or suggestions, feel free to open an issue at https://github.com/MIC-DKFZ/nnUNet
+
+###############################################
+I am running the following nnUNet: 3d_fullres
+My trainer class is:  <class 'nnunet.training.network_training.nnUNetTrainerV2.nnUNetTrainerV2'>
+For that I will be using the following configuration:
+num_classes:  16
+modalities:  {0: 'CT'}
+use_mask_for_norm OrderedDict([(0, False)])
+keep_only_largest_region None
+min_region_size_per_class None
+min_size_per_class None
+normalization_schemes OrderedDict([(0, 'CT')])
+stages...
+
+stage:  0
+{'batch_size': 2, 'num_pool_per_axis': [5, 5, 5], 'patch_size': array([128, 128, 128]), 'median_patient_size_in_voxels': array([203, 201, 203]), 'current_spacing': array([0.24252709, 0.24221727, 0.24252709]), 'original_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'do_dummy_2D_data_aug': False, 'pool_op_kernel_sizes': [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'conv_kernel_sizes': [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]]}
+
+stage:  1
+{'batch_size': 2, 'num_pool_per_axis': [5, 5, 5], 'patch_size': array([128, 128, 128]), 'median_patient_size_in_voxels': array([512, 508, 512]), 'current_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'original_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'do_dummy_2D_data_aug': False, 'pool_op_kernel_sizes': [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'conv_kernel_sizes': [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]]}
+
+I am using stage 1 from these plans
+I am using batch dice + CE loss
+
+I am using data from this folder:  /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/nnUNetData_plans_v2.1
+###############################################
+2022-04-14 23:20:46.333101: loading checkpoint /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_0/model_final_checkpoint.model train= False
+loading dataset
+loading all case properties
+2022-04-14 23:20:47.223545: Using splits from existing split file: /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl
+2022-04-14 23:20:47.223972: The split file contains 5 splits.
+2022-04-14 23:20:47.224111: Desired fold for training: 0
+2022-04-14 23:20:47.224239: This split has 12 training and 3 validation cases.
+2022-04-14 23:20:47.346152: finished prediction
+2022-04-14 23:20:47.346363: evaluation of raw predictions
+2022-04-15 00:38:35.320306: determining postprocessing
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Foreground vs background
+before: 0.8138435969016024
+after:  0.7540459351925939
+Removing all but the largest foreground region worsened results for some classes!
+for_which_classes [7, 11]
+1
+dice before: 0.9503418251750954
+dice after:  0.9509171629932213
+average hausdorff distance before: 0.09575686826090372
+average hausdorff distance after:  0.06898197942891636
+Removing all but the largest region for class 1 improved dice and/or ahd results!
+min_valid_object_sizes None
+10
+dice before: 0.835127097204431
+dice after:  0.8384158655966235
+average hausdorff distance before: 0.3705015485810959
+average hausdorff distance after:  0.1604301826441007
+Removing all but the largest region for class 10 improved dice and/or ahd results!
+min_valid_object_sizes None
+11
+dice before: 0.7514911986057324
+dice after:  0.7542977433872897
+average hausdorff distance before: 0.4805205732857461
+average hausdorff distance after:  0.2971781746459969
+Removing all but the largest region for class 11 improved dice and/or ahd results!
+min_valid_object_sizes None
+12
+dice before: 0.9293216051185494
+dice after:  0.9293321754828009
+average hausdorff distance before: 0.24069100667346666
+average hausdorff distance after:  0.24070002919596115
+Removing all but the largest region for class 12 improved dice and/or ahd results!
+min_valid_object_sizes None
+13
+dice before: 0.8057490637537743
+dice after:  0.8078005149025387
+average hausdorff distance before: 1.0022076597974297
+average hausdorff distance after:  0.9340705679857332
+Removing all but the largest region for class 13 improved dice and/or ahd results!
+min_valid_object_sizes None
+14
+dice before: 0.7116331273765564
+dice after:  0.7241166207698888
+average hausdorff distance before: 0.6149811129051191
+average hausdorff distance after:  0.1703005171654722
+Removing all but the largest region for class 14 improved dice and/or ahd results!
+min_valid_object_sizes None
+15
+dice before: 0.9361564759904858
+dice after:  0.9380349684453123
+average hausdorff distance before: 0.1832157222789382
+average hausdorff distance after:  0.09774835575236096
+Removing all but the largest region for class 15 improved dice and/or ahd results!
+min_valid_object_sizes None
+16
+dice before: 0.8642121808829826
+dice after:  0.8642758278505887
+average hausdorff distance before: 0.6528229876852326
+average hausdorff distance after:  0.5959912620474856
+Removing all but the largest region for class 16 improved dice and/or ahd results!
+min_valid_object_sizes None
+2
+dice before: 0.933426058740654
+dice after:  0.933947270705739
+average hausdorff distance before: 0.19479236561692204
+average hausdorff distance after:  0.05477384807427812
+Removing all but the largest region for class 2 improved dice and/or ahd results!
+min_valid_object_sizes None
+3
+dice before: 0.928279152066406
+dice after:  0.9283912939544899
+average hausdorff distance before: 0.061162955664841694
+average hausdorff distance after:  0.061194422335014154
+Removing all but the largest region for class 3 improved dice and/or ahd results!
+min_valid_object_sizes None
+4
+dice before: 0.5652001474558058
+dice after:  0.5430731699094331
+average hausdorff distance before: 0.13053009758260495
+average hausdorff distance after:  0.18765475471332546
+5
+dice before: 0.9584418592200326
+dice after:  0.9584544758459286
+average hausdorff distance before: 0.052665760121853124
+average hausdorff distance after:  0.05028986019386613
+Removing all but the largest region for class 5 improved dice and/or ahd results!
+min_valid_object_sizes None
+6
+dice before: 0.9323028074902745
+dice after:  0.9322984194696828
+average hausdorff distance before: 0.15142321191332345
+average hausdorff distance after:  0.15163817782265313
+7
+dice before: 0.5982741142197346
+dice after:  0.5978816118986415
+average hausdorff distance before: 0.3163339954209566
+average hausdorff distance after:  0.31917795808427923
+8
+dice before: 0.5314133289095926
+dice after:  0.5314133289095926
+average hausdorff distance before: 0.6315227822208856
+average hausdorff distance after:  0.6315227822208856
+9
+dice before: 0.7901275082155307
+dice after:  0.7901275082155307
+average hausdorff distance before: 0.2309576275238586
+average hausdorff distance after:  0.2309576275238586
+done
+for which classes:
+[1, 10, 11, 12, 13, 14, 15, 16, 2, 3, 5]
+min_object_sizes
+None
+done
+
+
+Please cite the following paper when using nnUNet:
+
+Isensee, F., Jaeger, P.F., Kohl, S.A.A. et al. "nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation." Nat Methods (2020). https://doi.org/10.1038/s41592-020-01008-z
+
+
+If you have questions or suggestions, feel free to open an issue at https://github.com/MIC-DKFZ/nnUNet
+
+###############################################
+I am running the following nnUNet: 3d_fullres
+My trainer class is:  <class 'nnunet.training.network_training.nnUNetTrainerV2.nnUNetTrainerV2'>
+For that I will be using the following configuration:
+num_classes:  16
+modalities:  {0: 'CT'}
+use_mask_for_norm OrderedDict([(0, False)])
+keep_only_largest_region None
+min_region_size_per_class None
+min_size_per_class None
+normalization_schemes OrderedDict([(0, 'CT')])
+stages...
+
+stage:  0
+{'batch_size': 2, 'num_pool_per_axis': [5, 5, 5], 'patch_size': array([128, 128, 128]), 'median_patient_size_in_voxels': array([203, 201, 203]), 'current_spacing': array([0.24252709, 0.24221727, 0.24252709]), 'original_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'do_dummy_2D_data_aug': False, 'pool_op_kernel_sizes': [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'conv_kernel_sizes': [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]]}
+
+stage:  1
+{'batch_size': 2, 'num_pool_per_axis': [5, 5, 5], 'patch_size': array([128, 128, 128]), 'median_patient_size_in_voxels': array([512, 508, 512]), 'current_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'original_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'do_dummy_2D_data_aug': False, 'pool_op_kernel_sizes': [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'conv_kernel_sizes': [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]]}
+
+I am using stage 1 from these plans
+I am using batch dice + CE loss
+
+I am using data from this folder:  /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/nnUNetData_plans_v2.1
+###############################################
+2022-04-15 04:40:55.134967: loading checkpoint /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_1/model_final_checkpoint.model train= False
+loading dataset
+loading all case properties
+2022-04-15 04:40:56.031566: Using splits from existing split file: /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl
+2022-04-15 04:40:56.031983: The split file contains 5 splits.
+2022-04-15 04:40:56.032108: Desired fold for training: 1
+2022-04-15 04:40:56.032227: This split has 12 training and 3 validation cases.
+2022-04-15 04:40:56.190491: finished prediction
+2022-04-15 04:40:56.190703: evaluation of raw predictions
+2022-04-15 06:06:24.699017: determining postprocessing
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Foreground vs background
+before: 0.7917463850434399
+after:  0.734146852608405
+Removing all but the largest foreground region worsened results for some classes!
+for_which_classes [1, 7]
+1
+dice before: 0.9592667848429101
+dice after:  0.9591234747952866
+average hausdorff distance before: 0.06744047691691264
+average hausdorff distance after:  0.0798378906539446
+10
+dice before: 0.8979122159096988
+dice after:  0.8993848412339994
+average hausdorff distance before: 0.19238639659173998
+average hausdorff distance after:  0.09300631721064752
+Removing all but the largest region for class 10 improved dice and/or ahd results!
+min_valid_object_sizes None
+11
+dice before: 0.6192330240806904
+dice after:  0.7107506334330389
+average hausdorff distance before: 1.4276694778509904
+average hausdorff distance after:  0.10187700475380916
+Removing all but the largest region for class 11 improved dice and/or ahd results!
+min_valid_object_sizes None
+12
+dice before: 0.9386799386204157
+dice after:  0.9388718582058967
+average hausdorff distance before: 0.19530436667855913
+average hausdorff distance after:  0.19530436667855913
+Removing all but the largest region for class 12 improved dice and/or ahd results!
+min_valid_object_sizes None
+13
+dice before: 0.7978393750239318
+dice after:  0.8051622857977336
+average hausdorff distance before: 0.9011298262267983
+average hausdorff distance after:  0.7596196069990677
+Removing all but the largest region for class 13 improved dice and/or ahd results!
+min_valid_object_sizes None
+14
+dice before: 0.6985453114183313
+dice after:  0.7353345082204009
+average hausdorff distance before: 0.7006539222487572
+average hausdorff distance after:  0.25740037662344323
+Removing all but the largest region for class 14 improved dice and/or ahd results!
+min_valid_object_sizes None
+15
+dice before: 0.9224886479852606
+dice after:  0.9605170117173679
+average hausdorff distance before: 1.2932070437691954
+average hausdorff distance after:  0.07577354574296645
+Removing all but the largest region for class 15 improved dice and/or ahd results!
+min_valid_object_sizes None
+16
+dice before: 0.833999734778068
+dice after:  0.8340853171055026
+average hausdorff distance before: 0.962069032166729
+average hausdorff distance after:  0.9064829376158535
+Removing all but the largest region for class 16 improved dice and/or ahd results!
+min_valid_object_sizes None
+2
+dice before: 0.9223311969970901
+dice after:  0.9232716315113629
+average hausdorff distance before: 0.2644628892502721
+average hausdorff distance after:  0.059598007972831074
+Removing all but the largest region for class 2 improved dice and/or ahd results!
+min_valid_object_sizes None
+3
+dice before: 0.9143179115896207
+dice after:  0.9143179115896207
+average hausdorff distance before: 0.0730908082050333
+average hausdorff distance after:  0.0730908082050333
+4
+dice before: 0.6027646044886933
+dice after:  0.6027646044886933
+average hausdorff distance before: 0.1261886455444243
+average hausdorff distance after:  0.1261886455444243
+5
+dice before: 0.9572101276455376
+dice after:  0.9572101276455376
+average hausdorff distance before: 0.04819556322840221
+average hausdorff distance after:  0.04819556322840221
+6
+dice before: 0.8978096410695091
+dice after:  0.8978189984129333
+average hausdorff distance before: 0.24504673885705366
+average hausdorff distance after:  0.24601949304564466
+Removing all but the largest region for class 6 improved dice and/or ahd results!
+min_valid_object_sizes None
+7
+dice before: 0.5348525273043662
+dice after:  0.5348525273043662
+average hausdorff distance before: 0.38628312658875535
+average hausdorff distance after:  0.38628312658875535
+8
+dice before: 0.42174810050027833
+dice after:  0.42174810050027833
+average hausdorff distance before: 0.5776749723706087
+average hausdorff distance after:  0.5776749723706087
+9
+dice before: 0.7489430184406355
+dice after:  0.7489430184406355
+average hausdorff distance before: 0.24627260282423316
+average hausdorff distance after:  0.24627260282423316
+done
+for which classes:
+[10, 11, 12, 13, 14, 15, 16, 2, 6]
+min_object_sizes
+None
+done
+
+
+Please cite the following paper when using nnUNet:
+
+Isensee, F., Jaeger, P.F., Kohl, S.A.A. et al. "nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation." Nat Methods (2020). https://doi.org/10.1038/s41592-020-01008-z
+
+
+If you have questions or suggestions, feel free to open an issue at https://github.com/MIC-DKFZ/nnUNet
+
+###############################################
+I am running the following nnUNet: 3d_fullres
+My trainer class is:  <class 'nnunet.training.network_training.nnUNetTrainerV2.nnUNetTrainerV2'>
+For that I will be using the following configuration:
+num_classes:  16
+modalities:  {0: 'CT'}
+use_mask_for_norm OrderedDict([(0, False)])
+keep_only_largest_region None
+min_region_size_per_class None
+min_size_per_class None
+normalization_schemes OrderedDict([(0, 'CT')])
+stages...
+
+stage:  0
+{'batch_size': 2, 'num_pool_per_axis': [5, 5, 5], 'patch_size': array([128, 128, 128]), 'median_patient_size_in_voxels': array([203, 201, 203]), 'current_spacing': array([0.24252709, 0.24221727, 0.24252709]), 'original_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'do_dummy_2D_data_aug': False, 'pool_op_kernel_sizes': [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'conv_kernel_sizes': [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]]}
+
+stage:  1
+{'batch_size': 2, 'num_pool_per_axis': [5, 5, 5], 'patch_size': array([128, 128, 128]), 'median_patient_size_in_voxels': array([512, 508, 512]), 'current_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'original_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'do_dummy_2D_data_aug': False, 'pool_op_kernel_sizes': [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'conv_kernel_sizes': [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]]}
+
+I am using stage 1 from these plans
+I am using batch dice + CE loss
+
+I am using data from this folder:  /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/nnUNetData_plans_v2.1
+###############################################
+2022-04-15 10:09:09.047121: loading checkpoint /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_2/model_final_checkpoint.model train= False
+loading dataset
+loading all case properties
+2022-04-15 10:09:09.942337: Using splits from existing split file: /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl
+2022-04-15 10:09:09.942768: The split file contains 5 splits.
+2022-04-15 10:09:09.942897: Desired fold for training: 2
+2022-04-15 10:09:09.943014: This split has 12 training and 3 validation cases.
+2022-04-15 10:09:10.093980: finished prediction
+2022-04-15 10:09:10.094214: evaluation of raw predictions
+2022-04-15 11:36:08.617656: determining postprocessing
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Foreground vs background
+before: 0.7371710068278969
+after:  0.6821045886201994
+Removing all but the largest foreground region worsened results for some classes!
+for_which_classes [1, 7]
+1
+dice before: 0.9544387755460564
+dice after:  0.9544070781379697
+average hausdorff distance before: 0.09773887131023634
+average hausdorff distance after:  0.10748858791155981
+10
+dice before: 0.8363541467332466
+dice after:  0.7704253714949618
+average hausdorff distance before: 0.2590816359047112
+average hausdorff distance after:  1.0242374083240051
+11
+dice before: 0.5585559186426563
+dice after:  0.5601819875030133
+average hausdorff distance before: 0.5773390336399101
+average hausdorff distance after:  0.5773390336399101
+Removing all but the largest region for class 11 improved dice and/or ahd results!
+min_valid_object_sizes None
+12
+dice before: 0.8531176202197549
+dice after:  0.8913722784916219
+average hausdorff distance before: 3.403560550227803
+average hausdorff distance after:  0.37171786523334527
+Removing all but the largest region for class 12 improved dice and/or ahd results!
+min_valid_object_sizes None
+13
+dice before: 0.7531764844670984
+dice after:  0.7826346433718037
+average hausdorff distance before: 2.0557563983659084
+average hausdorff distance after:  0.9541609577886594
+Removing all but the largest region for class 13 improved dice and/or ahd results!
+min_valid_object_sizes None
+14
+dice before: 0.5998077896696957
+dice after:  0.6147153480898978
+average hausdorff distance before: 1.5718949732273177
+average hausdorff distance after:  0.3196791954731391
+Removing all but the largest region for class 14 improved dice and/or ahd results!
+min_valid_object_sizes None
+15
+dice before: 0.9232644770916761
+dice after:  0.9246815840808456
+average hausdorff distance before: 0.18152388005227207
+average hausdorff distance after:  0.08865299861134307
+Removing all but the largest region for class 15 improved dice and/or ahd results!
+min_valid_object_sizes None
+16
+dice before: 0.8216408542942212
+dice after:  0.823044091958633
+average hausdorff distance before: 1.1708905014497684
+average hausdorff distance after:  0.877231727844634
+Removing all but the largest region for class 16 improved dice and/or ahd results!
+min_valid_object_sizes None
+2
+dice before: 0.8821647547059208
+dice after:  0.8831773394067556
+average hausdorff distance before: 0.28562684277933253
+average hausdorff distance after:  0.0901405975166588
+Removing all but the largest region for class 2 improved dice and/or ahd results!
+min_valid_object_sizes None
+3
+dice before: 0.8633930369994203
+dice after:  0.880097220712391
+average hausdorff distance before: 0.26055147472536044
+average hausdorff distance after:  0.10615230955009931
+Removing all but the largest region for class 3 improved dice and/or ahd results!
+min_valid_object_sizes None
+4
+dice before: 0.26089886395428635
+dice after:  0.28177969899875405
+average hausdorff distance before: 0.6025620465596384
+average hausdorff distance after:  0.34353343225287414
+Removing all but the largest region for class 4 improved dice and/or ahd results!
+min_valid_object_sizes None
+5
+dice before: 0.9248636586787589
+dice after:  0.9298688247838016
+average hausdorff distance before: 0.5386812294628734
+average hausdorff distance after:  0.10763143964446825
+Removing all but the largest region for class 5 improved dice and/or ahd results!
+min_valid_object_sizes None
+6
+dice before: 0.8817749968810054
+dice after:  0.8859821994368594
+average hausdorff distance before: 0.709544086054596
+average hausdorff distance after:  0.2816959173437113
+Removing all but the largest region for class 6 improved dice and/or ahd results!
+min_valid_object_sizes None
+7
+dice before: 0.5151204901889024
+dice after:  0.5212752269235529
+average hausdorff distance before: 0.4887692293851666
+average hausdorff distance after:  0.4887692293851666
+Removing all but the largest region for class 7 improved dice and/or ahd results!
+min_valid_object_sizes None
+8
+dice before: 0.39123952074549634
+dice after:  0.11226357535082367
+average hausdorff distance before: 3.9467577494626607
+average hausdorff distance after:  8.166742692564759
+9
+dice before: 0.7749247204281563
+dice after:  0.7749247204281563
+average hausdorff distance before: 0.20744357240169328
+average hausdorff distance after:  0.20744357240169328
+done
+for which classes:
+[11, 12, 13, 14, 15, 16, 2, 3, 4, 5, 6, 7]
+min_object_sizes
+None
+done
+
+
+Please cite the following paper when using nnUNet:
+
+Isensee, F., Jaeger, P.F., Kohl, S.A.A. et al. "nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation." Nat Methods (2020). https://doi.org/10.1038/s41592-020-01008-z
+
+
+If you have questions or suggestions, feel free to open an issue at https://github.com/MIC-DKFZ/nnUNet
+
+###############################################
+I am running the following nnUNet: 3d_fullres
+My trainer class is:  <class 'nnunet.training.network_training.nnUNetTrainerV2.nnUNetTrainerV2'>
+For that I will be using the following configuration:
+num_classes:  16
+modalities:  {0: 'CT'}
+use_mask_for_norm OrderedDict([(0, False)])
+keep_only_largest_region None
+min_region_size_per_class None
+min_size_per_class None
+normalization_schemes OrderedDict([(0, 'CT')])
+stages...
+
+stage:  0
+{'batch_size': 2, 'num_pool_per_axis': [5, 5, 5], 'patch_size': array([128, 128, 128]), 'median_patient_size_in_voxels': array([203, 201, 203]), 'current_spacing': array([0.24252709, 0.24221727, 0.24252709]), 'original_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'do_dummy_2D_data_aug': False, 'pool_op_kernel_sizes': [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'conv_kernel_sizes': [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]]}
+
+stage:  1
+{'batch_size': 2, 'num_pool_per_axis': [5, 5, 5], 'patch_size': array([128, 128, 128]), 'median_patient_size_in_voxels': array([512, 508, 512]), 'current_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'original_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'do_dummy_2D_data_aug': False, 'pool_op_kernel_sizes': [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'conv_kernel_sizes': [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]]}
+
+I am using stage 1 from these plans
+I am using batch dice + CE loss
+
+I am using data from this folder:  /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/nnUNetData_plans_v2.1
+###############################################
+2022-04-15 15:34:40.121964: loading checkpoint /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_3/model_final_checkpoint.model train= False
+loading dataset
+loading all case properties
+2022-04-15 15:34:41.014236: Using splits from existing split file: /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl
+2022-04-15 15:34:41.014661: The split file contains 5 splits.
+2022-04-15 15:34:41.014789: Desired fold for training: 3
+2022-04-15 15:34:41.014904: This split has 12 training and 3 validation cases.
+2022-04-15 15:34:41.158683: finished prediction
+2022-04-15 15:34:41.158892: evaluation of raw predictions
+2022-04-15 16:54:13.004225: determining postprocessing
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Foreground vs background
+before: 0.7873045581046736
+after:  0.6923238839774521
+Removing all but the largest foreground region worsened results for some classes!
+for_which_classes [1, 7, 9, 10]
+1
+dice before: 0.9455734718939204
+dice after:  0.9453594968045786
+average hausdorff distance before: 0.09292437997378866
+average hausdorff distance after:  0.08867335975339269
+Removing all but the largest region for class 1 improved dice and/or ahd results!
+min_valid_object_sizes None
+10
+dice before: 0.8761964056128098
+dice after:  0.8762000665165535
+average hausdorff distance before: 0.13242926578431666
+average hausdorff distance after:  0.13214704124893364
+Removing all but the largest region for class 10 improved dice and/or ahd results!
+min_valid_object_sizes None
+11
+dice before: 0.551161557279994
+dice after:  0.5506102730909295
+average hausdorff distance before: 1.5324421669613664
+average hausdorff distance after:  1.8515289802485935
+12
+dice before: 0.9182901582581366
+dice after:  0.9313215443012526
+average hausdorff distance before: 1.7035675832348531
+average hausdorff distance after:  0.23126529874772841
+Removing all but the largest region for class 12 improved dice and/or ahd results!
+min_valid_object_sizes None
+13
+dice before: 0.802024445073022
+dice after:  0.8028560732396306
+average hausdorff distance before: 0.771209145366508
+average hausdorff distance after:  0.7648036354045386
+Removing all but the largest region for class 13 improved dice and/or ahd results!
+min_valid_object_sizes None
+14
+dice before: 0.6012171046363441
+dice after:  0.6070685471640002
+average hausdorff distance before: 0.8272816855847452
+average hausdorff distance after:  0.4749680470242737
+Removing all but the largest region for class 14 improved dice and/or ahd results!
+min_valid_object_sizes None
+15
+dice before: 0.9059443964823637
+dice after:  0.9064476487855083
+average hausdorff distance before: 0.42170991373669864
+average hausdorff distance after:  0.1971818246838372
+Removing all but the largest region for class 15 improved dice and/or ahd results!
+min_valid_object_sizes None
+16
+dice before: 0.8066741228246262
+dice after:  0.8245986353277818
+average hausdorff distance before: 1.603006756420002
+average hausdorff distance after:  0.8491374770454653
+Removing all but the largest region for class 16 improved dice and/or ahd results!
+min_valid_object_sizes None
+2
+dice before: 0.8987812633794162
+dice after:  0.900744711399763
+average hausdorff distance before: 0.29164782156829944
+average hausdorff distance after:  0.0764707828383043
+Removing all but the largest region for class 2 improved dice and/or ahd results!
+min_valid_object_sizes None
+3
+dice before: 0.921784417051125
+dice after:  0.921784417051125
+average hausdorff distance before: 0.07610006597343145
+average hausdorff distance after:  0.07610006597343145
+4
+dice before: 0.6116763367101338
+dice after:  0.6109822296951816
+average hausdorff distance before: 0.16475090235985643
+average hausdorff distance after:  0.21151236261101272
+5
+dice before: 0.9521105861633236
+dice after:  0.9521225867644345
+average hausdorff distance before: 0.058303867213881366
+average hausdorff distance after:  0.05637239507055527
+Removing all but the largest region for class 5 improved dice and/or ahd results!
+min_valid_object_sizes None
+6
+dice before: 0.8983660346843504
+dice after:  0.8984148706332583
+average hausdorff distance before: 0.20944664923487824
+average hausdorff distance after:  0.20990017833028066
+Removing all but the largest region for class 6 improved dice and/or ahd results!
+min_valid_object_sizes None
+7
+dice before: 0.6499517473760368
+dice after:  0.6507446791082919
+average hausdorff distance before: 0.2925055745995377
+average hausdorff distance after:  0.29297455437918396
+Removing all but the largest region for class 7 improved dice and/or ahd results!
+min_valid_object_sizes None
+8
+dice before: 0.4734226063453089
+dice after:  0.47346175185000083
+average hausdorff distance before: 0.7321390843038226
+average hausdorff distance after:  0.7321807004629907
+Removing all but the largest region for class 8 improved dice and/or ahd results!
+min_valid_object_sizes None
+9
+dice before: 0.7836982759038671
+dice after:  0.7836982759038671
+average hausdorff distance before: 0.21001280116357446
+average hausdorff distance after:  0.21001280116357446
+done
+for which classes:
+[1, 10, 12, 13, 14, 15, 16, 2, 5, 6, 7, 8]
+min_object_sizes
+None
+done
+
+
+Please cite the following paper when using nnUNet:
+
+Isensee, F., Jaeger, P.F., Kohl, S.A.A. et al. "nnU-Net: a self-configuring method for deep learning-based biomedical image segmentation." Nat Methods (2020). https://doi.org/10.1038/s41592-020-01008-z
+
+
+If you have questions or suggestions, feel free to open an issue at https://github.com/MIC-DKFZ/nnUNet
+
+###############################################
+I am running the following nnUNet: 3d_fullres
+My trainer class is:  <class 'nnunet.training.network_training.nnUNetTrainerV2.nnUNetTrainerV2'>
+For that I will be using the following configuration:
+num_classes:  16
+modalities:  {0: 'CT'}
+use_mask_for_norm OrderedDict([(0, False)])
+keep_only_largest_region None
+min_region_size_per_class None
+min_size_per_class None
+normalization_schemes OrderedDict([(0, 'CT')])
+stages...
+
+stage:  0
+{'batch_size': 2, 'num_pool_per_axis': [5, 5, 5], 'patch_size': array([128, 128, 128]), 'median_patient_size_in_voxels': array([203, 201, 203]), 'current_spacing': array([0.24252709, 0.24221727, 0.24252709]), 'original_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'do_dummy_2D_data_aug': False, 'pool_op_kernel_sizes': [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'conv_kernel_sizes': [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]]}
+
+stage:  1
+{'batch_size': 2, 'num_pool_per_axis': [5, 5, 5], 'patch_size': array([128, 128, 128]), 'median_patient_size_in_voxels': array([512, 508, 512]), 'current_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'original_spacing': array([0.096133  , 0.09601019, 0.096133  ]), 'do_dummy_2D_data_aug': False, 'pool_op_kernel_sizes': [[2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2], [2, 2, 2]], 'conv_kernel_sizes': [[3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3], [3, 3, 3]]}
+
+I am using stage 1 from these plans
+I am using batch dice + CE loss
+
+I am using data from this folder:  /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/nnUNetData_plans_v2.1
+###############################################
+2022-04-15 20:38:30.203113: loading checkpoint /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_trained_models/nnUNet/3d_fullres/Task101_TemporalBone/nnUNetTrainerV2__nnUNetPlansv2.1/fold_4/model_final_checkpoint.model train= False
+loading dataset
+loading all case properties
+2022-04-15 20:38:31.099178: Using splits from existing split file: /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl
+2022-04-15 20:38:31.099597: The split file contains 5 splits.
+2022-04-15 20:38:31.099721: Desired fold for training: 4
+2022-04-15 20:38:31.099839: This split has 12 training and 3 validation cases.
+2022-04-15 20:38:31.271724: finished prediction
+2022-04-15 20:38:31.271929: evaluation of raw predictions
+2022-04-15 21:56:47.245564: determining postprocessing
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Average (Modified) Hausdorff Distance not calculated for either raw or postprocessed outputs
+Foreground vs background
+before: 0.7872279986302857
+after:  0.648721226746928
+Removing all but the largest foreground region worsened results for some classes!
+for_which_classes [1, 7, 9, 10, 11]
+1
+dice before: 0.9643156059301893
+dice after:  0.9652379747685907
+average hausdorff distance before: 0.08951882750557504
+average hausdorff distance after:  0.05995336520780784
+Removing all but the largest region for class 1 improved dice and/or ahd results!
+min_valid_object_sizes None
+10
+dice before: 0.8560762244617979
+dice after:  0.8608072240959853
+average hausdorff distance before: 0.40047473856933274
+average hausdorff distance after:  0.16630864366569628
+Removing all but the largest region for class 10 improved dice and/or ahd results!
+min_valid_object_sizes None
+11
+dice before: 0.46545635389519363
+dice after:  0.4558510373915225
+average hausdorff distance before: 1.9750518327020474
+average hausdorff distance after:  2.001761629680225
+12
+dice before: 0.8922800561879254
+dice after:  0.9048463682542778
+average hausdorff distance before: 0.5630121751480303
+average hausdorff distance after:  0.2886362027119481
+Removing all but the largest region for class 12 improved dice and/or ahd results!
+min_valid_object_sizes None
+13
+dice before: 0.801399860147629
+dice after:  0.8036469766291914
+average hausdorff distance before: 0.9061854979712379
+average hausdorff distance after:  0.8183767214478038
+Removing all but the largest region for class 13 improved dice and/or ahd results!
+min_valid_object_sizes None
+14
+dice before: 0.7092624863896954
+dice after:  0.7025657955121564
+average hausdorff distance before: 0.21228983698484716
+average hausdorff distance after:  0.23427004503178903
+15
+dice before: 0.9448048967744932
+dice after:  0.9630953147452948
+average hausdorff distance before: 1.2218837718342292
+average hausdorff distance after:  0.06426094045661991
+Removing all but the largest region for class 15 improved dice and/or ahd results!
+min_valid_object_sizes None
+16
+dice before: 0.8425116004845298
+dice after:  0.8434688159691023
+average hausdorff distance before: 0.7642245278847296
+average hausdorff distance after:  0.7631023162793379
+Removing all but the largest region for class 16 improved dice and/or ahd results!
+min_valid_object_sizes None
+2
+dice before: 0.9062800886308574
+dice after:  0.9309007914844711
+average hausdorff distance before: 1.5786595053160422
+average hausdorff distance after:  0.0566516246492923
+Removing all but the largest region for class 2 improved dice and/or ahd results!
+min_valid_object_sizes None
+3
+dice before: 0.9334315646965355
+dice after:  0.9355492405390825
+average hausdorff distance before: 0.07456542483580463
+average hausdorff distance after:  0.06347016911819682
+Removing all but the largest region for class 3 improved dice and/or ahd results!
+min_valid_object_sizes None
+4
+dice before: 0.553628271972105
+dice after:  0.535501572508636
+average hausdorff distance before: 0.16990528874845925
+average hausdorff distance after:  0.3960133767585856
+5
+dice before: 0.9627437931146297
+dice after:  0.962810339778812
+average hausdorff distance before: 0.048640298334589376
+average hausdorff distance after:  0.04688109801765269
+Removing all but the largest region for class 5 improved dice and/or ahd results!
+min_valid_object_sizes None
+6
+dice before: 0.9241415451842664
+dice after:  0.9261999025763498
+average hausdorff distance before: 1.0636916728903125
+average hausdorff distance after:  0.17638998638229123
+Removing all but the largest region for class 6 improved dice and/or ahd results!
+min_valid_object_sizes None
+7
+dice before: 0.6128635817136986
+dice after:  0.6128635817136986
+average hausdorff distance before: 0.3022311286204917
+average hausdorff distance after:  0.3022311286204917
+8
+dice before: 0.5314842585353398
+dice after:  0.5364232562671939
+average hausdorff distance before: 0.42620055558340897
+average hausdorff distance after:  0.4232457315188567
+Removing all but the largest region for class 8 improved dice and/or ahd results!
+min_valid_object_sizes None
+9
+dice before: 0.6949677899656854
+dice after:  0.6949677899656854
+average hausdorff distance before: 0.4224761568776718
+average hausdorff distance after:  0.4224761568776718
+done
+for which classes:
+[1, 10, 12, 13, 15, 16, 2, 3, 5, 6, 8]
+min_object_sizes
+None
+done
+

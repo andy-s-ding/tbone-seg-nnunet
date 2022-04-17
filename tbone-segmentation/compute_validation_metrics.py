@@ -102,8 +102,18 @@ def parse_command_line(args):
                         action="store_true",
                         help="True if overwriting output files"
                         )
+    parser.add_argument('--raw',
+                        action="store_true",
+                        help="True if analyzing raw validation files"
+                        )
+    parser.add_argument('--pp',
+                        action="store",
+                        default="_postprocessed",
+                        help="Suffix for folder containing postprocessed validation files"
+                        )
 
     args = vars(parser.parse_args())
+    print(args)
     return args
 
 
@@ -157,9 +167,15 @@ def main():
         folds = [folder[-1] for folder in os.listdir(base) if fnmatch.fnmatch(folder, 'fold_*')]
     else: folds = args['folds'] # Otherwise, do specified folds
 
+    # Determine which validation folder to analyze
+    if args['raw']: val_dir = 'validation_raw'
+    else: 
+        pp_suffix = args['pp']
+        val_dir = 'validation_raw' + pp_suffix
+
     for fold in folds:
         print(f"Fold: {fold}")
-        val_path = os.path.join(base, f"fold_{fold}", 'validation_raw_postprocessed')
+        val_path = os.path.join(base, f"fold_{fold}", val_dir)
 
         try:
             # Determine targets in fold
