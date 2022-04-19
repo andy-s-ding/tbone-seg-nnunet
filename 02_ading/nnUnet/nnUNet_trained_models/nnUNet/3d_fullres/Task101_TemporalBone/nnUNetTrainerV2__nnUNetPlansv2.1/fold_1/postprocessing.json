@@ -99,6 +99,7 @@
         2,
         6
     ],
+    "min_proportion_kept": "0.1",
     "min_valid_object_sizes": "None",
     "num_samples": 3,
     "validation_final": "validation_raw_postprocessed",

@@ -14,6 +14,7 @@
 
 
 import torch
+from nnunet.training.loss_functions.focal_loss import FocalLossV2
 from nnunet.training.loss_functions.TopK_loss import TopKLoss
 from nnunet.training.loss_functions.crossentropy import RobustCrossEntropyLoss
 from nnunet.utilities.nd_softmax import softmax_helper
@@ -125,9 +126,7 @@ def get_tp_fp_fn_tn(net_output, gt, axes=None, mask=None, square=False):
             y_onehot = gt
         else:
             gt = gt.long()
-            y_onehot = torch.zeros(shp_x)
-            if net_output.device.type == "cuda":
-                y_onehot = y_onehot.cuda(net_output.device.index)
+            y_onehot = torch.zeros(shp_x, device=net_output.device)
             y_onehot.scatter_(1, gt, 1)
 
     tp = net_output * y_onehot
@@ -428,4 +427,49 @@ class DC_and_topk_loss(nn.Module):
             result = ce_loss + dc_loss
         else:
             raise NotImplementedError("nah son") # reserved for other stuff (later?)
+        return result
+
+
+class DC_and_FocalCE_loss(nn.Module):
+    def __init__(self, soft_dice_kwargs, focal_kwargs, aggregate="sum", square_dice=False, weight_focal=1, weight_dice=1,
+                 log_dice=False):
+        """
+        CAREFUL. Weights for CE and Dice do not need to sum to one. You can set whatever you want.
+        :param soft_dice_kwargs:
+        :param ce_kwargs:
+        :param aggregate:
+        :param square_dice:
+        :param weight_focal:
+        :param weight_dice:
+        """
+        super(DC_and_FocalCE_loss, self).__init__()
+        self.log_dice = log_dice
+        self.weight_dice = weight_dice
+        self.weight_focal = weight_focal
+        self.aggregate = aggregate
+        self.focal = FocalLossV2(apply_nonlin=softmax_helper, **focal_kwargs)
+
+        if not square_dice:
+            self.dc = SoftDiceLoss(apply_nonlin=softmax_helper, **soft_dice_kwargs)
+        else:
+            self.dc = SoftDiceLossSquared(apply_nonlin=softmax_helper, **soft_dice_kwargs)
+
+    def forward(self, net_output, target):
+        """
+        target must be b, c, x, y(, z) with c=1
+        :param net_output:
+        :param target:
+        :return:
+        """
+        dc_loss = self.dc(net_output, target) if self.weight_dice != 0 else 0
+        if self.log_dice:
+            dc_loss = -torch.log(-dc_loss)
+
+        focal_loss = self.focal(net_output, target[:, 0].long()) if self.weight_focal != 0 else 0
+
+        if self.aggregate == "sum":
+            result = self.weight_focal * focal_loss + self.weight_dice * dc_loss
+        else:
+            # reserved for other stuff (later)
+            raise NotImplementedError("nah son")
         return result

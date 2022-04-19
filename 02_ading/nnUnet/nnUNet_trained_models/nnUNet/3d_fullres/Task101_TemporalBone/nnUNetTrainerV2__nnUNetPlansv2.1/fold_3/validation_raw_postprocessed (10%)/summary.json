@@ -1,7 +1,7 @@
 {
     "author": "Fabian",
     "description": "",
-    "id": "d8ce5b4f1236",
+    "id": "4ca1a6710b87",
     "name": "",
     "results": {
         "all": [
@@ -41,21 +41,21 @@
                     "True Negative Rate": 0.9999170358320347
                 },
                 "11": {
-                    "Accuracy": 0.999963009451318,
-                    "Average (Modified) Hausdorff Distance": 2.599266901595892,
-                    "Dice": 0.4379278868096759,
-                    "False Discovery Rate": 0.303448275862069,
-                    "False Negative Rate": 0.6806456981194875,
-                    "False Omission Rate": 3.0713453935379806e-05,
-                    "False Positive Rate": 6.278013429006357e-06,
-                    "Hausdorff Distance": 9.276487038627339,
-                    "Jaccard": 0.2803506208911614,
-                    "Negative Predictive Value": 0.9999692865460647,
-                    "Precision": 0.696551724137931,
-                    "Recall": 0.31935430188051256,
+                    "Accuracy": 0.9999656977615957,
+                    "Average (Modified) Hausdorff Distance": 0.8320985590262078,
+                    "Dice": 0.5033702978908459,
+                    "False Discovery Rate": 0.2740671056757604,
+                    "False Negative Rate": 0.6147445498419037,
+                    "False Omission Rate": 2.773982117337296e-05,
+                    "False Positive Rate": 6.563377675794513e-06,
+                    "Hausdorff Distance": 3.272552407458679,
+                    "Jaccard": 0.33633590004358566,
+                    "Negative Predictive Value": 0.9999722601788267,
+                    "Precision": 0.7259328943242396,
+                    "Recall": 0.3852554501580962,
                     "Total Positives Reference": 6009,
-                    "Total Positives Test": 2755,
-                    "True Negative Rate": 0.999993721986571
+                    "Total Positives Test": 3189,
+                    "True Negative Rate": 0.9999934366223242
                 },
                 "12": {
                     "Accuracy": 0.9988004879688653,
@@ -317,21 +317,21 @@
                     "True Negative Rate": 0.999867893924246
                 },
                 "11": {
-                    "Accuracy": 0.9999935120109498,
-                    "Average (Modified) Hausdorff Distance": 0.10054627599894131,
-                    "Dice": 0.7383403997577226,
-                    "False Discovery Rate": 0.26121212121212123,
+                    "Accuracy": 0.9999893068328617,
+                    "Average (Modified) Hausdorff Distance": 3.336336435574281,
+                    "Dice": 0.631279129984464,
+                    "False Discovery Rate": 0.44841628959276014,
                     "False Negative Rate": 0.26210653753026636,
-                    "False Omission Rate": 3.2515440591504076e-06,
-                    "False Positive Rate": 3.2365254285515732e-06,
-                    "Hausdorff Distance": 0.7750490333783057,
-                    "Jaccard": 0.585213634181469,
-                    "Negative Predictive Value": 0.9999967484559409,
-                    "Precision": 0.7387878787878788,
+                    "False Omission Rate": 3.2515577326991557e-06,
+                    "False Positive Rate": 7.441755683679219e-06,
+                    "Hausdorff Distance": 11.887878080675852,
+                    "Jaccard": 0.46121831252364737,
+                    "Negative Predictive Value": 0.9999967484422673,
+                    "Precision": 0.5515837104072399,
                     "Recall": 0.7378934624697336,
                     "Total Positives Reference": 1652,
-                    "Total Positives Test": 1650,
-                    "True Negative Rate": 0.9999967634745714
+                    "Total Positives Test": 2210,
+                    "True Negative Rate": 0.9999925582443163
                 },
                 "12": {
                     "Accuracy": 0.9992386750348909,
@@ -402,21 +402,21 @@
                     "True Negative Rate": 0.9998699133160363
                 },
                 "16": {
-                    "Accuracy": 0.9946992228350301,
-                    "Average (Modified) Hausdorff Distance": 0.7339604415096807,
-                    "Dice": 0.8522283190746256,
-                    "False Discovery Rate": 0.1048978970818063,
+                    "Accuracy": 0.9923208191638856,
+                    "Average (Modified) Hausdorff Distance": 2.9375103877312183,
+                    "Dice": 0.7992360750370949,
+                    "False Discovery Rate": 0.21432541508286218,
                     "False Negative Rate": 0.1867260434554351,
-                    "False Omission Rate": 0.0035704475784932898,
-                    "False Positive Rate": 0.0018256127407819678,
-                    "Hausdorff Distance": 8.070141969801204,
-                    "Jaccard": 0.742506835843457,
-                    "Negative Predictive Value": 0.9964295524215067,
-                    "Precision": 0.8951021029181937,
+                    "False Omission Rate": 0.003579108033411727,
+                    "False Positive Rate": 0.004249574255072108,
+                    "Hausdorff Distance": 19.29470267552472,
+                    "Jaccard": 0.6656063347854038,
+                    "Negative Predictive Value": 0.9964208919665882,
+                    "Precision": 0.7856745849171378,
                     "Recall": 0.8132739565445649,
                     "Total Positives Reference": 2502886,
-                    "Total Positives Test": 2274078,
-                    "True Negative Rate": 0.998174387259218
+                    "Total Positives Test": 2590808,
+                    "True Negative Rate": 0.9957504257449279
                 },
                 "2": {
                     "Accuracy": 0.9999847712479238,
@@ -593,21 +593,21 @@
                     "True Negative Rate": 0.9998761815437254
                 },
                 "11": {
-                    "Accuracy": 0.9999623711653581,
-                    "Average (Modified) Hausdorff Distance": 2.8547737631509467,
-                    "Dice": 0.47556253270538984,
-                    "False Discovery Rate": 0.2378396511237839,
-                    "False Negative Rate": 0.6543961058716155,
-                    "False Omission Rate": 3.2305501973170045e-05,
-                    "False Positive Rate": 5.324318668620265e-06,
-                    "Hausdorff Distance": 10.740442157041466,
-                    "Jaccard": 0.3119593574076617,
-                    "Negative Predictive Value": 0.9999676944980268,
-                    "Precision": 0.7621603488762161,
-                    "Recall": 0.34560389412838455,
+                    "Accuracy": 0.9999688591544084,
+                    "Average (Modified) Hausdorff Distance": 0.3947529265967108,
+                    "Dice": 0.6105737627946286,
+                    "False Discovery Rate": 0.20220858895705518,
+                    "False Negative Rate": 0.5054761180407666,
+                    "False Omission Rate": 2.49539900014476e-05,
+                    "False Positive Rate": 6.187924658562771e-06,
+                    "Hausdorff Distance": 2.5204528764918575,
+                    "Jaccard": 0.4394430927277643,
+                    "Negative Predictive Value": 0.9999750460099985,
+                    "Precision": 0.7977914110429448,
+                    "Recall": 0.49452388195923336,
                     "Total Positives Reference": 6574,
-                    "Total Positives Test": 2981,
-                    "True Negative Rate": 0.9999946756813314
+                    "Total Positives Test": 4075,
+                    "True Negative Rate": 0.9999938120753414
                 },
                 "12": {
                     "Accuracy": 0.9987147999560739,
@@ -870,21 +870,21 @@
                 "True Negative Rate": 0.999887037100002
             },
             "11": {
-                "Accuracy": 0.9999729642092086,
-                "Average (Modified) Hausdorff Distance": 1.8515289802485935,
-                "Dice": 0.5506102730909295,
-                "False Discovery Rate": 0.2675000160659914,
-                "False Negative Rate": 0.5323827805071231,
-                "False Omission Rate": 2.2090166655900086e-05,
-                "False Positive Rate": 4.946285842059399e-06,
-                "Hausdorff Distance": 6.93065940968237,
-                "Jaccard": 0.392507870826764,
-                "Negative Predictive Value": 0.9999779098333441,
-                "Precision": 0.7324999839340086,
-                "Recall": 0.46761721949287693,
+                "Accuracy": 0.9999746212496219,
+                "Average (Modified) Hausdorff Distance": 1.5210626403990666,
+                "Dice": 0.5817410635566461,
+                "False Discovery Rate": 0.30823066140852523,
+                "False Negative Rate": 0.4607757351376456,
+                "False Omission Rate": 1.8648456302506574e-05,
+                "False Positive Rate": 6.731019339345501e-06,
+                "Hausdorff Distance": 5.893627788208796,
+                "Jaccard": 0.41233243509833245,
+                "Negative Predictive Value": 0.9999813515436976,
+                "Precision": 0.6917693385914747,
+                "Recall": 0.5392242648623543,
                 "Total Positives Reference": 4745.0,
-                "Total Positives Test": 2462.0,
-                "True Negative Rate": 0.9999950537141579
+                "Total Positives Test": 3158.0,
+                "True Negative Rate": 0.9999932689806607
             },
             "12": {
                 "Accuracy": 0.9989179876532767,
@@ -955,21 +955,21 @@
                 "True Negative Rate": 0.9998160945850013
             },
             "16": {
-                "Accuracy": 0.9944277986141015,
-                "Average (Modified) Hausdorff Distance": 0.8491374770454653,
-                "Dice": 0.8245986353277818,
-                "False Discovery Rate": 0.17244962583755305,
+                "Accuracy": 0.9936349973903865,
+                "Average (Modified) Hausdorff Distance": 1.583654125785978,
+                "Dice": 0.8069345539819381,
+                "False Discovery Rate": 0.20892546517123833,
                 "False Negative Rate": 0.15670109459271309,
-                "False Omission Rate": 0.0030097632778319145,
-                "False Positive Rate": 0.002651118731668308,
-                "Hausdorff Distance": 6.41967074902896,
-                "Jaccard": 0.7025378347466744,
-                "Negative Predictive Value": 0.996990236722168,
-                "Precision": 0.8275503741624469,
+                "False Omission Rate": 0.003012650096138061,
+                "False Positive Rate": 0.003459105903098355,
+                "Hausdorff Distance": 10.161190984270133,
+                "Jaccard": 0.6769043343939901,
+                "Negative Predictive Value": 0.9969873499038618,
+                "Precision": 0.7910745348287617,
                 "Recall": 0.8432989054072869,
                 "Total Positives Reference": 2202084.0,
-                "Total Positives Test": 2156266.6666666665,
-                "True Negative Rate": 0.9973488812683318
+                "Total Positives Test": 2261843.3333333335,
+                "True Negative Rate": 0.9965408940969017
             },
             "2": {
                 "Accuracy": 0.9999689968239291,
@@ -1110,5 +1110,5 @@
         }
     },
     "task": "",
-    "timestamp": "2022-04-17 04:13:28.689047"
+    "timestamp": "2022-04-17 19:07:20.764382"
 }

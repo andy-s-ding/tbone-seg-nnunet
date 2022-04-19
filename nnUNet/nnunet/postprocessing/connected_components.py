@@ -185,7 +185,7 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
     pp_results['num_samples'] = len(validation_result_raw['all'])
     validation_result_raw = validation_result_raw['mean']
 
-    min_proportion_kept = 0.1
+    min_proportion_kept = None
     
     if advanced_postprocessing:
         # first treat all foreground classes as one and remove all but the largest foreground connected component
@@ -374,8 +374,8 @@ def determine_postprocessing(base, gt_labels_folder, raw_subfolder_name="validat
                 if min_size_kept is not None:
                     pp_results['min_valid_object_sizes'].update({c: min_size_kept[c]})
 
-                print("Removing regions smaller than {}% total volume for class {} improved dice results!".format(int(min_proportion_kept*100), c))
-                # print("Removing all but the largest region for class %d improved dice results!" % c)
+                # print("Removing regions smaller than {}% total volume for class {} improved dice results!".format(int(min_proportion_kept*100), c))
+                print("Removing all but the largest region for class %d improved dice results!" % c)
                 # print("Removing all but the largest region for class %d improved dice and/or ahd results!" % c)
                 print('min_valid_object_sizes', min_size_kept)
     else:

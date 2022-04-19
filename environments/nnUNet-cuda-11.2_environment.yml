@@ -56,4 +56,5 @@ dependencies:
   - xz=5.2.5=h516909a_1
   - zlib=1.2.11=h516909a_1010
   - zstd=1.4.9=ha95c52a_0
+  - edt=2.1.2
 prefix: /home/andyding/anaconda3/envs/nnUNet-11.2

@@ -12,15 +12,17 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-from nnunet.training.loss_functions.focal_loss import FocalLossV2
+from nnunet.training.loss_functions.dice_loss import DC_and_FocalCE_loss
 from nnunet.training.network_training.nnUNetTrainerV2 import nnUNetTrainerV2
 from torch import nn
 
 
-class nnUNetTrainerV2_SegLoss_Focal(nnUNetTrainerV2):
+class nnUNetTrainerV2_Loss_DiceFocalCE(nnUNetTrainerV2):
     def __init__(self, plans_file, fold, output_folder=None, dataset_directory=None, batch_dice=True, stage=None,
                  unpack_data=True, deterministic=True, fp16=False):
         super().__init__(plans_file, fold, output_folder, dataset_directory, batch_dice, stage,
                                               unpack_data, deterministic, fp16)
-        print("Setting up self.loss = Focal_loss({'alpha':0.25, 'gamma':2, 'smooth':1e-5})")
-        self.loss = FocalLossV2(apply_nonlin=nn.Softmax(dim=1), **{'alpha':0.25, 'gamma':2, 'smooth':1e-5})
+        print("Focal loss parameters: {'alpha':0.25, 'gamma':2, 'smooth':1e-5}")
+        self.loss = DC_and_FocalCE_loss({'batch_dice': self.batch_dice, 'smooth': 1e-5, 'do_bg': False}, {'alpha':0.25, 'gamma':2, 'smooth':1e-5})
+
+
