@@ -1,0 +1,3208 @@
+Starting... 
+2022-04-22 15:55:04.812117: Using splits from existing split file: /media/andyding/SAMSUNG 4TB/tbone-seg-nnunet/02_ading/nnUnet/nnUNet_preprocessed/Task101_TemporalBone/splits_final.pkl 
+2022-04-22 15:55:04.812933: The split file contains 5 splits. 
+2022-04-22 15:55:04.813112: Desired fold for training: 3 
+2022-04-22 15:55:04.813272: This split has 12 training and 3 validation cases. 
+2022-04-22 15:55:04.863836: TRAINING KEYS:
+ odict_keys(['jhu_000', 'jhu_001', 'jhu_002', 'jhu_003', 'jhu_005', 'jhu_006', 'jhu_007', 'jhu_008', 'jhu_010', 'jhu_011', 'jhu_012', 'jhu_014']) 
+2022-04-22 15:55:04.864081: VALIDATION KEYS:
+ odict_keys(['jhu_004', 'jhu_009', 'jhu_013']) 
+2022-04-22 15:55:07.338247: lr: 0.01 
+2022-04-22 15:55:26.710338: Unable to plot network architecture: 
+2022-04-22 15:55:26.780865: No module named 'hiddenlayer' 
+2022-04-22 15:55:26.849110: 
+printing the network instead:
+ 
+2022-04-22 15:55:26.913776: Generic_UNet(
+  (conv_blocks_localization): ModuleList(
+    (0): Sequential(
+      (0): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(640, 320, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+      (1): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(320, 320, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+    )
+    (1): Sequential(
+      (0): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(512, 256, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+      (1): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(256, 256, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+    )
+    (2): Sequential(
+      (0): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(256, 128, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+      (1): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(128, 128, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+    )
+    (3): Sequential(
+      (0): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(128, 64, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+      (1): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(64, 64, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+    )
+    (4): Sequential(
+      (0): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(64, 32, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+      (1): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(32, 32, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+    )
+  )
+  (conv_blocks_context): ModuleList(
+    (0): StackedConvLayers(
+      (blocks): Sequential(
+        (0): ConvDropoutNormNonlin(
+          (conv): Conv3d(1, 32, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+          (instnorm): InstanceNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+          (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+        )
+        (1): ConvDropoutNormNonlin(
+          (conv): Conv3d(32, 32, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+          (instnorm): InstanceNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+          (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+        )
+      )
+    )
+    (1): StackedConvLayers(
+      (blocks): Sequential(
+        (0): ConvDropoutNormNonlin(
+          (conv): Conv3d(32, 64, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1])
+          (instnorm): InstanceNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+          (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+        )
+        (1): ConvDropoutNormNonlin(
+          (conv): Conv3d(64, 64, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+          (instnorm): InstanceNorm3d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+          (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+        )
+      )
+    )
+    (2): StackedConvLayers(
+      (blocks): Sequential(
+        (0): ConvDropoutNormNonlin(
+          (conv): Conv3d(64, 128, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1])
+          (instnorm): InstanceNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+          (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+        )
+        (1): ConvDropoutNormNonlin(
+          (conv): Conv3d(128, 128, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+          (instnorm): InstanceNorm3d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+          (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+        )
+      )
+    )
+    (3): StackedConvLayers(
+      (blocks): Sequential(
+        (0): ConvDropoutNormNonlin(
+          (conv): Conv3d(128, 256, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1])
+          (instnorm): InstanceNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+          (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+        )
+        (1): ConvDropoutNormNonlin(
+          (conv): Conv3d(256, 256, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+          (instnorm): InstanceNorm3d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+          (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+        )
+      )
+    )
+    (4): StackedConvLayers(
+      (blocks): Sequential(
+        (0): ConvDropoutNormNonlin(
+          (conv): Conv3d(256, 320, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1])
+          (instnorm): InstanceNorm3d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+          (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+        )
+        (1): ConvDropoutNormNonlin(
+          (conv): Conv3d(320, 320, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+          (instnorm): InstanceNorm3d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+          (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+        )
+      )
+    )
+    (5): Sequential(
+      (0): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(320, 320, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+      (1): StackedConvLayers(
+        (blocks): Sequential(
+          (0): ConvDropoutNormNonlin(
+            (conv): Conv3d(320, 320, kernel_size=[3, 3, 3], stride=(1, 1, 1), padding=[1, 1, 1])
+            (instnorm): InstanceNorm3d(320, eps=1e-05, momentum=0.1, affine=True, track_running_stats=False)
+            (lrelu): LeakyReLU(negative_slope=0.01, inplace=True)
+          )
+        )
+      )
+    )
+  )
+  (td): ModuleList()
+  (tu): ModuleList(
+    (0): ConvTranspose3d(320, 320, kernel_size=[2, 2, 2], stride=[2, 2, 2], bias=False)
+    (1): ConvTranspose3d(320, 256, kernel_size=[2, 2, 2], stride=[2, 2, 2], bias=False)
+    (2): ConvTranspose3d(256, 128, kernel_size=[2, 2, 2], stride=[2, 2, 2], bias=False)
+    (3): ConvTranspose3d(128, 64, kernel_size=[2, 2, 2], stride=[2, 2, 2], bias=False)
+    (4): ConvTranspose3d(64, 32, kernel_size=[2, 2, 2], stride=[2, 2, 2], bias=False)
+  )
+  (seg_outputs): ModuleList(
+    (0): Conv3d(320, 17, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+    (1): Conv3d(256, 17, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+    (2): Conv3d(128, 17, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+    (3): Conv3d(64, 17, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+    (4): Conv3d(32, 17, kernel_size=(1, 1, 1), stride=(1, 1, 1), bias=False)
+  )
+) 
+2022-04-22 15:55:27.005893: 
+ 
+2022-04-22 15:55:27.080925: 
+epoch:  0 
+2022-04-22 16:00:44.169528: train loss : 0.3954 
+2022-04-22 16:01:05.268771: validation loss: 0.3094 
+2022-04-22 16:01:05.274368: Average global foreground Dice: [0.8849, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.389, 0.0, 0.0015, 0.0032] 
+2022-04-22 16:01:05.274806: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 16:01:05.806538: lr: 0.00997 
+2022-04-22 16:01:05.806722: saving scheduled checkpoint file... 
+2022-04-22 16:01:05.841851: saving checkpoint... 
+2022-04-22 16:01:06.669436: done, saving took 0.86 seconds 
+2022-04-22 16:01:06.670184: done 
+2022-04-22 16:01:06.670358: This epoch took 339.519324 s
+ 
+2022-04-22 16:01:06.670483: 
+epoch:  1 
+2022-04-22 16:06:15.820417: train loss : 0.2520 
+2022-04-22 16:06:36.362307: validation loss: 0.2535 
+2022-04-22 16:06:36.363400: Average global foreground Dice: [0.8374, 0.0, 0.0, 0.0, 0.3488, 0.2171, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.3429, 0.0, 0.0, 0.0046] 
+2022-04-22 16:06:36.363563: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 16:06:37.009678: lr: 0.00994 
+2022-04-22 16:06:37.009851: saving scheduled checkpoint file... 
+2022-04-22 16:06:37.039814: saving checkpoint... 
+2022-04-22 16:06:37.866946: done, saving took 0.86 seconds 
+2022-04-22 16:06:37.870889: done 
+2022-04-22 16:06:37.904578: saving checkpoint... 
+2022-04-22 16:06:38.745117: done, saving took 0.87 seconds 
+2022-04-22 16:06:38.749455: This epoch took 332.078840 s
+ 
+2022-04-22 16:06:38.749598: 
+epoch:  2 
+2022-04-22 16:11:48.714593: train loss : 0.2064 
+2022-04-22 16:12:09.623605: validation loss: 0.1721 
+2022-04-22 16:12:09.624272: Average global foreground Dice: [0.885, 0.0, 0.0, 0.0, 0.4991, 0.4194, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.423, 0.0, 0.0074, 0.3477] 
+2022-04-22 16:12:09.634539: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 16:12:10.187002: lr: 0.00991 
+2022-04-22 16:12:10.187226: saving scheduled checkpoint file... 
+2022-04-22 16:12:10.222548: saving checkpoint... 
+2022-04-22 16:12:11.059795: done, saving took 0.87 seconds 
+2022-04-22 16:12:11.060583: done 
+2022-04-22 16:12:11.082196: saving checkpoint... 
+2022-04-22 16:12:11.906252: done, saving took 0.85 seconds 
+2022-04-22 16:12:11.907022: This epoch took 333.157283 s
+ 
+2022-04-22 16:12:11.907173: 
+epoch:  3 
+2022-04-22 16:17:19.248561: train loss : 0.1319 
+2022-04-22 16:17:39.833125: validation loss: 0.1440 
+2022-04-22 16:17:39.833802: Average global foreground Dice: [0.9042, 0.0, 0.0, 0.0, 0.6305, 0.3405, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5399, 0.0, 0.002, 0.2323] 
+2022-04-22 16:17:39.833993: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 16:17:40.390880: lr: 0.00988 
+2022-04-22 16:17:40.391100: saving scheduled checkpoint file... 
+2022-04-22 16:17:40.420500: saving checkpoint... 
+2022-04-22 16:17:41.274061: done, saving took 0.88 seconds 
+2022-04-22 16:17:41.277806: done 
+2022-04-22 16:17:41.310921: saving checkpoint... 
+2022-04-22 16:17:42.161504: done, saving took 0.88 seconds 
+2022-04-22 16:17:42.162278: This epoch took 330.254952 s
+ 
+2022-04-22 16:17:42.162419: 
+epoch:  4 
+2022-04-22 16:22:50.957062: train loss : 0.1173 
+2022-04-22 16:23:11.524818: validation loss: 0.1226 
+2022-04-22 16:23:11.525654: Average global foreground Dice: [0.8999, 0.0, 0.0, 0.0, 0.6072, 0.6712, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5403, 0.0, 0.104, 0.3262] 
+2022-04-22 16:23:11.525834: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 16:23:12.079938: lr: 0.00985 
+2022-04-22 16:23:12.080122: saving scheduled checkpoint file... 
+2022-04-22 16:23:12.109809: saving checkpoint... 
+2022-04-22 16:23:12.941997: done, saving took 0.86 seconds 
+2022-04-22 16:23:12.942721: done 
+2022-04-22 16:23:12.964301: saving checkpoint... 
+2022-04-22 16:23:13.786458: done, saving took 0.84 seconds 
+2022-04-22 16:23:13.787171: This epoch took 331.624601 s
+ 
+2022-04-22 16:23:13.787303: 
+epoch:  5 
+2022-04-22 16:28:21.755749: train loss : 0.0979 
+2022-04-22 16:28:42.211834: validation loss: 0.1175 
+2022-04-22 16:28:42.212514: Average global foreground Dice: [0.9092, 0.0, 0.0, 0.0, 0.733, 0.6732, 0.0, 0.0, 0.0, 0.033, 0.0, 0.0, 0.4794, 0.0, 0.0268, 0.3703] 
+2022-04-22 16:28:42.212688: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 16:28:42.806393: lr: 0.00982 
+2022-04-22 16:28:42.806570: saving scheduled checkpoint file... 
+2022-04-22 16:28:42.836003: saving checkpoint... 
+2022-04-22 16:28:43.670141: done, saving took 0.86 seconds 
+2022-04-22 16:28:43.670865: done 
+2022-04-22 16:28:43.692474: saving checkpoint... 
+2022-04-22 16:28:44.513348: done, saving took 0.84 seconds 
+2022-04-22 16:28:44.514084: This epoch took 330.726648 s
+ 
+2022-04-22 16:28:44.514221: 
+epoch:  6 
+2022-04-22 16:33:52.156600: train loss : 0.0784 
+2022-04-22 16:34:12.570603: validation loss: 0.0730 
+2022-04-22 16:34:12.571334: Average global foreground Dice: [0.8856, 0.0, 0.0, 0.0, 0.6875, 0.4983, 0.0, 0.0, 0.0, 0.145, 0.0, 0.0, 0.6041, 0.0, 0.108, 0.4143] 
+2022-04-22 16:34:12.571512: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 16:34:13.143235: lr: 0.00979 
+2022-04-22 16:34:13.143404: saving scheduled checkpoint file... 
+2022-04-22 16:34:13.169287: saving checkpoint... 
+2022-04-22 16:34:13.995338: done, saving took 0.85 seconds 
+2022-04-22 16:34:13.998630: done 
+2022-04-22 16:34:14.028327: saving checkpoint... 
+2022-04-22 16:34:14.867173: done, saving took 0.87 seconds 
+2022-04-22 16:34:14.867901: This epoch took 330.353547 s
+ 
+2022-04-22 16:34:14.868036: 
+epoch:  7 
+2022-04-22 16:39:24.028764: train loss : 0.0377 
+2022-04-22 16:39:44.892453: validation loss: 0.0432 
+2022-04-22 16:39:44.893386: Average global foreground Dice: [0.9023, 0.4063, 0.0, 0.0, 0.7555, 0.7102, 0.0, 0.0, 0.0, 0.3348, 0.0, 0.095, 0.5981, 0.0, 0.1601, 0.4646] 
+2022-04-22 16:39:44.893799: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 16:39:45.542918: lr: 0.00976 
+2022-04-22 16:39:45.543097: saving scheduled checkpoint file... 
+2022-04-22 16:39:45.564988: saving checkpoint... 
+2022-04-22 16:39:46.415258: done, saving took 0.87 seconds 
+2022-04-22 16:39:46.415996: done 
+2022-04-22 16:39:46.437648: saving checkpoint... 
+2022-04-22 16:39:47.241005: done, saving took 0.82 seconds 
+2022-04-22 16:39:47.241738: This epoch took 332.373537 s
+ 
+2022-04-22 16:39:47.241878: 
+epoch:  8 
+2022-04-22 16:44:54.985286: train loss : 0.0243 
+2022-04-22 16:45:15.470351: validation loss: 0.0380 
+2022-04-22 16:45:15.471017: Average global foreground Dice: [0.8884, 0.5227, 0.0003, 0.0, 0.7502, 0.6012, 0.0, 0.0, 0.0, 0.4394, 0.0, 0.0, 0.6267, 0.0, 0.1403, 0.4324] 
+2022-04-22 16:45:15.471188: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 16:45:16.038929: lr: 0.00973 
+2022-04-22 16:45:16.039110: saving scheduled checkpoint file... 
+2022-04-22 16:45:16.060855: saving checkpoint... 
+2022-04-22 16:45:16.883911: done, saving took 0.84 seconds 
+2022-04-22 16:45:16.884665: done 
+2022-04-22 16:45:16.906311: saving checkpoint... 
+2022-04-22 16:45:17.738026: done, saving took 0.85 seconds 
+2022-04-22 16:45:17.738753: This epoch took 330.496741 s
+ 
+2022-04-22 16:45:17.738885: 
+epoch:  9 
+2022-04-22 16:50:26.450482: train loss : 0.0063 
+2022-04-22 16:50:47.039699: validation loss: 0.0223 
+2022-04-22 16:50:47.040366: Average global foreground Dice: [0.9088, 0.5564, 0.0002, 0.0, 0.749, 0.6953, 0.0, 0.0, 0.0, 0.5082, 0.0, 0.1769, 0.6102, 0.0, 0.0, 0.4601] 
+2022-04-22 16:50:47.040536: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 16:50:47.604642: lr: 0.009699 
+2022-04-22 16:50:47.604825: saving scheduled checkpoint file... 
+2022-04-22 16:50:47.626567: saving checkpoint... 
+2022-04-22 16:50:48.464269: done, saving took 0.86 seconds 
+2022-04-22 16:50:48.465029: done 
+2022-04-22 16:50:48.486628: saving checkpoint... 
+2022-04-22 16:50:49.321660: done, saving took 0.86 seconds 
+2022-04-22 16:50:49.322412: This epoch took 331.583389 s
+ 
+2022-04-22 16:50:49.322547: 
+epoch:  10 
+2022-04-22 16:56:01.908715: train loss : -0.0048 
+2022-04-22 16:56:23.245402: validation loss: 0.0007 
+2022-04-22 16:56:23.246106: Average global foreground Dice: [0.9149, 0.5835, 0.3041, 0.0, 0.821, 0.5651, 0.0, 0.0, 0.16, 0.6095, 0.0, 0.1457, 0.5846, 0.0, 0.0395, 0.4935] 
+2022-04-22 16:56:23.246283: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 16:56:23.797900: lr: 0.009669 
+2022-04-22 16:56:23.798090: saving scheduled checkpoint file... 
+2022-04-22 16:56:23.819821: saving checkpoint... 
+2022-04-22 16:56:24.645925: done, saving took 0.85 seconds 
+2022-04-22 16:56:24.646658: done 
+2022-04-22 16:56:24.668558: saving checkpoint... 
+2022-04-22 16:56:25.523919: done, saving took 0.88 seconds 
+2022-04-22 16:56:25.524666: This epoch took 336.201979 s
+ 
+2022-04-22 16:56:25.524797: 
+epoch:  11 
+2022-04-22 17:01:43.232838: train loss : -0.0219 
+2022-04-22 17:02:03.913437: validation loss: -0.0244 
+2022-04-22 17:02:03.914162: Average global foreground Dice: [0.9122, 0.6123, 0.4038, 0.0, 0.8548, 0.5863, 0.0, 0.0, 0.3182, 0.5695, 0.0, 0.13, 0.635, 0.0, 0.2278, 0.5726] 
+2022-04-22 17:02:03.914382: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 17:02:04.451831: lr: 0.009639 
+2022-04-22 17:02:04.452058: saving scheduled checkpoint file... 
+2022-04-22 17:02:04.474060: saving checkpoint... 
+2022-04-22 17:02:05.299188: done, saving took 0.85 seconds 
+2022-04-22 17:02:05.299923: done 
+2022-04-22 17:02:05.321551: saving checkpoint... 
+2022-04-22 17:02:06.132357: done, saving took 0.83 seconds 
+2022-04-22 17:02:06.133092: This epoch took 340.608155 s
+ 
+2022-04-22 17:02:06.133229: 
+epoch:  12 
+2022-04-22 17:07:16.402353: train loss : -0.0447 
+2022-04-22 17:07:37.272781: validation loss: -0.0611 
+2022-04-22 17:07:37.273705: Average global foreground Dice: [0.9256, 0.6327, 0.4546, 0.0, 0.8856, 0.7796, 0.0, 0.0, 0.404, 0.6374, 0.0, 0.0917, 0.6532, 0.0, 0.0756, 0.5173] 
+2022-04-22 17:07:37.273975: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 17:07:37.875971: lr: 0.009609 
+2022-04-22 17:07:37.876231: saving scheduled checkpoint file... 
+2022-04-22 17:07:37.898087: saving checkpoint... 
+2022-04-22 17:07:38.739894: done, saving took 0.86 seconds 
+2022-04-22 17:07:38.740693: done 
+2022-04-22 17:07:38.762453: saving checkpoint... 
+2022-04-22 17:07:39.596047: done, saving took 0.86 seconds 
+2022-04-22 17:07:39.596907: This epoch took 333.463541 s
+ 
+2022-04-22 17:07:39.597069: 
+epoch:  13 
+2022-04-22 17:12:50.342807: train loss : -0.0585 
+2022-04-22 17:13:11.283590: validation loss: -0.0374 
+2022-04-22 17:13:11.284379: Average global foreground Dice: [0.9177, 0.6794, 0.6631, 0.0, 0.8337, 0.7674, 0.0, 0.0, 0.517, 0.5704, 0.0, 0.1921, 0.5638, 0.0, 0.2233, 0.5031] 
+2022-04-22 17:13:11.284579: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 17:13:11.847869: lr: 0.009579 
+2022-04-22 17:13:11.848056: saving scheduled checkpoint file... 
+2022-04-22 17:13:11.871663: saving checkpoint... 
+2022-04-22 17:13:12.709337: done, saving took 0.86 seconds 
+2022-04-22 17:13:12.710079: done 
+2022-04-22 17:13:12.731723: saving checkpoint... 
+2022-04-22 17:13:13.578495: done, saving took 0.87 seconds 
+2022-04-22 17:13:13.579222: This epoch took 333.982009 s
+ 
+2022-04-22 17:13:13.579361: 
+epoch:  14 
+2022-04-22 17:18:22.854944: train loss : -0.0617 
+2022-04-22 17:18:43.461222: validation loss: -0.0218 
+2022-04-22 17:18:43.462070: Average global foreground Dice: [0.9019, 0.6834, 0.6724, 0.0, 0.8652, 0.8042, 0.0, 0.0, 0.4933, 0.5878, 0.0, 0.1443, 0.5564, 0.0, 0.2702, 0.5419] 
+2022-04-22 17:18:43.462280: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 17:18:44.045781: lr: 0.009549 
+2022-04-22 17:18:44.045970: saving scheduled checkpoint file... 
+2022-04-22 17:18:44.069322: saving checkpoint... 
+2022-04-22 17:18:44.979580: done, saving took 0.93 seconds 
+2022-04-22 17:18:44.986830: done 
+2022-04-22 17:18:45.010379: saving checkpoint... 
+2022-04-22 17:18:45.861385: done, saving took 0.87 seconds 
+2022-04-22 17:18:45.862129: This epoch took 332.282621 s
+ 
+2022-04-22 17:18:45.862271: 
+epoch:  15 
+2022-04-22 17:23:55.214011: train loss : -0.0815 
+2022-04-22 17:24:15.955383: validation loss: -0.0691 
+2022-04-22 17:24:15.956362: Average global foreground Dice: [0.9132, 0.6988, 0.6646, 0.0, 0.8232, 0.6399, 0.0298, 0.0, 0.382, 0.657, 0.0, 0.4252, 0.6288, 0.0, 0.0158, 0.5766] 
+2022-04-22 17:24:15.956585: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 17:24:16.550518: lr: 0.009519 
+2022-04-22 17:24:16.550751: saving scheduled checkpoint file... 
+2022-04-22 17:24:16.572527: saving checkpoint... 
+2022-04-22 17:24:17.416005: done, saving took 0.87 seconds 
+2022-04-22 17:24:17.416740: done 
+2022-04-22 17:24:17.438462: saving checkpoint... 
+2022-04-22 17:24:18.287371: done, saving took 0.87 seconds 
+2022-04-22 17:24:18.288106: This epoch took 332.425695 s
+ 
+2022-04-22 17:24:18.288248: 
+epoch:  16 
+2022-04-22 17:29:30.689791: train loss : -0.0954 
+2022-04-22 17:29:51.800658: validation loss: -0.1255 
+2022-04-22 17:29:51.805435: Average global foreground Dice: [0.904, 0.7224, 0.6795, 0.0, 0.8572, 0.7411, 0.1756, 0.0, 0.6926, 0.6815, 0.0, 0.4143, 0.6431, 0.0, 0.2885, 0.6435] 
+2022-04-22 17:29:51.805627: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 17:29:52.357836: lr: 0.009489 
+2022-04-22 17:29:52.358045: saving scheduled checkpoint file... 
+2022-04-22 17:29:52.387426: saving checkpoint... 
+2022-04-22 17:29:53.226331: done, saving took 0.87 seconds 
+2022-04-22 17:29:53.227411: done 
+2022-04-22 17:29:53.249188: saving checkpoint... 
+2022-04-22 17:29:54.066495: done, saving took 0.84 seconds 
+2022-04-22 17:29:54.067484: This epoch took 335.779099 s
+ 
+2022-04-22 17:29:54.067631: 
+epoch:  17 
+2022-04-22 17:35:03.961604: train loss : -0.0849 
+2022-04-22 17:35:24.492749: validation loss: -0.0859 
+2022-04-22 17:35:24.503727: Average global foreground Dice: [0.9212, 0.7444, 0.7389, 0.0, 0.8533, 0.7159, 0.3138, 0.0096, 0.7037, 0.6721, 0.0, 0.4632, 0.6305, 0.0, 0.0638, 0.5654] 
+2022-04-22 17:35:24.504179: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 17:35:25.050013: lr: 0.009458 
+2022-04-22 17:35:25.050193: saving scheduled checkpoint file... 
+2022-04-22 17:35:25.079474: saving checkpoint... 
+2022-04-22 17:35:25.925480: done, saving took 0.88 seconds 
+2022-04-22 17:35:25.926210: done 
+2022-04-22 17:35:25.947856: saving checkpoint... 
+2022-04-22 17:35:26.834325: done, saving took 0.91 seconds 
+2022-04-22 17:35:26.835159: This epoch took 332.767389 s
+ 
+2022-04-22 17:35:26.835322: 
+epoch:  18 
+2022-04-22 17:40:34.836664: train loss : -0.0960 
+2022-04-22 17:40:55.395607: validation loss: -0.1333 
+2022-04-22 17:40:55.400342: Average global foreground Dice: [0.9066, 0.7704, 0.7843, 0.0, 0.8613, 0.85, 0.4122, 0.0, 0.6528, 0.7012, 0.0, 0.5216, 0.6797, 0.0, 0.1208, 0.6334] 
+2022-04-22 17:40:55.400542: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 17:40:55.993318: lr: 0.009428 
+2022-04-22 17:40:55.993503: saving scheduled checkpoint file... 
+2022-04-22 17:40:56.022894: saving checkpoint... 
+2022-04-22 17:40:56.858522: done, saving took 0.86 seconds 
+2022-04-22 17:40:56.859592: done 
+2022-04-22 17:40:56.881167: saving checkpoint... 
+2022-04-22 17:40:57.712381: done, saving took 0.85 seconds 
+2022-04-22 17:40:57.713116: This epoch took 330.877630 s
+ 
+2022-04-22 17:40:57.713250: 
+epoch:  19 
+2022-04-22 17:46:05.874665: train loss : -0.1110 
+2022-04-22 17:46:26.465112: validation loss: -0.1146 
+2022-04-22 17:46:26.476050: Average global foreground Dice: [0.9227, 0.6879, 0.6399, 0.0, 0.8672, 0.8616, 0.3673, 0.0054, 0.7349, 0.6847, 0.0, 0.2703, 0.7115, 0.0, 0.1458, 0.6186] 
+2022-04-22 17:46:26.476489: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 17:46:27.042061: lr: 0.009398 
+2022-04-22 17:46:27.042288: saving scheduled checkpoint file... 
+2022-04-22 17:46:27.067908: saving checkpoint... 
+2022-04-22 17:46:27.936971: done, saving took 0.89 seconds 
+2022-04-22 17:46:27.940625: done 
+2022-04-22 17:46:27.969853: saving checkpoint... 
+2022-04-22 17:46:28.817644: done, saving took 0.88 seconds 
+2022-04-22 17:46:28.821306: This epoch took 331.107922 s
+ 
+2022-04-22 17:46:28.821448: 
+epoch:  20 
+2022-04-22 17:51:37.671298: train loss : -0.0995 
+2022-04-22 17:51:58.597221: validation loss: -0.0984 
+2022-04-22 17:51:58.598290: Average global foreground Dice: [0.9285, 0.7532, 0.7047, 0.0, 0.8267, 0.7704, 0.3809, 0.0003, 0.6476, 0.6763, 0.0, 0.4548, 0.6318, 0.0, 0.0161, 0.5775] 
+2022-04-22 17:51:58.598680: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 17:51:59.179082: lr: 0.009368 
+2022-04-22 17:51:59.179267: saving scheduled checkpoint file... 
+2022-04-22 17:51:59.208287: saving checkpoint... 
+2022-04-22 17:52:00.101599: done, saving took 0.92 seconds 
+2022-04-22 17:52:00.107774: done 
+2022-04-22 17:52:00.131294: saving checkpoint... 
+2022-04-22 17:52:00.978281: done, saving took 0.87 seconds 
+2022-04-22 17:52:00.979050: This epoch took 332.157465 s
+ 
+2022-04-22 17:52:00.979190: 
+epoch:  21 
+2022-04-22 17:57:08.850070: train loss : -0.1229 
+2022-04-22 17:57:29.463204: validation loss: -0.0999 
+2022-04-22 17:57:29.464108: Average global foreground Dice: [0.9156, 0.7191, 0.7467, 0.0, 0.9146, 0.8469, 0.5145, 0.2525, 0.6879, 0.7385, 0.0, 0.4391, 0.5913, 0.0, 0.012, 0.622] 
+2022-04-22 17:57:29.474750: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 17:57:30.036473: lr: 0.009338 
+2022-04-22 17:57:30.036706: saving scheduled checkpoint file... 
+2022-04-22 17:57:30.058625: saving checkpoint... 
+2022-04-22 17:57:30.901482: done, saving took 0.86 seconds 
+2022-04-22 17:57:30.902216: done 
+2022-04-22 17:57:30.923854: saving checkpoint... 
+2022-04-22 17:57:31.756340: done, saving took 0.85 seconds 
+2022-04-22 17:57:31.757099: This epoch took 330.777767 s
+ 
+2022-04-22 17:57:31.757233: 
+epoch:  22 
+2022-04-22 18:02:42.227191: train loss : -0.1045 
+2022-04-22 18:03:03.268303: validation loss: -0.1363 
+2022-04-22 18:03:03.269754: Average global foreground Dice: [0.9279, 0.7369, 0.775, 0.0, 0.9024, 0.809, 0.5537, 0.3544, 0.6868, 0.7303, 0.0, 0.5961, 0.703, 0.0, 0.2317, 0.6731] 
+2022-04-22 18:03:03.270373: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 18:03:03.858275: lr: 0.009307 
+2022-04-22 18:03:03.858449: saving scheduled checkpoint file... 
+2022-04-22 18:03:03.888690: saving checkpoint... 
+2022-04-22 18:03:04.727865: done, saving took 0.87 seconds 
+2022-04-22 18:03:04.728592: done 
+2022-04-22 18:03:04.750264: saving checkpoint... 
+2022-04-22 18:03:05.579667: done, saving took 0.85 seconds 
+2022-04-22 18:03:05.580395: This epoch took 333.823025 s
+ 
+2022-04-22 18:03:05.580546: 
+epoch:  23 
+2022-04-22 18:08:14.194013: train loss : -0.1162 
+2022-04-22 18:08:34.901469: validation loss: -0.1379 
+2022-04-22 18:08:34.902792: Average global foreground Dice: [0.9224, 0.7372, 0.736, 0.0, 0.8877, 0.8786, 0.5198, 0.335, 0.7302, 0.7132, 0.0, 0.5354, 0.7067, 0.0, 0.3798, 0.7422] 
+2022-04-22 18:08:34.903167: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 18:08:35.487898: lr: 0.009277 
+2022-04-22 18:08:35.488088: saving scheduled checkpoint file... 
+2022-04-22 18:08:35.518267: saving checkpoint... 
+2022-04-22 18:08:36.356232: done, saving took 0.87 seconds 
+2022-04-22 18:08:36.356982: done 
+2022-04-22 18:08:36.378677: saving checkpoint... 
+2022-04-22 18:08:37.209936: done, saving took 0.85 seconds 
+2022-04-22 18:08:37.210682: This epoch took 331.629980 s
+ 
+2022-04-22 18:08:37.210819: 
+epoch:  24 
+2022-04-22 18:13:45.569914: train loss : -0.1224 
+2022-04-22 18:14:06.224712: validation loss: -0.1752 
+2022-04-22 18:14:06.225715: Average global foreground Dice: [0.9197, 0.805, 0.8241, 0.0, 0.899, 0.8343, 0.5521, 0.4755, 0.6723, 0.7399, 0.0, 0.607, 0.7268, 0.0, 0.0913, 0.7153] 
+2022-04-22 18:14:06.226499: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 18:14:06.799736: lr: 0.009247 
+2022-04-22 18:14:06.799971: saving scheduled checkpoint file... 
+2022-04-22 18:14:06.829285: saving checkpoint... 
+2022-04-22 18:14:07.676586: done, saving took 0.88 seconds 
+2022-04-22 18:14:07.677316: done 
+2022-04-22 18:14:07.699133: saving checkpoint... 
+2022-04-22 18:14:08.536119: done, saving took 0.86 seconds 
+2022-04-22 18:14:08.536858: This epoch took 331.325903 s
+ 
+2022-04-22 18:14:08.536993: 
+epoch:  25 
+2022-04-22 18:19:17.068099: train loss : -0.1560 
+2022-04-22 18:19:37.731532: validation loss: -0.1526 
+2022-04-22 18:19:37.768262: Average global foreground Dice: [0.9173, 0.8161, 0.76, 0.0, 0.8952, 0.7794, 0.441, 0.2678, 0.7219, 0.6751, 0.0, 0.3466, 0.6317, 0.0, 0.4745, 0.7381] 
+2022-04-22 18:19:37.768699: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 18:19:38.325912: lr: 0.009217 
+2022-04-22 18:19:38.326107: saving scheduled checkpoint file... 
+2022-04-22 18:19:38.351614: saving checkpoint... 
+2022-04-22 18:19:39.217747: done, saving took 0.89 seconds 
+2022-04-22 18:19:39.221433: done 
+2022-04-22 18:19:39.251456: saving checkpoint... 
+2022-04-22 18:19:40.103496: done, saving took 0.88 seconds 
+2022-04-22 18:19:40.104270: This epoch took 331.567141 s
+ 
+2022-04-22 18:19:40.104413: 
+epoch:  26 
+2022-04-22 18:24:49.077610: train loss : -0.1854 
+2022-04-22 18:25:10.045380: validation loss: -0.1277 
+2022-04-22 18:25:10.056281: Average global foreground Dice: [0.9185, 0.7749, 0.7364, 0.0, 0.8811, 0.7798, 0.5597, 0.5516, 0.6248, 0.693, 0.0, 0.3609, 0.5889, 0.0, 0.4092, 0.7535] 
+2022-04-22 18:25:10.057649: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 18:25:10.610308: lr: 0.009186 
+2022-04-22 18:25:10.610485: saving scheduled checkpoint file... 
+2022-04-22 18:25:10.640701: saving checkpoint... 
+2022-04-22 18:25:11.498156: done, saving took 0.89 seconds 
+2022-04-22 18:25:11.498889: done 
+2022-04-22 18:25:11.520477: saving checkpoint... 
+2022-04-22 18:25:12.360929: done, saving took 0.86 seconds 
+2022-04-22 18:25:12.363483: This epoch took 332.258932 s
+ 
+2022-04-22 18:25:12.363639: 
+epoch:  27 
+2022-04-22 18:30:21.188696: train loss : -0.1461 
+2022-04-22 18:30:41.771285: validation loss: -0.1563 
+2022-04-22 18:30:41.782624: Average global foreground Dice: [0.929, 0.8428, 0.7958, 0.0, 0.9262, 0.8052, 0.6639, 0.4596, 0.6883, 0.7668, 0.0, 0.6382, 0.6464, 0.0, 0.4502, 0.7587] 
+2022-04-22 18:30:41.783052: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 18:30:42.368889: lr: 0.009156 
+2022-04-22 18:30:42.369281: saving scheduled checkpoint file... 
+2022-04-22 18:30:42.396237: saving checkpoint... 
+2022-04-22 18:30:43.313236: done, saving took 0.94 seconds 
+2022-04-22 18:30:43.313998: done 
+2022-04-22 18:30:43.335696: saving checkpoint... 
+2022-04-22 18:30:44.155750: done, saving took 0.84 seconds 
+2022-04-22 18:30:44.156487: This epoch took 331.792702 s
+ 
+2022-04-22 18:30:44.156627: 
+epoch:  28 
+2022-04-22 18:35:52.304586: train loss : -0.1754 
+2022-04-22 18:36:13.017493: validation loss: -0.1592 
+2022-04-22 18:36:13.022701: Average global foreground Dice: [0.9253, 0.7699, 0.7816, 0.0, 0.9123, 0.8292, 0.601, 0.4928, 0.7116, 0.6809, 0.0, 0.5169, 0.6334, 0.0, 0.1114, 0.6942] 
+2022-04-22 18:36:13.023353: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 18:36:13.629274: lr: 0.009126 
+2022-04-22 18:36:13.629466: saving scheduled checkpoint file... 
+2022-04-22 18:36:13.651202: saving checkpoint... 
+2022-04-22 18:36:14.501301: done, saving took 0.87 seconds 
+2022-04-22 18:36:14.502082: done 
+2022-04-22 18:36:14.523755: saving checkpoint... 
+2022-04-22 18:36:15.370043: done, saving took 0.87 seconds 
+2022-04-22 18:36:15.370822: This epoch took 331.214057 s
+ 
+2022-04-22 18:36:15.370961: 
+epoch:  29 
+2022-04-22 18:41:22.747258: train loss : -0.1920 
+2022-04-22 18:41:43.452200: validation loss: -0.1730 
+2022-04-22 18:41:43.453432: Average global foreground Dice: [0.9302, 0.8459, 0.8666, 0.0, 0.9161, 0.8541, 0.5778, 0.6392, 0.656, 0.7484, 0.0, 0.5662, 0.6887, 0.0151, 0.4829, 0.6922] 
+2022-04-22 18:41:43.454008: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 18:41:44.008779: lr: 0.009095 
+2022-04-22 18:41:44.008993: saving scheduled checkpoint file... 
+2022-04-22 18:41:44.030713: saving checkpoint... 
+2022-04-22 18:41:44.908119: done, saving took 0.90 seconds 
+2022-04-22 18:41:44.908855: done 
+2022-04-22 18:41:44.930490: saving checkpoint... 
+2022-04-22 18:41:45.758236: done, saving took 0.85 seconds 
+2022-04-22 18:41:45.758972: This epoch took 330.387881 s
+ 
+2022-04-22 18:41:45.759113: 
+epoch:  30 
+2022-04-22 18:46:53.790761: train loss : -0.1827 
+2022-04-22 18:47:14.455158: validation loss: -0.1748 
+2022-04-22 18:47:14.457078: Average global foreground Dice: [0.929, 0.7957, 0.7852, 0.0, 0.9298, 0.8939, 0.5242, 0.6618, 0.7064, 0.7356, 0.0, 0.6197, 0.4782, 0.0002, 0.4746, 0.6538] 
+2022-04-22 18:47:14.457465: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 18:47:15.026609: lr: 0.009065 
+2022-04-22 18:47:15.026792: saving scheduled checkpoint file... 
+2022-04-22 18:47:15.048432: saving checkpoint... 
+2022-04-22 18:47:15.887370: done, saving took 0.86 seconds 
+2022-04-22 18:47:15.888126: done 
+2022-04-22 18:47:15.909710: saving checkpoint... 
+2022-04-22 18:47:16.747428: done, saving took 0.86 seconds 
+2022-04-22 18:47:16.748162: This epoch took 330.988910 s
+ 
+2022-04-22 18:47:16.748298: 
+epoch:  31 
+2022-04-22 18:52:24.790083: train loss : -0.1973 
+2022-04-22 18:52:45.389832: validation loss: -0.2054 
+2022-04-22 18:52:45.391186: Average global foreground Dice: [0.9278, 0.7901, 0.8018, 0.0, 0.9215, 0.806, 0.5365, 0.5339, 0.6905, 0.7634, 0.0, 0.6581, 0.7136, 0.0139, 0.5471, 0.8081] 
+2022-04-22 18:52:45.391955: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 18:52:45.993110: lr: 0.009035 
+2022-04-22 18:52:45.993342: saving scheduled checkpoint file... 
+2022-04-22 18:52:46.015029: saving checkpoint... 
+2022-04-22 18:52:46.858019: done, saving took 0.86 seconds 
+2022-04-22 18:52:46.859123: done 
+2022-04-22 18:52:46.880791: saving checkpoint... 
+2022-04-22 18:52:47.709915: done, saving took 0.85 seconds 
+2022-04-22 18:52:47.710659: This epoch took 330.962222 s
+ 
+2022-04-22 18:52:47.710799: 
+epoch:  32 
+2022-04-22 18:57:56.152949: train loss : -0.1854 
+2022-04-22 18:58:16.798036: validation loss: -0.1413 
+2022-04-22 18:58:16.799187: Average global foreground Dice: [0.9156, 0.8292, 0.7955, 0.0, 0.843, 0.7959, 0.6455, 0.6359, 0.7289, 0.7243, 0.0, 0.6094, 0.6791, 0.0734, 0.5412, 0.7504] 
+2022-04-22 18:58:16.799366: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 18:58:17.391203: lr: 0.009004 
+2022-04-22 18:58:17.391427: saving scheduled checkpoint file... 
+2022-04-22 18:58:17.413119: saving checkpoint... 
+2022-04-22 18:58:18.262615: done, saving took 0.87 seconds 
+2022-04-22 18:58:18.263382: done 
+2022-04-22 18:58:18.285029: saving checkpoint... 
+2022-04-22 18:58:19.130157: done, saving took 0.87 seconds 
+2022-04-22 18:58:19.130938: This epoch took 331.420010 s
+ 
+2022-04-22 18:58:19.131087: 
+epoch:  33 
+2022-04-22 19:03:28.598814: train loss : -0.2173 
+2022-04-22 19:03:49.477496: validation loss: -0.1618 
+2022-04-22 19:03:49.479009: Average global foreground Dice: [0.9187, 0.8513, 0.7848, 0.0, 0.9232, 0.9034, 0.6146, 0.5743, 0.7041, 0.7686, 0.0, 0.661, 0.6568, 0.108, 0.6168, 0.6714] 
+2022-04-22 19:03:49.479675: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 19:03:50.073520: lr: 0.008974 
+2022-04-22 19:03:50.074058: saving scheduled checkpoint file... 
+2022-04-22 19:03:50.095849: saving checkpoint... 
+2022-04-22 19:03:50.998140: done, saving took 0.92 seconds 
+2022-04-22 19:03:51.005790: done 
+2022-04-22 19:03:51.029386: saving checkpoint... 
+2022-04-22 19:03:51.862218: done, saving took 0.86 seconds 
+2022-04-22 19:03:51.862955: This epoch took 332.731720 s
+ 
+2022-04-22 19:03:51.863088: 
+epoch:  34 
+2022-04-22 19:09:02.813727: train loss : -0.2172 
+2022-04-22 19:09:23.594416: validation loss: -0.1595 
+2022-04-22 19:09:23.596253: Average global foreground Dice: [0.9207, 0.8105, 0.7979, 0.0004, 0.9204, 0.8569, 0.7018, 0.5521, 0.7442, 0.7493, 0.0, 0.6547, 0.7209, 0.177, 0.5488, 0.8016] 
+2022-04-22 19:09:23.597007: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 19:09:24.264313: lr: 0.008944 
+2022-04-22 19:09:24.264505: saving scheduled checkpoint file... 
+2022-04-22 19:09:24.293138: saving checkpoint... 
+2022-04-22 19:09:25.147532: done, saving took 0.88 seconds 
+2022-04-22 19:09:25.148272: done 
+2022-04-22 19:09:25.169917: saving checkpoint... 
+2022-04-22 19:09:26.007797: done, saving took 0.86 seconds 
+2022-04-22 19:09:26.008533: This epoch took 334.145308 s
+ 
+2022-04-22 19:09:26.008665: 
+epoch:  35 
+2022-04-22 19:14:38.174223: train loss : -0.2025 
+2022-04-22 19:14:59.173937: validation loss: -0.1592 
+2022-04-22 19:14:59.184889: Average global foreground Dice: [0.9377, 0.7691, 0.7433, 0.0003, 0.9289, 0.8649, 0.6822, 0.3631, 0.7463, 0.7917, 0.0, 0.3975, 0.6781, 0.0588, 0.6941, 0.7296] 
+2022-04-22 19:14:59.185371: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 19:14:59.769302: lr: 0.008913 
+2022-04-22 19:14:59.769480: saving scheduled checkpoint file... 
+2022-04-22 19:14:59.798163: saving checkpoint... 
+2022-04-22 19:15:00.643831: done, saving took 0.87 seconds 
+2022-04-22 19:15:00.648043: done 
+2022-04-22 19:15:00.680936: saving checkpoint... 
+2022-04-22 19:15:01.517931: done, saving took 0.87 seconds 
+2022-04-22 19:15:01.518674: This epoch took 335.509874 s
+ 
+2022-04-22 19:15:01.518813: 
+epoch:  36 
+2022-04-22 19:20:10.434574: train loss : -0.2194 
+2022-04-22 19:20:31.117369: validation loss: -0.2171 
+2022-04-22 19:20:31.123108: Average global foreground Dice: [0.9335, 0.8155, 0.8304, 0.1826, 0.9213, 0.8764, 0.6343, 0.5178, 0.7327, 0.7907, 0.0, 0.6993, 0.6894, 0.1232, 0.5527, 0.7673] 
+2022-04-22 19:20:31.123696: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 19:20:31.723268: lr: 0.008883 
+2022-04-22 19:20:31.723492: saving scheduled checkpoint file... 
+2022-04-22 19:20:31.753276: saving checkpoint... 
+2022-04-22 19:20:32.604119: done, saving took 0.88 seconds 
+2022-04-22 19:20:32.604847: done 
+2022-04-22 19:20:32.626466: saving checkpoint... 
+2022-04-22 19:20:33.463672: done, saving took 0.86 seconds 
+2022-04-22 19:20:33.464434: This epoch took 331.945483 s
+ 
+2022-04-22 19:20:33.464581: 
+epoch:  37 
+2022-04-22 19:25:42.109038: train loss : -0.2208 
+2022-04-22 19:26:02.723771: validation loss: -0.1753 
+2022-04-22 19:26:02.724560: Average global foreground Dice: [0.9355, 0.7618, 0.7663, 0.2305, 0.9348, 0.8737, 0.6894, 0.5311, 0.679, 0.7689, 0.0, 0.6328, 0.7173, 0.0648, 0.7354, 0.7721] 
+2022-04-22 19:26:02.728304: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 19:26:03.282518: lr: 0.008852 
+2022-04-22 19:26:03.282693: saving scheduled checkpoint file... 
+2022-04-22 19:26:03.312215: saving checkpoint... 
+2022-04-22 19:26:04.162810: done, saving took 0.88 seconds 
+2022-04-22 19:26:04.163559: done 
+2022-04-22 19:26:04.185190: saving checkpoint... 
+2022-04-22 19:26:05.024036: done, saving took 0.86 seconds 
+2022-04-22 19:26:05.024800: This epoch took 331.560073 s
+ 
+2022-04-22 19:26:05.024944: 
+epoch:  38 
+2022-04-22 19:31:14.897970: train loss : -0.2206 
+2022-04-22 19:31:35.762933: validation loss: -0.1885 
+2022-04-22 19:31:35.774225: Average global foreground Dice: [0.9361, 0.8153, 0.7954, 0.2328, 0.8988, 0.8615, 0.5846, 0.6144, 0.6774, 0.7418, 0.0, 0.7663, 0.6971, 0.1062, 0.4237, 0.6855] 
+2022-04-22 19:31:35.774614: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 19:31:36.375360: lr: 0.008822 
+2022-04-22 19:31:36.375590: saving scheduled checkpoint file... 
+2022-04-22 19:31:36.401306: saving checkpoint... 
+2022-04-22 19:31:37.253428: done, saving took 0.88 seconds 
+2022-04-22 19:31:37.257046: done 
+2022-04-22 19:31:37.286582: saving checkpoint... 
+2022-04-22 19:31:38.141010: done, saving took 0.88 seconds 
+2022-04-22 19:31:38.141786: This epoch took 333.116690 s
+ 
+2022-04-22 19:31:38.141935: 
+epoch:  39 
+2022-04-22 19:36:49.652235: train loss : -0.2433 
+2022-04-22 19:37:10.616195: validation loss: -0.2208 
+2022-04-22 19:37:10.617234: Average global foreground Dice: [0.9411, 0.8633, 0.8778, 0.3697, 0.9363, 0.9006, 0.5605, 0.6994, 0.6663, 0.7947, 0.0, 0.7262, 0.7175, 0.1688, 0.744, 0.7112] 
+2022-04-22 19:37:10.627770: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 19:37:11.184717: lr: 0.008792 
+2022-04-22 19:37:11.184919: saving scheduled checkpoint file... 
+2022-04-22 19:37:11.210250: saving checkpoint... 
+2022-04-22 19:37:12.147197: done, saving took 0.96 seconds 
+2022-04-22 19:37:12.154175: done 
+2022-04-22 19:37:12.177830: saving checkpoint... 
+2022-04-22 19:37:13.032984: done, saving took 0.88 seconds 
+2022-04-22 19:37:13.033815: This epoch took 334.891727 s
+ 
+2022-04-22 19:37:13.033987: 
+epoch:  40 
+2022-04-22 19:42:22.627827: train loss : -0.2316 
+2022-04-22 19:42:43.190466: validation loss: -0.1851 
+2022-04-22 19:42:43.191746: Average global foreground Dice: [0.9201, 0.7884, 0.7846, 0.3766, 0.9051, 0.8495, 0.6062, 0.5327, 0.664, 0.7408, 0.0002, 0.7768, 0.6927, 0.1562, 0.6089, 0.7839] 
+2022-04-22 19:42:43.192380: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 19:42:43.768215: lr: 0.008761 
+2022-04-22 19:42:43.768396: saving scheduled checkpoint file... 
+2022-04-22 19:42:43.793201: saving checkpoint... 
+2022-04-22 19:42:44.645612: done, saving took 0.88 seconds 
+2022-04-22 19:42:44.649075: done 
+2022-04-22 19:42:44.677880: saving checkpoint... 
+2022-04-22 19:42:45.496308: done, saving took 0.85 seconds 
+2022-04-22 19:42:45.497103: This epoch took 332.462948 s
+ 
+2022-04-22 19:42:45.497251: 
+epoch:  41 
+2022-04-22 19:47:56.875031: train loss : -0.1990 
+2022-04-22 19:48:17.857870: validation loss: -0.1297 
+2022-04-22 19:48:17.858631: Average global foreground Dice: [0.8817, 0.8382, 0.8427, 0.3305, 0.8857, 0.8396, 0.6489, 0.5581, 0.7015, 0.7594, 0.1009, 0.2082, 0.4051, 0.1303, 0.5719, 0.5883] 
+2022-04-22 19:48:17.858824: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 19:48:18.418392: lr: 0.008731 
+2022-04-22 19:48:18.418573: saving scheduled checkpoint file... 
+2022-04-22 19:48:18.447452: saving checkpoint... 
+2022-04-22 19:48:19.292035: done, saving took 0.87 seconds 
+2022-04-22 19:48:19.292763: done 
+2022-04-22 19:48:19.314368: saving checkpoint... 
+2022-04-22 19:48:20.148621: done, saving took 0.86 seconds 
+2022-04-22 19:48:20.149381: This epoch took 334.651965 s
+ 
+2022-04-22 19:48:20.149526: 
+epoch:  42 
+2022-04-22 19:53:29.494793: train loss : -0.2140 
+2022-04-22 19:53:50.466080: validation loss: -0.2090 
+2022-04-22 19:53:50.471096: Average global foreground Dice: [0.929, 0.8157, 0.8393, 0.4715, 0.9287, 0.8635, 0.6081, 0.4394, 0.7605, 0.8032, 0.0394, 0.705, 0.7063, 0.1204, 0.4183, 0.6672] 
+2022-04-22 19:53:50.471476: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 19:53:51.072621: lr: 0.0087 
+2022-04-22 19:53:51.072853: saving scheduled checkpoint file... 
+2022-04-22 19:53:51.101706: saving checkpoint... 
+2022-04-22 19:53:51.941014: done, saving took 0.87 seconds 
+2022-04-22 19:53:51.941786: done 
+2022-04-22 19:53:51.963398: saving checkpoint... 
+2022-04-22 19:53:52.790954: done, saving took 0.85 seconds 
+2022-04-22 19:53:52.791704: This epoch took 332.642036 s
+ 
+2022-04-22 19:53:52.791846: 
+epoch:  43 
+2022-04-22 19:59:00.836417: train loss : -0.2478 
+2022-04-22 19:59:21.512574: validation loss: -0.2221 
+2022-04-22 19:59:21.513791: Average global foreground Dice: [0.9219, 0.8707, 0.8466, 0.3939, 0.911, 0.8371, 0.601, 0.5624, 0.7429, 0.7739, 0.1113, 0.6825, 0.7611, 0.0731, 0.5748, 0.752] 
+2022-04-22 19:59:21.517843: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 19:59:22.074131: lr: 0.00867 
+2022-04-22 19:59:22.074337: saving scheduled checkpoint file... 
+2022-04-22 19:59:22.104560: saving checkpoint... 
+2022-04-22 19:59:22.964238: done, saving took 0.89 seconds 
+2022-04-22 19:59:22.964947: done 
+2022-04-22 19:59:22.986538: saving checkpoint... 
+2022-04-22 19:59:23.828106: done, saving took 0.86 seconds 
+2022-04-22 19:59:23.828987: This epoch took 331.037000 s
+ 
+2022-04-22 19:59:23.829138: 
+epoch:  44 
+2022-04-22 20:04:31.682943: train loss : -0.2484 
+2022-04-22 20:04:52.330274: validation loss: -0.2488 
+2022-04-22 20:04:52.330965: Average global foreground Dice: [0.9373, 0.8279, 0.8494, 0.3724, 0.9267, 0.8554, 0.5674, 0.6099, 0.6411, 0.7807, 0.0315, 0.7228, 0.7203, 0.2976, 0.7305, 0.8288] 
+2022-04-22 20:04:52.331163: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 20:04:52.912283: lr: 0.008639 
+2022-04-22 20:04:52.912466: saving scheduled checkpoint file... 
+2022-04-22 20:04:52.939529: saving checkpoint... 
+2022-04-22 20:04:53.795984: done, saving took 0.88 seconds 
+2022-04-22 20:04:53.800033: done 
+2022-04-22 20:04:53.830724: saving checkpoint... 
+2022-04-22 20:04:54.673234: done, saving took 0.87 seconds 
+2022-04-22 20:04:54.673967: This epoch took 330.844680 s
+ 
+2022-04-22 20:04:54.674109: 
+epoch:  45 
+2022-04-22 20:10:03.760861: train loss : -0.2425 
+2022-04-22 20:10:24.706722: validation loss: -0.2332 
+2022-04-22 20:10:24.707898: Average global foreground Dice: [0.9372, 0.8399, 0.8163, 0.4487, 0.942, 0.9022, 0.6311, 0.6941, 0.7485, 0.7829, 0.173, 0.6805, 0.6968, 0.2585, 0.6284, 0.7886] 
+2022-04-22 20:10:24.713216: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 20:10:25.307985: lr: 0.008609 
+2022-04-22 20:10:25.308172: saving scheduled checkpoint file... 
+2022-04-22 20:10:25.337455: saving checkpoint... 
+2022-04-22 20:10:26.245152: done, saving took 0.94 seconds 
+2022-04-22 20:10:26.250419: done 
+2022-04-22 20:10:26.272085: saving checkpoint... 
+2022-04-22 20:10:27.121120: done, saving took 0.87 seconds 
+2022-04-22 20:10:27.121958: This epoch took 332.447702 s
+ 
+2022-04-22 20:10:27.122101: 
+epoch:  46 
+2022-04-22 20:15:35.991241: train loss : -0.2595 
+2022-04-22 20:15:56.632898: validation loss: -0.2203 
+2022-04-22 20:15:56.633617: Average global foreground Dice: [0.9303, 0.8061, 0.8466, 0.4396, 0.9348, 0.8449, 0.6761, 0.5984, 0.727, 0.8035, 0.2404, 0.8352, 0.7384, 0.1239, 0.6869, 0.7553] 
+2022-04-22 20:15:56.634094: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 20:15:57.197155: lr: 0.008578 
+2022-04-22 20:15:57.197344: saving scheduled checkpoint file... 
+2022-04-22 20:15:57.218982: saving checkpoint... 
+2022-04-22 20:15:58.072437: done, saving took 0.87 seconds 
+2022-04-22 20:15:58.073488: done 
+2022-04-22 20:15:58.095102: saving checkpoint... 
+2022-04-22 20:15:58.925438: done, saving took 0.85 seconds 
+2022-04-22 20:15:58.926236: This epoch took 331.803995 s
+ 
+2022-04-22 20:15:58.926380: 
+epoch:  47 
+2022-04-22 20:21:06.972108: train loss : -0.2479 
+2022-04-22 20:21:27.631035: validation loss: -0.1975 
+2022-04-22 20:21:27.641963: Average global foreground Dice: [0.9334, 0.8303, 0.8053, 0.4615, 0.9124, 0.839, 0.7072, 0.5598, 0.7334, 0.8027, 0.1362, 0.7688, 0.7337, 0.2265, 0.7721, 0.758] 
+2022-04-22 20:21:27.642612: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 20:21:28.240777: lr: 0.008548 
+2022-04-22 20:21:28.240956: saving scheduled checkpoint file... 
+2022-04-22 20:21:28.262709: saving checkpoint... 
+2022-04-22 20:21:29.115390: done, saving took 0.87 seconds 
+2022-04-22 20:21:29.117778: done 
+2022-04-22 20:21:29.143151: saving checkpoint... 
+2022-04-22 20:21:30.006312: done, saving took 0.89 seconds 
+2022-04-22 20:21:30.009125: This epoch took 331.082606 s
+ 
+2022-04-22 20:21:30.009270: 
+epoch:  48 
+2022-04-22 20:26:39.232156: train loss : -0.2436 
+2022-04-22 20:26:59.922072: validation loss: -0.2427 
+2022-04-22 20:26:59.922944: Average global foreground Dice: [0.9344, 0.7872, 0.8294, 0.4635, 0.9327, 0.8805, 0.6532, 0.4395, 0.6954, 0.7954, 0.2233, 0.8133, 0.7055, 0.1846, 0.5475, 0.651] 
+2022-04-22 20:26:59.933022: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 20:27:00.528982: lr: 0.008517 
+2022-04-22 20:27:00.529168: saving scheduled checkpoint file... 
+2022-04-22 20:27:00.561756: saving checkpoint... 
+2022-04-22 20:27:01.412525: done, saving took 0.88 seconds 
+2022-04-22 20:27:01.413333: done 
+2022-04-22 20:27:01.435006: saving checkpoint... 
+2022-04-22 20:27:02.258595: done, saving took 0.85 seconds 
+2022-04-22 20:27:02.259346: This epoch took 332.249938 s
+ 
+2022-04-22 20:27:02.259507: 
+epoch:  49 
+2022-04-22 20:32:10.458300: train loss : -0.2507 
+2022-04-22 20:32:31.105691: validation loss: -0.2801 
+2022-04-22 20:32:31.106619: Average global foreground Dice: [0.9305, 0.87, 0.8613, 0.5238, 0.9381, 0.8662, 0.6487, 0.4635, 0.7172, 0.8173, 0.2322, 0.828, 0.748, 0.4024, 0.5918, 0.7501] 
+2022-04-22 20:32:31.121149: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 20:32:31.720006: lr: 0.008487 
+2022-04-22 20:32:31.720189: saving scheduled checkpoint file... 
+2022-04-22 20:32:31.747368: saving checkpoint... 
+2022-04-22 20:32:32.594086: done, saving took 0.87 seconds 
+2022-04-22 20:32:32.594819: done 
+2022-04-22 20:32:32.616440: saving checkpoint... 
+2022-04-22 20:32:33.463265: done, saving took 0.87 seconds 
+2022-04-22 20:32:33.464223: This epoch took 331.204568 s
+ 
+2022-04-22 20:32:33.464365: 
+epoch:  50 
+2022-04-22 20:37:42.103076: train loss : -0.2272 
+2022-04-22 20:38:02.629864: validation loss: -0.2224 
+2022-04-22 20:38:02.631213: Average global foreground Dice: [0.9372, 0.7399, 0.8078, 0.4081, 0.9452, 0.8517, 0.6185, 0.3011, 0.7383, 0.784, 0.2417, 0.7469, 0.6693, 0.2726, 0.7058, 0.7359] 
+2022-04-22 20:38:02.631607: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 20:38:03.229229: lr: 0.008456 
+2022-04-22 20:38:03.229409: saving scheduled checkpoint file... 
+2022-04-22 20:38:03.256656: saving checkpoint... 
+2022-04-22 20:38:04.099102: done, saving took 0.87 seconds 
+2022-04-22 20:38:04.103351: done 
+2022-04-22 20:38:04.134100: saving checkpoint... 
+2022-04-22 20:38:04.976070: done, saving took 0.87 seconds 
+2022-04-22 20:38:04.976896: This epoch took 331.512390 s
+ 
+2022-04-22 20:38:04.977046: 
+epoch:  51 
+2022-04-22 20:43:15.031820: train loss : -0.2394 
+2022-04-22 20:43:35.635798: validation loss: -0.1573 
+2022-04-22 20:43:35.646373: Average global foreground Dice: [0.9256, 0.835, 0.8096, 0.4287, 0.9105, 0.8398, 0.6898, 0.6259, 0.6162, 0.7733, 0.2389, 0.6878, 0.6929, 0.1967, 0.5842, 0.8069] 
+2022-04-22 20:43:35.646979: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 20:43:36.209859: lr: 0.008426 
+2022-04-22 20:43:36.210064: saving scheduled checkpoint file... 
+2022-04-22 20:43:36.238331: saving checkpoint... 
+2022-04-22 20:43:37.123752: done, saving took 0.91 seconds 
+2022-04-22 20:43:37.130884: done 
+2022-04-22 20:43:37.156130: saving checkpoint... 
+2022-04-22 20:43:38.004077: done, saving took 0.87 seconds 
+2022-04-22 20:43:38.006942: This epoch took 333.029750 s
+ 
+2022-04-22 20:43:38.007081: 
+epoch:  52 
+2022-04-22 20:48:47.513883: train loss : -0.2599 
+2022-04-22 20:49:08.105406: validation loss: -0.2628 
+2022-04-22 20:49:08.106136: Average global foreground Dice: [0.9436, 0.8526, 0.8697, 0.5033, 0.9418, 0.8635, 0.5929, 0.6082, 0.7003, 0.813, 0.2453, 0.7466, 0.6358, 0.1431, 0.7774, 0.7696] 
+2022-04-22 20:49:08.107140: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 20:49:08.716679: lr: 0.008395 
+2022-04-22 20:49:08.716856: saving scheduled checkpoint file... 
+2022-04-22 20:49:08.742268: saving checkpoint... 
+2022-04-22 20:49:09.590275: done, saving took 0.87 seconds 
+2022-04-22 20:49:09.591017: done 
+2022-04-22 20:49:09.612721: saving checkpoint... 
+2022-04-22 20:49:10.446640: done, saving took 0.86 seconds 
+2022-04-22 20:49:10.447384: This epoch took 332.440169 s
+ 
+2022-04-22 20:49:10.447530: 
+epoch:  53 
+2022-04-22 20:54:19.707308: train loss : -0.2640 
+2022-04-22 20:54:40.271207: validation loss: -0.2419 
+2022-04-22 20:54:40.282162: Average global foreground Dice: [0.9276, 0.8053, 0.8359, 0.5096, 0.9301, 0.9094, 0.7042, 0.431, 0.7388, 0.7856, 0.265, 0.8095, 0.7519, 0.1766, 0.452, 0.7488] 
+2022-04-22 20:54:40.282535: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 20:54:40.877203: lr: 0.008364 
+2022-04-22 20:54:40.877378: saving scheduled checkpoint file... 
+2022-04-22 20:54:40.906088: saving checkpoint... 
+2022-04-22 20:54:41.750630: done, saving took 0.87 seconds 
+2022-04-22 20:54:41.754792: done 
+2022-04-22 20:54:41.788717: saving checkpoint... 
+2022-04-22 20:54:42.637329: done, saving took 0.88 seconds 
+2022-04-22 20:54:42.638095: This epoch took 332.190403 s
+ 
+2022-04-22 20:54:42.638237: 
+epoch:  54 
+2022-04-22 20:59:51.787855: train loss : -0.2630 
+2022-04-22 21:00:12.480691: validation loss: -0.2256 
+2022-04-22 21:00:12.485831: Average global foreground Dice: [0.9341, 0.8483, 0.8603, 0.5109, 0.9171, 0.8796, 0.5558, 0.4461, 0.7406, 0.7994, 0.3399, 0.6227, 0.7629, 0.203, 0.7461, 0.7149] 
+2022-04-22 21:00:12.486819: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 21:00:13.063929: lr: 0.008334 
+2022-04-22 21:00:13.064123: saving scheduled checkpoint file... 
+2022-04-22 21:00:13.098986: saving checkpoint... 
+2022-04-22 21:00:13.939473: done, saving took 0.87 seconds 
+2022-04-22 21:00:13.940197: done 
+2022-04-22 21:00:13.961768: saving checkpoint... 
+2022-04-22 21:00:14.796091: done, saving took 0.86 seconds 
+2022-04-22 21:00:14.796850: This epoch took 332.158471 s
+ 
+2022-04-22 21:00:14.796992: 
+epoch:  55 
+2022-04-22 21:05:25.679615: train loss : -0.2551 
+2022-04-22 21:05:46.650764: validation loss: -0.2329 
+2022-04-22 21:05:46.661783: Average global foreground Dice: [0.9365, 0.8403, 0.8438, 0.4896, 0.9149, 0.8863, 0.6458, 0.7946, 0.7337, 0.8065, 0.2505, 0.7519, 0.7261, 0.1693, 0.7859, 0.8125] 
+2022-04-22 21:05:46.662198: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 21:05:47.261896: lr: 0.008303 
+2022-04-22 21:05:47.262079: saving scheduled checkpoint file... 
+2022-04-22 21:05:47.292304: saving checkpoint... 
+2022-04-22 21:05:48.145056: done, saving took 0.88 seconds 
+2022-04-22 21:05:48.145791: done 
+2022-04-22 21:05:48.167633: saving checkpoint... 
+2022-04-22 21:05:49.001512: done, saving took 0.86 seconds 
+2022-04-22 21:05:49.002252: This epoch took 334.205119 s
+ 
+2022-04-22 21:05:49.002393: 
+epoch:  56 
+2022-04-22 21:10:59.664604: train loss : -0.2531 
+2022-04-22 21:11:20.771011: validation loss: -0.2346 
+2022-04-22 21:11:20.772164: Average global foreground Dice: [0.9401, 0.8421, 0.8533, 0.5451, 0.9368, 0.8714, 0.5697, 0.6631, 0.7027, 0.7967, 0.2248, 0.7168, 0.7752, 0.348, 0.5891, 0.7303] 
+2022-04-22 21:11:20.772809: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 21:11:21.382867: lr: 0.008272 
+2022-04-22 21:11:21.383065: saving scheduled checkpoint file... 
+2022-04-22 21:11:21.412003: saving checkpoint... 
+2022-04-22 21:11:22.259145: done, saving took 0.88 seconds 
+2022-04-22 21:11:22.263248: done 
+2022-04-22 21:11:22.294293: saving checkpoint... 
+2022-04-22 21:11:23.141298: done, saving took 0.88 seconds 
+2022-04-22 21:11:23.145153: This epoch took 334.142626 s
+ 
+2022-04-22 21:11:23.145296: 
+epoch:  57 
+2022-04-22 21:16:32.044884: train loss : -0.2707 
+2022-04-22 21:16:52.596125: validation loss: -0.2499 
+2022-04-22 21:16:52.596982: Average global foreground Dice: [0.9327, 0.827, 0.8454, 0.5002, 0.9311, 0.8482, 0.6461, 0.6289, 0.7601, 0.7768, 0.4129, 0.775, 0.743, 0.2972, 0.8444, 0.8098] 
+2022-04-22 21:16:52.607508: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 21:16:53.203408: lr: 0.008242 
+2022-04-22 21:16:53.203852: saving scheduled checkpoint file... 
+2022-04-22 21:16:53.230863: saving checkpoint... 
+2022-04-22 21:16:54.138987: done, saving took 0.93 seconds 
+2022-04-22 21:16:54.145853: done 
+2022-04-22 21:16:54.171158: saving checkpoint... 
+2022-04-22 21:16:55.031000: done, saving took 0.88 seconds 
+2022-04-22 21:16:55.033911: This epoch took 331.888470 s
+ 
+2022-04-22 21:16:55.034052: 
+epoch:  58 
+2022-04-22 21:22:03.860214: train loss : -0.2506 
+2022-04-22 21:22:24.552349: validation loss: -0.2263 
+2022-04-22 21:22:24.553493: Average global foreground Dice: [0.9349, 0.8266, 0.8399, 0.5134, 0.9267, 0.8933, 0.667, 0.57, 0.7344, 0.7444, 0.3154, 0.8364, 0.663, 0.267, 0.723, 0.8119] 
+2022-04-22 21:22:24.554154: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 21:22:25.157669: lr: 0.008211 
+2022-04-22 21:22:25.157876: saving scheduled checkpoint file... 
+2022-04-22 21:22:25.182986: saving checkpoint... 
+2022-04-22 21:22:26.025790: done, saving took 0.87 seconds 
+2022-04-22 21:22:26.026619: done 
+2022-04-22 21:22:26.048654: saving checkpoint... 
+2022-04-22 21:22:26.882256: done, saving took 0.86 seconds 
+2022-04-22 21:22:26.883047: This epoch took 331.848859 s
+ 
+2022-04-22 21:22:26.883195: 
+epoch:  59 
+2022-04-22 21:27:36.673815: train loss : -0.2407 
+2022-04-22 21:27:57.300936: validation loss: -0.2768 
+2022-04-22 21:27:57.305994: Average global foreground Dice: [0.9427, 0.8919, 0.8847, 0.4863, 0.9109, 0.8449, 0.6254, 0.4525, 0.6971, 0.8073, 0.3786, 0.7471, 0.7164, 0.2835, 0.7577, 0.7877] 
+2022-04-22 21:27:57.316877: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 21:27:57.906239: lr: 0.008181 
+2022-04-22 21:27:57.906446: saving scheduled checkpoint file... 
+2022-04-22 21:27:57.935721: saving checkpoint... 
+2022-04-22 21:27:58.784826: done, saving took 0.88 seconds 
+2022-04-22 21:27:58.785782: done 
+2022-04-22 21:27:58.807667: saving checkpoint... 
+2022-04-22 21:27:59.651641: done, saving took 0.87 seconds 
+2022-04-22 21:27:59.652380: This epoch took 332.769043 s
+ 
+2022-04-22 21:27:59.652517: 
+epoch:  60 
+2022-04-22 21:33:09.325782: train loss : -0.2759 
+2022-04-22 21:33:30.189147: validation loss: -0.1886 
+2022-04-22 21:33:30.190500: Average global foreground Dice: [0.9194, 0.8108, 0.8321, 0.5538, 0.9154, 0.8564, 0.5854, 0.5369, 0.7074, 0.7957, 0.3518, 0.8181, 0.6616, 0.3407, 0.7622, 0.7914] 
+2022-04-22 21:33:30.190810: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 21:33:30.779898: lr: 0.00815 
+2022-04-22 21:33:30.780082: saving scheduled checkpoint file... 
+2022-04-22 21:33:30.811232: saving checkpoint... 
+2022-04-22 21:33:31.664744: done, saving took 0.88 seconds 
+2022-04-22 21:33:31.665474: done 
+2022-04-22 21:33:31.687164: saving checkpoint... 
+2022-04-22 21:33:32.522357: done, saving took 0.86 seconds 
+2022-04-22 21:33:32.523107: This epoch took 332.870456 s
+ 
+2022-04-22 21:33:32.523257: 
+epoch:  61 
+2022-04-22 21:38:43.256959: train loss : -0.2501 
+2022-04-22 21:39:04.156197: validation loss: -0.2922 
+2022-04-22 21:39:04.161014: Average global foreground Dice: [0.9276, 0.8504, 0.864, 0.5233, 0.9256, 0.8844, 0.5797, 0.6699, 0.6678, 0.8077, 0.2998, 0.8217, 0.7563, 0.2983, 0.803, 0.8341] 
+2022-04-22 21:39:04.161734: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 21:39:04.737052: lr: 0.008119 
+2022-04-22 21:39:04.737237: saving scheduled checkpoint file... 
+2022-04-22 21:39:04.768141: saving checkpoint... 
+2022-04-22 21:39:05.628585: done, saving took 0.89 seconds 
+2022-04-22 21:39:05.629327: done 
+2022-04-22 21:39:05.651201: saving checkpoint... 
+2022-04-22 21:39:06.499512: done, saving took 0.87 seconds 
+2022-04-22 21:39:06.503631: This epoch took 333.980220 s
+ 
+2022-04-22 21:39:06.503776: 
+epoch:  62 
+2022-04-22 21:44:15.671601: train loss : -0.2740 
+2022-04-22 21:44:36.317925: validation loss: -0.2440 
+2022-04-22 21:44:36.318905: Average global foreground Dice: [0.9364, 0.8751, 0.863, 0.5427, 0.9049, 0.8868, 0.5669, 0.4595, 0.7528, 0.8104, 0.3873, 0.8152, 0.6821, 0.168, 0.7008, 0.8162] 
+2022-04-22 21:44:36.319777: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 21:44:36.883681: lr: 0.008088 
+2022-04-22 21:44:36.883877: saving scheduled checkpoint file... 
+2022-04-22 21:44:36.911050: saving checkpoint... 
+2022-04-22 21:44:37.756790: done, saving took 0.87 seconds 
+2022-04-22 21:44:37.760520: done 
+2022-04-22 21:44:37.791260: saving checkpoint... 
+2022-04-22 21:44:38.639276: done, saving took 0.88 seconds 
+2022-04-22 21:44:38.640007: This epoch took 332.136090 s
+ 
+2022-04-22 21:44:38.640141: 
+epoch:  63 
+2022-04-22 21:49:47.567022: train loss : -0.2868 
+2022-04-22 21:50:08.159228: validation loss: -0.2333 
+2022-04-22 21:50:08.160357: Average global foreground Dice: [0.9348, 0.8014, 0.8502, 0.5264, 0.9265, 0.9295, 0.6827, 0.4687, 0.7416, 0.84, 0.2653, 0.7807, 0.6913, 0.2757, 0.7921, 0.8018] 
+2022-04-22 21:50:08.161069: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 21:50:08.734033: lr: 0.008058 
+2022-04-22 21:50:08.734261: saving scheduled checkpoint file... 
+2022-04-22 21:50:08.761226: saving checkpoint... 
+2022-04-22 21:50:09.669499: done, saving took 0.94 seconds 
+2022-04-22 21:50:09.676346: done 
+2022-04-22 21:50:09.701702: saving checkpoint... 
+2022-04-22 21:50:10.546794: done, saving took 0.87 seconds 
+2022-04-22 21:50:10.549708: This epoch took 331.909429 s
+ 
+2022-04-22 21:50:10.550081: 
+epoch:  64 
+2022-04-22 21:55:19.305902: train loss : -0.3010 
+2022-04-22 21:55:39.873632: validation loss: -0.3079 
+2022-04-22 21:55:39.874307: Average global foreground Dice: [0.948, 0.8585, 0.8495, 0.5338, 0.9462, 0.9036, 0.6633, 0.5386, 0.7794, 0.8063, 0.3772, 0.6798, 0.8089, 0.2978, 0.6982, 0.8067] 
+2022-04-22 21:55:39.874869: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 21:55:40.486217: lr: 0.008027 
+2022-04-22 21:55:40.486408: saving scheduled checkpoint file... 
+2022-04-22 21:55:40.511860: saving checkpoint... 
+2022-04-22 21:55:41.359878: done, saving took 0.87 seconds 
+2022-04-22 21:55:41.360623: done 
+2022-04-22 21:55:41.382185: saving checkpoint... 
+2022-04-22 21:55:42.226066: done, saving took 0.87 seconds 
+2022-04-22 21:55:42.226861: This epoch took 331.676636 s
+ 
+2022-04-22 21:55:42.227009: 
+epoch:  65 
+2022-04-22 22:00:51.446530: train loss : -0.2930 
+2022-04-22 22:01:12.067281: validation loss: -0.2516 
+2022-04-22 22:01:12.081970: Average global foreground Dice: [0.9396, 0.7488, 0.8114, 0.4608, 0.9403, 0.8849, 0.7211, 0.7761, 0.7787, 0.7907, 0.4139, 0.6726, 0.7631, 0.2328, 0.7434, 0.7827] 
+2022-04-22 22:01:12.082395: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 22:01:12.651736: lr: 0.007996 
+2022-04-22 22:01:12.651922: saving scheduled checkpoint file... 
+2022-04-22 22:01:12.677374: saving checkpoint... 
+2022-04-22 22:01:13.537929: done, saving took 0.89 seconds 
+2022-04-22 22:01:13.542204: done 
+2022-04-22 22:01:13.576268: saving checkpoint... 
+2022-04-22 22:01:14.422174: done, saving took 0.88 seconds 
+2022-04-22 22:01:14.422914: This epoch took 332.195764 s
+ 
+2022-04-22 22:01:14.423054: 
+epoch:  66 
+2022-04-22 22:06:22.800329: train loss : -0.2776 
+2022-04-22 22:06:43.405515: validation loss: -0.2300 
+2022-04-22 22:06:43.406674: Average global foreground Dice: [0.933, 0.8352, 0.882, 0.4566, 0.9003, 0.7924, 0.5331, 0.3803, 0.7038, 0.7396, 0.3432, 0.5026, 0.709, 0.1858, 0.7351, 0.8243] 
+2022-04-22 22:06:43.410222: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 22:06:43.976913: lr: 0.007965 
+2022-04-22 22:06:43.977102: saving scheduled checkpoint file... 
+2022-04-22 22:06:44.007342: saving checkpoint... 
+2022-04-22 22:06:44.861969: done, saving took 0.88 seconds 
+2022-04-22 22:06:44.862702: done 
+2022-04-22 22:06:44.862850: This epoch took 330.439660 s
+ 
+2022-04-22 22:06:44.862983: 
+epoch:  67 
+2022-04-22 22:11:53.234780: train loss : -0.2557 
+2022-04-22 22:12:13.786751: validation loss: -0.2878 
+2022-04-22 22:12:13.791885: Average global foreground Dice: [0.945, 0.8447, 0.8788, 0.5221, 0.9225, 0.8542, 0.6412, 0.3871, 0.7566, 0.7929, 0.344, 0.7885, 0.6968, 0.3179, 0.734, 0.8182] 
+2022-04-22 22:12:13.792626: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 22:12:14.352846: lr: 0.007935 
+2022-04-22 22:12:14.353054: saving scheduled checkpoint file... 
+2022-04-22 22:12:14.384029: saving checkpoint... 
+2022-04-22 22:12:15.261055: done, saving took 0.91 seconds 
+2022-04-22 22:12:15.261776: done 
+2022-04-22 22:12:15.261923: This epoch took 330.398804 s
+ 
+2022-04-22 22:12:15.262052: 
+epoch:  68 
+2022-04-22 22:17:23.293350: train loss : -0.2990 
+2022-04-22 22:17:43.997745: validation loss: -0.2775 
+2022-04-22 22:17:43.998816: Average global foreground Dice: [0.9452, 0.8635, 0.8613, 0.5677, 0.931, 0.8441, 0.648, 0.5285, 0.7285, 0.7966, 0.3397, 0.7796, 0.7749, 0.2407, 0.8064, 0.6885] 
+2022-04-22 22:17:43.999441: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 22:17:44.611700: lr: 0.007904 
+2022-04-22 22:17:44.611999: saving scheduled checkpoint file... 
+2022-04-22 22:17:44.639254: saving checkpoint... 
+2022-04-22 22:17:45.493075: done, saving took 0.88 seconds 
+2022-04-22 22:17:45.496970: done 
+2022-04-22 22:17:45.497122: This epoch took 330.234939 s
+ 
+2022-04-22 22:17:45.497253: 
+epoch:  69 
+2022-04-22 22:22:53.508806: train loss : -0.2933 
+2022-04-22 22:23:14.205850: validation loss: -0.2863 
+2022-04-22 22:23:14.207103: Average global foreground Dice: [0.9368, 0.8765, 0.8852, 0.5041, 0.9395, 0.9208, 0.6565, 0.597, 0.7411, 0.8227, 0.4617, 0.743, 0.6954, 0.3731, 0.6351, 0.7235] 
+2022-04-22 22:23:14.207454: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 22:23:14.810566: lr: 0.007873 
+2022-04-22 22:23:14.810769: saving scheduled checkpoint file... 
+2022-04-22 22:23:14.839586: saving checkpoint... 
+2022-04-22 22:23:15.734230: done, saving took 0.92 seconds 
+2022-04-22 22:23:15.741467: done 
+2022-04-22 22:23:15.768915: saving checkpoint... 
+2022-04-22 22:23:16.603580: done, saving took 0.86 seconds 
+2022-04-22 22:23:16.606851: This epoch took 331.109464 s
+ 
+2022-04-22 22:23:16.606997: 
+epoch:  70 
+2022-04-22 22:28:25.246894: train loss : -0.2977 
+2022-04-22 22:28:45.939342: validation loss: -0.2743 
+2022-04-22 22:28:45.950565: Average global foreground Dice: [0.9496, 0.8322, 0.8491, 0.5732, 0.9461, 0.9098, 0.6701, 0.4035, 0.7658, 0.8205, 0.362, 0.838, 0.7712, 0.1555, 0.8172, 0.7702] 
+2022-04-22 22:28:45.951343: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 22:28:46.548028: lr: 0.007842 
+2022-04-22 22:28:46.548248: saving scheduled checkpoint file... 
+2022-04-22 22:28:46.574249: saving checkpoint... 
+2022-04-22 22:28:47.417794: done, saving took 0.87 seconds 
+2022-04-22 22:28:47.418552: done 
+2022-04-22 22:28:47.440286: saving checkpoint... 
+2022-04-22 22:28:48.264460: done, saving took 0.85 seconds 
+2022-04-22 22:28:48.265235: This epoch took 331.658097 s
+ 
+2022-04-22 22:28:48.265381: 
+epoch:  71 
+2022-04-22 22:33:59.998001: train loss : -0.2938 
+2022-04-22 22:34:20.923699: validation loss: -0.3126 
+2022-04-22 22:34:20.928387: Average global foreground Dice: [0.9405, 0.8466, 0.8118, 0.4859, 0.9424, 0.8882, 0.7229, 0.5627, 0.6969, 0.8044, 0.4047, 0.7873, 0.7143, 0.417, 0.7256, 0.801] 
+2022-04-22 22:34:20.938823: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 22:34:21.519334: lr: 0.007811 
+2022-04-22 22:34:21.519524: saving scheduled checkpoint file... 
+2022-04-22 22:34:21.550195: saving checkpoint... 
+2022-04-22 22:34:22.390603: done, saving took 0.87 seconds 
+2022-04-22 22:34:22.391704: done 
+2022-04-22 22:34:22.413464: saving checkpoint... 
+2022-04-22 22:34:23.245040: done, saving took 0.85 seconds 
+2022-04-22 22:34:23.245773: This epoch took 334.980249 s
+ 
+2022-04-22 22:34:23.245910: 
+epoch:  72 
+2022-04-22 22:39:33.759048: train loss : -0.3259 
+2022-04-22 22:39:54.378423: validation loss: -0.2175 
+2022-04-22 22:39:54.379567: Average global foreground Dice: [0.9341, 0.8637, 0.8646, 0.5558, 0.9316, 0.8883, 0.6765, 0.599, 0.7827, 0.7882, 0.3449, 0.8201, 0.7316, 0.2336, 0.7502, 0.7717] 
+2022-04-22 22:39:54.379751: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 22:39:54.962938: lr: 0.007781 
+2022-04-22 22:39:54.963124: saving scheduled checkpoint file... 
+2022-04-22 22:39:54.993507: saving checkpoint... 
+2022-04-22 22:39:55.829609: done, saving took 0.87 seconds 
+2022-04-22 22:39:55.830351: done 
+2022-04-22 22:39:55.851988: saving checkpoint... 
+2022-04-22 22:39:56.670329: done, saving took 0.84 seconds 
+2022-04-22 22:39:56.671116: This epoch took 333.425072 s
+ 
+2022-04-22 22:39:56.671280: 
+epoch:  73 
+2022-04-22 22:45:05.562941: train loss : -0.3135 
+2022-04-22 22:45:26.211666: validation loss: -0.2738 
+2022-04-22 22:45:26.213103: Average global foreground Dice: [0.94, 0.8819, 0.8954, 0.5191, 0.9171, 0.8418, 0.6428, 0.5502, 0.7742, 0.8325, 0.3942, 0.8133, 0.7816, 0.3376, 0.8307, 0.7165] 
+2022-04-22 22:45:26.213789: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 22:45:26.826415: lr: 0.00775 
+2022-04-22 22:45:26.826650: saving scheduled checkpoint file... 
+2022-04-22 22:45:26.857678: saving checkpoint... 
+2022-04-22 22:45:27.720385: done, saving took 0.89 seconds 
+2022-04-22 22:45:27.725299: done 
+2022-04-22 22:45:27.746928: saving checkpoint... 
+2022-04-22 22:45:28.583558: done, saving took 0.86 seconds 
+2022-04-22 22:45:28.584310: This epoch took 331.912887 s
+ 
+2022-04-22 22:45:28.584450: 
+epoch:  74 
+2022-04-22 22:50:36.463457: train loss : -0.3028 
+2022-04-22 22:50:57.071726: validation loss: -0.2855 
+2022-04-22 22:50:57.082737: Average global foreground Dice: [0.9442, 0.8579, 0.8613, 0.5118, 0.9357, 0.8669, 0.5709, 0.4462, 0.6986, 0.8019, 0.4028, 0.8495, 0.7517, 0.4299, 0.8549, 0.7557] 
+2022-04-22 22:50:57.083120: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 22:50:57.675545: lr: 0.007719 
+2022-04-22 22:50:57.675780: saving scheduled checkpoint file... 
+2022-04-22 22:50:57.707047: saving checkpoint... 
+2022-04-22 22:50:58.549332: done, saving took 0.87 seconds 
+2022-04-22 22:50:58.554042: done 
+2022-04-22 22:50:58.588460: saving checkpoint... 
+2022-04-22 22:50:59.440737: done, saving took 0.89 seconds 
+2022-04-22 22:50:59.445257: This epoch took 330.860668 s
+ 
+2022-04-22 22:50:59.445398: 
+epoch:  75 
+2022-04-22 22:56:07.109535: train loss : -0.3275 
+2022-04-22 22:56:27.778829: validation loss: -0.2890 
+2022-04-22 22:56:27.789711: Average global foreground Dice: [0.9325, 0.8371, 0.8878, 0.564, 0.9385, 0.9239, 0.6608, 0.5172, 0.7397, 0.8402, 0.4223, 0.8837, 0.7631, 0.3139, 0.8477, 0.8197] 
+2022-04-22 22:56:27.790454: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 22:56:28.369259: lr: 0.007688 
+2022-04-22 22:56:28.369482: saving scheduled checkpoint file... 
+2022-04-22 22:56:28.403507: saving checkpoint... 
+2022-04-22 22:56:29.319710: done, saving took 0.95 seconds 
+2022-04-22 22:56:29.326813: done 
+2022-04-22 22:56:29.352138: saving checkpoint... 
+2022-04-22 22:56:30.204613: done, saving took 0.88 seconds 
+2022-04-22 22:56:30.207531: This epoch took 330.761995 s
+ 
+2022-04-22 22:56:30.207686: 
+epoch:  76 
+2022-04-22 23:01:38.174787: train loss : -0.3017 
+2022-04-22 23:01:58.741162: validation loss: -0.2857 
+2022-04-22 23:01:58.742656: Average global foreground Dice: [0.9494, 0.8264, 0.8544, 0.5386, 0.9481, 0.8733, 0.6753, 0.5657, 0.7719, 0.8043, 0.4578, 0.7804, 0.7511, 0.4463, 0.8303, 0.7459] 
+2022-04-22 23:01:58.743276: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 23:01:59.352884: lr: 0.007657 
+2022-04-22 23:01:59.353106: saving scheduled checkpoint file... 
+2022-04-22 23:01:59.381867: saving checkpoint... 
+2022-04-22 23:02:00.228455: done, saving took 0.88 seconds 
+2022-04-22 23:02:00.229199: done 
+2022-04-22 23:02:00.250830: saving checkpoint... 
+2022-04-22 23:02:01.103624: done, saving took 0.87 seconds 
+2022-04-22 23:02:01.104404: This epoch took 330.896571 s
+ 
+2022-04-22 23:02:01.104553: 
+epoch:  77 
+2022-04-22 23:07:11.544526: train loss : -0.2965 
+2022-04-22 23:07:32.523166: validation loss: -0.2726 
+2022-04-22 23:07:32.524484: Average global foreground Dice: [0.9353, 0.8768, 0.8932, 0.4922, 0.9301, 0.9025, 0.637, 0.5848, 0.7583, 0.8237, 0.4535, 0.9061, 0.7698, 0.2034, 0.8439, 0.8241] 
+2022-04-22 23:07:32.524858: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 23:07:33.110306: lr: 0.007626 
+2022-04-22 23:07:33.110486: saving scheduled checkpoint file... 
+2022-04-22 23:07:33.141279: saving checkpoint... 
+2022-04-22 23:07:33.991987: done, saving took 0.88 seconds 
+2022-04-22 23:07:33.992718: done 
+2022-04-22 23:07:34.014295: saving checkpoint... 
+2022-04-22 23:07:34.848058: done, saving took 0.86 seconds 
+2022-04-22 23:07:34.852587: This epoch took 333.747892 s
+ 
+2022-04-22 23:07:34.852734: 
+epoch:  78 
+2022-04-22 23:12:43.938574: train loss : -0.3320 
+2022-04-22 23:13:05.018152: validation loss: -0.2398 
+2022-04-22 23:13:05.029042: Average global foreground Dice: [0.9268, 0.8881, 0.9004, 0.5577, 0.9291, 0.7977, 0.598, 0.6254, 0.7403, 0.8191, 0.3568, 0.829, 0.7596, 0.2144, 0.7863, 0.7426] 
+2022-04-22 23:13:05.029507: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 23:13:05.644730: lr: 0.007595 
+2022-04-22 23:13:05.644960: saving scheduled checkpoint file... 
+2022-04-22 23:13:05.677402: saving checkpoint... 
+2022-04-22 23:13:06.532833: done, saving took 0.89 seconds 
+2022-04-22 23:13:06.533555: done 
+2022-04-22 23:13:06.555129: saving checkpoint... 
+2022-04-22 23:13:07.396052: done, saving took 0.86 seconds 
+2022-04-22 23:13:07.396840: This epoch took 332.543960 s
+ 
+2022-04-22 23:13:07.397045: 
+epoch:  79 
+2022-04-22 23:18:17.858924: train loss : -0.3091 
+2022-04-22 23:18:38.673337: validation loss: -0.2857 
+2022-04-22 23:18:38.674529: Average global foreground Dice: [0.9426, 0.8247, 0.8413, 0.526, 0.9376, 0.851, 0.6852, 0.6349, 0.7329, 0.8234, 0.521, 0.7711, 0.7508, 0.4219, 0.7936, 0.806] 
+2022-04-22 23:18:38.675176: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 23:18:39.294425: lr: 0.007564 
+2022-04-22 23:18:39.294651: saving scheduled checkpoint file... 
+2022-04-22 23:18:39.324999: saving checkpoint... 
+2022-04-22 23:18:40.171883: done, saving took 0.88 seconds 
+2022-04-22 23:18:40.172609: done 
+2022-04-22 23:18:40.194254: saving checkpoint... 
+2022-04-22 23:18:41.023170: done, saving took 0.85 seconds 
+2022-04-22 23:18:41.023929: This epoch took 333.626729 s
+ 
+2022-04-22 23:18:41.024069: 
+epoch:  80 
+2022-04-22 23:23:51.654388: train loss : -0.3118 
+2022-04-22 23:24:12.575229: validation loss: -0.2956 
+2022-04-22 23:24:12.576926: Average global foreground Dice: [0.942, 0.8403, 0.8433, 0.5626, 0.9357, 0.9001, 0.6665, 0.5433, 0.7406, 0.8053, 0.3845, 0.744, 0.7521, 0.4492, 0.833, 0.8145] 
+2022-04-22 23:24:12.577276: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 23:24:13.187058: lr: 0.007533 
+2022-04-22 23:24:13.187238: saving scheduled checkpoint file... 
+2022-04-22 23:24:13.212567: saving checkpoint... 
+2022-04-22 23:24:14.075791: done, saving took 0.89 seconds 
+2022-04-22 23:24:14.079203: done 
+2022-04-22 23:24:14.108078: saving checkpoint... 
+2022-04-22 23:24:14.953033: done, saving took 0.87 seconds 
+2022-04-22 23:24:14.953773: This epoch took 333.929564 s
+ 
+2022-04-22 23:24:14.953911: 
+epoch:  81 
+2022-04-22 23:29:26.900268: train loss : -0.2841 
+2022-04-22 23:29:47.827140: validation loss: -0.2197 
+2022-04-22 23:29:47.827916: Average global foreground Dice: [0.9422, 0.8612, 0.8128, 0.5433, 0.9455, 0.8011, 0.6525, 0.45, 0.691, 0.8201, 0.4654, 0.4301, 0.5806, 0.3784, 0.6522, 0.7887] 
+2022-04-22 23:29:47.838042: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 23:29:48.470569: lr: 0.007502 
+2022-04-22 23:29:48.470798: saving scheduled checkpoint file... 
+2022-04-22 23:29:48.492570: saving checkpoint... 
+2022-04-22 23:29:49.348879: done, saving took 0.88 seconds 
+2022-04-22 23:29:49.349995: done 
+2022-04-22 23:29:49.350154: This epoch took 334.396099 s
+ 
+2022-04-22 23:29:49.350302: 
+epoch:  82 
+2022-04-22 23:34:59.503452: train loss : -0.2917 
+2022-04-22 23:35:20.617349: validation loss: -0.2743 
+2022-04-22 23:35:20.628473: Average global foreground Dice: [0.9318, 0.8664, 0.8572, 0.5219, 0.9373, 0.8716, 0.6986, 0.4898, 0.7399, 0.802, 0.418, 0.8513, 0.7566, 0.3537, 0.8165, 0.7963] 
+2022-04-22 23:35:20.628921: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 23:35:21.194306: lr: 0.007471 
+2022-04-22 23:35:21.194506: saving scheduled checkpoint file... 
+2022-04-22 23:35:21.216359: saving checkpoint... 
+2022-04-22 23:35:22.066280: done, saving took 0.87 seconds 
+2022-04-22 23:35:22.067081: done 
+2022-04-22 23:35:22.067240: This epoch took 332.716794 s
+ 
+2022-04-22 23:35:22.067382: 
+epoch:  83 
+2022-04-22 23:40:31.272752: train loss : -0.3029 
+2022-04-22 23:40:51.902945: validation loss: -0.2601 
+2022-04-22 23:40:51.904546: Average global foreground Dice: [0.9356, 0.8693, 0.9001, 0.5642, 0.9359, 0.8869, 0.6153, 0.3342, 0.766, 0.8292, 0.3657, 0.8007, 0.7568, 0.2561, 0.8425, 0.8147] 
+2022-04-22 23:40:51.904916: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 23:40:52.517973: lr: 0.00744 
+2022-04-22 23:40:52.518212: saving scheduled checkpoint file... 
+2022-04-22 23:40:52.539925: saving checkpoint... 
+2022-04-22 23:40:53.385971: done, saving took 0.87 seconds 
+2022-04-22 23:40:53.386707: done 
+2022-04-22 23:40:53.386857: This epoch took 331.319324 s
+ 
+2022-04-22 23:40:53.386990: 
+epoch:  84 
+2022-04-22 23:46:01.219181: train loss : -0.3137 
+2022-04-22 23:46:21.852775: validation loss: -0.2899 
+2022-04-22 23:46:21.853948: Average global foreground Dice: [0.9441, 0.8782, 0.8755, 0.5844, 0.9418, 0.8609, 0.58, 0.5553, 0.7716, 0.8506, 0.4012, 0.9004, 0.7716, 0.4836, 0.792, 0.7242] 
+2022-04-22 23:46:21.854299: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 23:46:22.454858: lr: 0.007409 
+2022-04-22 23:46:22.455043: saving scheduled checkpoint file... 
+2022-04-22 23:46:22.476722: saving checkpoint... 
+2022-04-22 23:46:23.327644: done, saving took 0.87 seconds 
+2022-04-22 23:46:23.328377: done 
+2022-04-22 23:46:23.350012: saving checkpoint... 
+2022-04-22 23:46:24.197582: done, saving took 0.87 seconds 
+2022-04-22 23:46:24.198326: This epoch took 330.811198 s
+ 
+2022-04-22 23:46:24.198464: 
+epoch:  85 
+2022-04-22 23:51:31.861813: train loss : -0.3186 
+2022-04-22 23:51:52.558976: validation loss: -0.3183 
+2022-04-22 23:51:52.559844: Average global foreground Dice: [0.948, 0.876, 0.8952, 0.5667, 0.9405, 0.9184, 0.6349, 0.4524, 0.7671, 0.8263, 0.4153, 0.778, 0.7857, 0.6169, 0.7857, 0.8494] 
+2022-04-22 23:51:52.570269: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 23:51:53.146761: lr: 0.007378 
+2022-04-22 23:51:53.146949: saving scheduled checkpoint file... 
+2022-04-22 23:51:53.168661: saving checkpoint... 
+2022-04-22 23:51:54.014974: done, saving took 0.87 seconds 
+2022-04-22 23:51:54.015760: done 
+2022-04-22 23:51:54.037497: saving checkpoint... 
+2022-04-22 23:51:54.897913: done, saving took 0.88 seconds 
+2022-04-22 23:51:54.898715: This epoch took 330.700110 s
+ 
+2022-04-22 23:51:54.898859: 
+epoch:  86 
+2022-04-22 23:57:02.301526: train loss : -0.3150 
+2022-04-22 23:57:22.922402: validation loss: -0.2315 
+2022-04-22 23:57:22.923562: Average global foreground Dice: [0.945, 0.8695, 0.8829, 0.5715, 0.9172, 0.8621, 0.7214, 0.4445, 0.7633, 0.8039, 0.4709, 0.1281, 0.7387, 0.1524, 0.7302, 0.6764] 
+2022-04-22 23:57:22.923900: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-22 23:57:23.537082: lr: 0.007347 
+2022-04-22 23:57:23.537271: saving scheduled checkpoint file... 
+2022-04-22 23:57:23.561996: saving checkpoint... 
+2022-04-22 23:57:24.416590: done, saving took 0.88 seconds 
+2022-04-22 23:57:24.417325: done 
+2022-04-22 23:57:24.417478: This epoch took 329.518481 s
+ 
+2022-04-22 23:57:24.417612: 
+epoch:  87 
+2022-04-23 00:02:33.986723: train loss : -0.2918 
+2022-04-23 00:02:55.764416: validation loss: -0.2310 
+2022-04-23 00:02:55.765446: Average global foreground Dice: [0.93, 0.8122, 0.8312, 0.5513, 0.937, 0.8786, 0.6725, 0.5808, 0.7806, 0.7939, 0.3984, 0.5678, 0.7378, 0.3232, 0.8045, 0.8262] 
+2022-04-23 00:02:55.766160: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 00:02:56.563494: lr: 0.007316 
+2022-04-23 00:02:56.563739: saving scheduled checkpoint file... 
+2022-04-23 00:02:56.590488: saving checkpoint... 
+2022-04-23 00:02:57.455456: done, saving took 0.89 seconds 
+2022-04-23 00:02:57.458367: done 
+2022-04-23 00:02:57.458517: This epoch took 333.040767 s
+ 
+2022-04-23 00:02:57.458651: 
+epoch:  88 
+2022-04-23 00:08:11.688684: train loss : -0.3070 
+2022-04-23 00:08:33.743673: validation loss: -0.2388 
+2022-04-23 00:08:33.754561: Average global foreground Dice: [0.9282, 0.8783, 0.877, 0.5932, 0.9348, 0.8897, 0.6307, 0.5739, 0.7182, 0.7912, 0.4266, 0.843, 0.7201, 0.3251, 0.7569, 0.8041] 
+2022-04-23 00:08:33.754999: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 00:08:34.363882: lr: 0.007285 
+2022-04-23 00:08:34.364111: saving scheduled checkpoint file... 
+2022-04-23 00:08:34.389130: saving checkpoint... 
+2022-04-23 00:08:35.283342: done, saving took 0.92 seconds 
+2022-04-23 00:08:35.284104: done 
+2022-04-23 00:08:35.284259: This epoch took 337.825464 s
+ 
+2022-04-23 00:08:35.284393: 
+epoch:  89 
+2022-04-23 00:13:43.285589: train loss : -0.3133 
+2022-04-23 00:14:04.031677: validation loss: -0.2961 
+2022-04-23 00:14:04.042305: Average global foreground Dice: [0.9508, 0.8918, 0.8989, 0.5297, 0.9422, 0.8745, 0.7288, 0.5383, 0.7119, 0.8125, 0.2683, 0.8947, 0.821, 0.3983, 0.8278, 0.8153] 
+2022-04-23 00:14:04.042741: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 00:14:04.638393: lr: 0.007254 
+2022-04-23 00:14:04.638587: saving scheduled checkpoint file... 
+2022-04-23 00:14:04.660271: saving checkpoint... 
+2022-04-23 00:14:05.507982: done, saving took 0.87 seconds 
+2022-04-23 00:14:05.508715: done 
+2022-04-23 00:14:05.508864: This epoch took 330.224325 s
+ 
+2022-04-23 00:14:05.508994: 
+epoch:  90 
+2022-04-23 00:19:13.116593: train loss : -0.2983 
+2022-04-23 00:19:33.763481: validation loss: -0.3036 
+2022-04-23 00:19:33.778280: Average global foreground Dice: [0.9443, 0.8248, 0.7942, 0.5544, 0.9319, 0.9214, 0.6314, 0.4433, 0.7692, 0.8188, 0.3363, 0.8274, 0.7781, 0.3385, 0.8455, 0.8194] 
+2022-04-23 00:19:33.778700: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 00:19:34.344404: lr: 0.007223 
+2022-04-23 00:19:34.344626: saving scheduled checkpoint file... 
+2022-04-23 00:19:34.366328: saving checkpoint... 
+2022-04-23 00:19:35.208991: done, saving took 0.86 seconds 
+2022-04-23 00:19:35.209745: done 
+2022-04-23 00:19:35.209907: This epoch took 329.700776 s
+ 
+2022-04-23 00:19:35.210044: 
+epoch:  91 
+2022-04-23 00:24:43.235818: train loss : -0.3257 
+2022-04-23 00:25:03.921960: validation loss: -0.3035 
+2022-04-23 00:25:03.936922: Average global foreground Dice: [0.9414, 0.8879, 0.8941, 0.5476, 0.9358, 0.9143, 0.7077, 0.5155, 0.7549, 0.8082, 0.405, 0.8555, 0.7918, 0.5023, 0.8508, 0.748] 
+2022-04-23 00:25:03.937322: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 00:25:04.524123: lr: 0.007192 
+2022-04-23 00:25:04.524353: saving scheduled checkpoint file... 
+2022-04-23 00:25:04.546031: saving checkpoint... 
+2022-04-23 00:25:05.381756: done, saving took 0.86 seconds 
+2022-04-23 00:25:05.382483: done 
+2022-04-23 00:25:05.404106: saving checkpoint... 
+2022-04-23 00:25:06.237063: done, saving took 0.85 seconds 
+2022-04-23 00:25:06.237796: This epoch took 331.027610 s
+ 
+2022-04-23 00:25:06.237931: 
+epoch:  92 
+2022-04-23 00:30:14.401809: train loss : -0.3227 
+2022-04-23 00:30:34.986373: validation loss: -0.2327 
+2022-04-23 00:30:35.022933: Average global foreground Dice: [0.9248, 0.874, 0.8792, 0.5389, 0.9434, 0.8974, 0.7143, 0.4512, 0.7647, 0.8268, 0.4571, 0.8135, 0.7531, 0.1584, 0.697, 0.7445] 
+2022-04-23 00:30:35.023406: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 00:30:35.617029: lr: 0.007161 
+2022-04-23 00:30:35.617338: saving scheduled checkpoint file... 
+2022-04-23 00:30:35.639116: saving checkpoint... 
+2022-04-23 00:30:36.478096: done, saving took 0.86 seconds 
+2022-04-23 00:30:36.478840: done 
+2022-04-23 00:30:36.478998: This epoch took 330.240932 s
+ 
+2022-04-23 00:30:36.479140: 
+epoch:  93 
+2022-04-23 00:35:44.183324: train loss : -0.3222 
+2022-04-23 00:36:04.796873: validation loss: -0.2886 
+2022-04-23 00:36:04.807601: Average global foreground Dice: [0.9454, 0.8898, 0.8923, 0.5694, 0.9482, 0.9093, 0.7152, 0.3396, 0.7562, 0.839, 0.3163, 0.7129, 0.7309, 0.3206, 0.7742, 0.829] 
+2022-04-23 00:36:04.808012: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 00:36:05.383734: lr: 0.00713 
+2022-04-23 00:36:05.383960: saving scheduled checkpoint file... 
+2022-04-23 00:36:05.405730: saving checkpoint... 
+2022-04-23 00:36:06.250446: done, saving took 0.87 seconds 
+2022-04-23 00:36:06.251197: done 
+2022-04-23 00:36:06.251358: This epoch took 329.772065 s
+ 
+2022-04-23 00:36:06.251498: 
+epoch:  94 
+2022-04-23 00:41:17.658392: train loss : -0.3344 
+2022-04-23 00:41:38.502006: validation loss: -0.3065 
+2022-04-23 00:41:38.503253: Average global foreground Dice: [0.9426, 0.8682, 0.8971, 0.5442, 0.941, 0.9109, 0.6267, 0.5146, 0.7541, 0.8535, 0.4264, 0.7107, 0.7978, 0.422, 0.8554, 0.7349] 
+2022-04-23 00:41:38.503994: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 00:41:39.069185: lr: 0.007099 
+2022-04-23 00:41:39.069427: saving scheduled checkpoint file... 
+2022-04-23 00:41:39.091258: saving checkpoint... 
+2022-04-23 00:41:39.932303: done, saving took 0.86 seconds 
+2022-04-23 00:41:39.933044: done 
+2022-04-23 00:41:39.933207: This epoch took 333.681553 s
+ 
+2022-04-23 00:41:39.933350: 
+epoch:  95 
+2022-04-23 00:46:49.827056: train loss : -0.3135 
+2022-04-23 00:47:10.793114: validation loss: -0.3096 
+2022-04-23 00:47:10.804125: Average global foreground Dice: [0.9413, 0.8634, 0.8718, 0.5755, 0.9459, 0.8693, 0.586, 0.6891, 0.7511, 0.812, 0.471, 0.8762, 0.7836, 0.3668, 0.8335, 0.7941] 
+2022-04-23 00:47:10.804888: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 00:47:11.407794: lr: 0.007067 
+2022-04-23 00:47:11.407990: saving scheduled checkpoint file... 
+2022-04-23 00:47:11.429702: saving checkpoint... 
+2022-04-23 00:47:12.292190: done, saving took 0.88 seconds 
+2022-04-23 00:47:12.292927: done 
+2022-04-23 00:47:12.314584: saving checkpoint... 
+2022-04-23 00:47:13.170196: done, saving took 0.88 seconds 
+2022-04-23 00:47:13.170996: This epoch took 333.237496 s
+ 
+2022-04-23 00:47:13.171134: 
+epoch:  96 
+2022-04-23 00:52:22.206537: train loss : -0.3309 
+2022-04-23 00:52:42.907851: validation loss: -0.2785 
+2022-04-23 00:52:42.918643: Average global foreground Dice: [0.9445, 0.7813, 0.8594, 0.516, 0.9433, 0.904, 0.6045, 0.5763, 0.7093, 0.8258, 0.2396, 0.874, 0.6581, 0.3639, 0.8681, 0.8157] 
+2022-04-23 00:52:42.919037: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 00:52:43.506340: lr: 0.007036 
+2022-04-23 00:52:43.506521: saving scheduled checkpoint file... 
+2022-04-23 00:52:43.531226: saving checkpoint... 
+2022-04-23 00:52:44.392340: done, saving took 0.89 seconds 
+2022-04-23 00:52:44.393313: done 
+2022-04-23 00:52:44.393491: This epoch took 331.222219 s
+ 
+2022-04-23 00:52:44.393640: 
+epoch:  97 
+2022-04-23 00:57:54.061751: train loss : -0.3137 
+2022-04-23 00:58:14.631275: validation loss: -0.3111 
+2022-04-23 00:58:14.632383: Average global foreground Dice: [0.9477, 0.8844, 0.8955, 0.5735, 0.944, 0.9152, 0.5863, 0.4216, 0.752, 0.8275, 0.5046, 0.8615, 0.7309, 0.3538, 0.7697, 0.8031] 
+2022-04-23 00:58:14.632754: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 00:58:15.209101: lr: 0.007005 
+2022-04-23 00:58:15.209323: saving scheduled checkpoint file... 
+2022-04-23 00:58:15.233800: saving checkpoint... 
+2022-04-23 00:58:16.132173: done, saving took 0.92 seconds 
+2022-04-23 00:58:16.140384: done 
+2022-04-23 00:58:16.162125: saving checkpoint... 
+2022-04-23 00:58:16.985316: done, saving took 0.84 seconds 
+2022-04-23 00:58:16.986056: This epoch took 332.592256 s
+ 
+2022-04-23 00:58:16.986193: 
+epoch:  98 
+2022-04-23 01:03:26.140412: train loss : -0.3461 
+2022-04-23 01:03:46.690077: validation loss: -0.2871 
+2022-04-23 01:03:46.691151: Average global foreground Dice: [0.9367, 0.8918, 0.9014, 0.5781, 0.9386, 0.8832, 0.578, 0.5239, 0.7199, 0.8126, 0.4903, 0.8833, 0.7465, 0.2874, 0.4907, 0.801] 
+2022-04-23 01:03:46.692020: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 01:03:47.301830: lr: 0.006974 
+2022-04-23 01:03:47.302029: saving scheduled checkpoint file... 
+2022-04-23 01:03:47.323735: saving checkpoint... 
+2022-04-23 01:03:48.164332: done, saving took 0.86 seconds 
+2022-04-23 01:03:48.169355: done 
+2022-04-23 01:03:48.169506: This epoch took 331.183178 s
+ 
+2022-04-23 01:03:48.169636: 
+epoch:  99 
+2022-04-23 01:08:56.988583: train loss : -0.3300 
+2022-04-23 01:09:17.980844: validation loss: -0.2973 
+2022-04-23 01:09:17.982145: Average global foreground Dice: [0.943, 0.8781, 0.871, 0.5805, 0.9411, 0.8863, 0.5735, 0.7037, 0.804, 0.8161, 0.3916, 0.8759, 0.7164, 0.175, 0.852, 0.8124] 
+2022-04-23 01:09:17.986267: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 01:09:18.594296: lr: 0.006943 
+2022-04-23 01:09:18.594478: saving scheduled checkpoint file... 
+2022-04-23 01:09:18.616213: saving checkpoint... 
+2022-04-23 01:09:19.451996: done, saving took 0.86 seconds 
+2022-04-23 01:09:19.452738: done 
+2022-04-23 01:09:19.474612: saving checkpoint... 
+2022-04-23 01:09:20.315585: done, saving took 0.86 seconds 
+2022-04-23 01:09:20.316348: This epoch took 332.146578 s
+ 
+2022-04-23 01:09:20.316487: 
+epoch:  100 
+2022-04-23 01:14:28.261403: train loss : -0.3320 
+2022-04-23 01:14:48.825454: validation loss: -0.2906 
+2022-04-23 01:14:48.827024: Average global foreground Dice: [0.9481, 0.8504, 0.8582, 0.5482, 0.944, 0.9208, 0.6936, 0.6315, 0.7625, 0.8351, 0.423, 0.8361, 0.7751, 0.5111, 0.8352, 0.8387] 
+2022-04-23 01:14:48.828034: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 01:14:49.436816: lr: 0.006911 
+2022-04-23 01:14:49.437030: saving scheduled checkpoint file... 
+2022-04-23 01:14:49.458722: saving checkpoint... 
+2022-04-23 01:14:50.297868: done, saving took 0.86 seconds 
+2022-04-23 01:14:50.301102: done 
+2022-04-23 01:14:50.329789: saving checkpoint... 
+2022-04-23 01:14:51.163019: done, saving took 0.86 seconds 
+2022-04-23 01:14:51.166442: This epoch took 330.849813 s
+ 
+2022-04-23 01:14:51.166616: 
+epoch:  101 
+2022-04-23 01:19:59.198324: train loss : -0.3248 
+2022-04-23 01:20:19.806125: validation loss: -0.3281 
+2022-04-23 01:20:19.807241: Average global foreground Dice: [0.9452, 0.8688, 0.8698, 0.5728, 0.9447, 0.9095, 0.6153, 0.5489, 0.7656, 0.8263, 0.3358, 0.8322, 0.8182, 0.4903, 0.8718, 0.8126] 
+2022-04-23 01:20:19.807642: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 01:20:20.376674: lr: 0.00688 
+2022-04-23 01:20:20.376861: saving scheduled checkpoint file... 
+2022-04-23 01:20:20.405169: saving checkpoint... 
+2022-04-23 01:20:21.242859: done, saving took 0.87 seconds 
+2022-04-23 01:20:21.246907: done 
+2022-04-23 01:20:21.279353: saving checkpoint... 
+2022-04-23 01:20:22.120198: done, saving took 0.87 seconds 
+2022-04-23 01:20:22.124335: This epoch took 330.957575 s
+ 
+2022-04-23 01:20:22.124477: 
+epoch:  102 
+2022-04-23 01:25:30.958317: train loss : -0.3113 
+2022-04-23 01:25:51.817482: validation loss: -0.3205 
+2022-04-23 01:25:51.818418: Average global foreground Dice: [0.9485, 0.868, 0.8935, 0.5617, 0.9404, 0.9043, 0.6272, 0.531, 0.7755, 0.8359, 0.3997, 0.9239, 0.7978, 0.1121, 0.7886, 0.7465] 
+2022-04-23 01:25:51.819406: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 01:25:52.420100: lr: 0.006849 
+2022-04-23 01:25:52.420284: saving scheduled checkpoint file... 
+2022-04-23 01:25:52.449891: saving checkpoint... 
+2022-04-23 01:25:53.305019: done, saving took 0.88 seconds 
+2022-04-23 01:25:53.306082: done 
+2022-04-23 01:25:53.306233: This epoch took 331.181612 s
+ 
+2022-04-23 01:25:53.306366: 
+epoch:  103 
+2022-04-23 01:31:01.880433: train loss : -0.3358 
+2022-04-23 01:31:22.505448: validation loss: -0.3134 
+2022-04-23 01:31:22.506601: Average global foreground Dice: [0.9441, 0.8549, 0.8986, 0.5712, 0.9334, 0.8897, 0.6075, 0.5, 0.7834, 0.8356, 0.5376, 0.8355, 0.7586, 0.2597, 0.7912, 0.8449] 
+2022-04-23 01:31:22.507354: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 01:31:23.097560: lr: 0.006817 
+2022-04-23 01:31:23.097744: saving scheduled checkpoint file... 
+2022-04-23 01:31:23.126458: saving checkpoint... 
+2022-04-23 01:31:23.972874: done, saving took 0.87 seconds 
+2022-04-23 01:31:23.977798: done 
+2022-04-23 01:31:23.999563: saving checkpoint... 
+2022-04-23 01:31:24.836288: done, saving took 0.86 seconds 
+2022-04-23 01:31:24.837253: This epoch took 331.530750 s
+ 
+2022-04-23 01:31:24.837414: 
+epoch:  104 
+2022-04-23 01:36:33.305017: train loss : -0.3186 
+2022-04-23 01:36:53.957172: validation loss: -0.2312 
+2022-04-23 01:36:53.967906: Average global foreground Dice: [0.9403, 0.8924, 0.907, 0.5308, 0.931, 0.8998, 0.6636, 0.4548, 0.7536, 0.8121, 0.4469, 0.8554, 0.7297, 0.1839, 0.8243, 0.74] 
+2022-04-23 01:36:53.968590: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 01:36:54.587749: lr: 0.006786 
+2022-04-23 01:36:54.588184: saving scheduled checkpoint file... 
+2022-04-23 01:36:54.613776: saving checkpoint... 
+2022-04-23 01:36:55.523434: done, saving took 0.94 seconds 
+2022-04-23 01:36:55.524232: done 
+2022-04-23 01:36:55.524389: This epoch took 330.686821 s
+ 
+2022-04-23 01:36:55.524526: 
+epoch:  105 
+2022-04-23 01:42:03.724923: train loss : -0.3350 
+2022-04-23 01:42:24.353426: validation loss: -0.2903 
+2022-04-23 01:42:24.354577: Average global foreground Dice: [0.9443, 0.8871, 0.8955, 0.5689, 0.9453, 0.9005, 0.6489, 0.6821, 0.7861, 0.8576, 0.3985, 0.6458, 0.7768, 0.4218, 0.6664, 0.8297] 
+2022-04-23 01:42:24.355222: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 01:42:24.972134: lr: 0.006755 
+2022-04-23 01:42:24.972318: saving scheduled checkpoint file... 
+2022-04-23 01:42:24.994211: saving checkpoint... 
+2022-04-23 01:42:25.839246: done, saving took 0.87 seconds 
+2022-04-23 01:42:25.839997: done 
+2022-04-23 01:42:25.840145: This epoch took 330.315479 s
+ 
+2022-04-23 01:42:25.840275: 
+epoch:  106 
+2022-04-23 01:47:33.417200: train loss : -0.3247 
+2022-04-23 01:47:54.020834: validation loss: -0.3169 
+2022-04-23 01:47:54.022406: Average global foreground Dice: [0.9431, 0.8768, 0.8832, 0.5845, 0.9429, 0.8677, 0.6866, 0.4638, 0.7405, 0.8271, 0.5354, 0.846, 0.7856, 0.1774, 0.7983, 0.8013] 
+2022-04-23 01:47:54.022892: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 01:47:54.588884: lr: 0.006723 
+2022-04-23 01:47:54.589070: saving scheduled checkpoint file... 
+2022-04-23 01:47:54.610744: saving checkpoint... 
+2022-04-23 01:47:55.454057: done, saving took 0.86 seconds 
+2022-04-23 01:47:55.454801: done 
+2022-04-23 01:47:55.454956: This epoch took 329.614547 s
+ 
+2022-04-23 01:47:55.455089: 
+epoch:  107 
+2022-04-23 01:53:03.316134: train loss : -0.3394 
+2022-04-23 01:53:23.922336: validation loss: -0.2873 
+2022-04-23 01:53:23.923476: Average global foreground Dice: [0.9288, 0.8707, 0.8947, 0.5715, 0.944, 0.8731, 0.7186, 0.5482, 0.7826, 0.8387, 0.4428, 0.7989, 0.725, 0.4295, 0.8412, 0.8133] 
+2022-04-23 01:53:23.923894: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 01:53:24.546323: lr: 0.006692 
+2022-04-23 01:53:24.546543: saving scheduled checkpoint file... 
+2022-04-23 01:53:24.568284: saving checkpoint... 
+2022-04-23 01:53:25.418526: done, saving took 0.87 seconds 
+2022-04-23 01:53:25.419269: done 
+2022-04-23 01:53:25.440975: saving checkpoint... 
+2022-04-23 01:53:26.288630: done, saving took 0.87 seconds 
+2022-04-23 01:53:26.289367: This epoch took 330.834140 s
+ 
+2022-04-23 01:53:26.289514: 
+epoch:  108 
+2022-04-23 01:58:33.803828: train loss : -0.3391 
+2022-04-23 01:58:54.481280: validation loss: -0.2542 
+2022-04-23 01:58:54.482487: Average global foreground Dice: [0.9424, 0.8763, 0.8922, 0.5552, 0.9316, 0.9087, 0.5845, 0.4103, 0.7518, 0.8116, 0.5257, 0.7225, 0.7917, 0.3647, 0.8011, 0.7889] 
+2022-04-23 01:58:54.483139: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 01:58:55.109968: lr: 0.006661 
+2022-04-23 01:58:55.110166: saving scheduled checkpoint file... 
+2022-04-23 01:58:55.131934: saving checkpoint... 
+2022-04-23 01:58:55.986481: done, saving took 0.88 seconds 
+2022-04-23 01:58:55.987235: done 
+2022-04-23 01:58:55.991581: This epoch took 329.701918 s
+ 
+2022-04-23 01:58:55.991729: 
+epoch:  109 
+2022-04-23 02:04:03.739071: train loss : -0.3533 
+2022-04-23 02:04:24.413335: validation loss: -0.3021 
+2022-04-23 02:04:24.414304: Average global foreground Dice: [0.9468, 0.8548, 0.8548, 0.4978, 0.9467, 0.9246, 0.7201, 0.5728, 0.7583, 0.8229, 0.5622, 0.6955, 0.7611, 0.2581, 0.7803, 0.7819] 
+2022-04-23 02:04:24.415008: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 02:04:25.027388: lr: 0.006629 
+2022-04-23 02:04:25.027615: saving scheduled checkpoint file... 
+2022-04-23 02:04:25.049299: saving checkpoint... 
+2022-04-23 02:04:25.889684: done, saving took 0.86 seconds 
+2022-04-23 02:04:25.890437: done 
+2022-04-23 02:04:25.890589: This epoch took 329.898712 s
+ 
+2022-04-23 02:04:25.890721: 
+epoch:  110 
+2022-04-23 02:09:34.149319: train loss : -0.3055 
+2022-04-23 02:09:54.747248: validation loss: -0.3283 
+2022-04-23 02:09:54.748701: Average global foreground Dice: [0.9297, 0.8996, 0.8928, 0.5287, 0.9262, 0.9048, 0.6547, 0.459, 0.7876, 0.8382, 0.5033, 0.8097, 0.7465, 0.331, 0.7471, 0.7462] 
+2022-04-23 02:09:54.749445: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 02:09:55.340189: lr: 0.006598 
+2022-04-23 02:09:55.340367: saving scheduled checkpoint file... 
+2022-04-23 02:09:55.362226: saving checkpoint... 
+2022-04-23 02:09:56.197459: done, saving took 0.86 seconds 
+2022-04-23 02:09:56.198195: done 
+2022-04-23 02:09:56.198348: This epoch took 330.307489 s
+ 
+2022-04-23 02:09:56.198479: 
+epoch:  111 
+2022-04-23 02:15:04.913897: train loss : -0.3229 
+2022-04-23 02:15:25.594128: validation loss: -0.3004 
+2022-04-23 02:15:25.595294: Average global foreground Dice: [0.9488, 0.834, 0.858, 0.5877, 0.9456, 0.9054, 0.6611, 0.4081, 0.779, 0.8207, 0.4084, 0.8414, 0.7872, 0.3317, 0.6443, 0.7775] 
+2022-04-23 02:15:25.596095: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 02:15:26.201644: lr: 0.006566 
+2022-04-23 02:15:26.202193: saving scheduled checkpoint file... 
+2022-04-23 02:15:26.224102: saving checkpoint... 
+2022-04-23 02:15:27.064216: done, saving took 0.86 seconds 
+2022-04-23 02:15:27.064953: done 
+2022-04-23 02:15:27.065102: This epoch took 330.866483 s
+ 
+2022-04-23 02:15:27.065236: 
+epoch:  112 
+2022-04-23 02:20:35.918967: train loss : -0.3520 
+2022-04-23 02:20:56.557538: validation loss: -0.3420 
+2022-04-23 02:20:56.558654: Average global foreground Dice: [0.942, 0.8628, 0.8772, 0.5514, 0.953, 0.9209, 0.6298, 0.6001, 0.7953, 0.8418, 0.5719, 0.7652, 0.8155, 0.3586, 0.8428, 0.8536] 
+2022-04-23 02:20:56.559099: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 02:20:57.153410: lr: 0.006535 
+2022-04-23 02:20:57.153603: saving scheduled checkpoint file... 
+2022-04-23 02:20:57.178159: saving checkpoint... 
+2022-04-23 02:20:58.007155: done, saving took 0.85 seconds 
+2022-04-23 02:20:58.008275: done 
+2022-04-23 02:20:58.029983: saving checkpoint... 
+2022-04-23 02:20:58.874457: done, saving took 0.87 seconds 
+2022-04-23 02:20:58.878193: This epoch took 331.812817 s
+ 
+2022-04-23 02:20:58.878385: 
+epoch:  113 
+2022-04-23 02:26:06.880634: train loss : -0.3514 
+2022-04-23 02:26:27.462774: validation loss: -0.2653 
+2022-04-23 02:26:27.464089: Average global foreground Dice: [0.944, 0.8313, 0.8686, 0.5542, 0.9375, 0.8916, 0.6771, 0.5601, 0.7773, 0.8303, 0.4929, 0.8175, 0.806, 0.4477, 0.8785, 0.8749] 
+2022-04-23 02:26:27.464883: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 02:26:28.036530: lr: 0.006504 
+2022-04-23 02:26:28.036705: saving scheduled checkpoint file... 
+2022-04-23 02:26:28.061763: saving checkpoint... 
+2022-04-23 02:26:28.999015: done, saving took 0.96 seconds 
+2022-04-23 02:26:28.999785: done 
+2022-04-23 02:26:29.021451: saving checkpoint... 
+2022-04-23 02:26:29.868519: done, saving took 0.87 seconds 
+2022-04-23 02:26:29.869303: This epoch took 330.990778 s
+ 
+2022-04-23 02:26:29.873610: 
+epoch:  114 
+2022-04-23 02:31:37.813968: train loss : -0.3582 
+2022-04-23 02:31:58.382517: validation loss: -0.2786 
+2022-04-23 02:31:58.383926: Average global foreground Dice: [0.9478, 0.8471, 0.8567, 0.5684, 0.9443, 0.8936, 0.6164, 0.4289, 0.8008, 0.8315, 0.528, 0.8831, 0.7837, 0.3111, 0.8845, 0.7577] 
+2022-04-23 02:31:58.387650: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 02:31:58.956166: lr: 0.006472 
+2022-04-23 02:31:58.956399: saving scheduled checkpoint file... 
+2022-04-23 02:31:58.978152: saving checkpoint... 
+2022-04-23 02:31:59.816149: done, saving took 0.86 seconds 
+2022-04-23 02:31:59.816911: done 
+2022-04-23 02:31:59.838585: saving checkpoint... 
+2022-04-23 02:32:00.675807: done, saving took 0.86 seconds 
+2022-04-23 02:32:00.676543: This epoch took 330.802794 s
+ 
+2022-04-23 02:32:00.676700: 
+epoch:  115 
+2022-04-23 02:37:08.969047: train loss : -0.3525 
+2022-04-23 02:37:29.599169: validation loss: -0.3393 
+2022-04-23 02:37:29.610049: Average global foreground Dice: [0.9432, 0.885, 0.8847, 0.5664, 0.9493, 0.8935, 0.7044, 0.4671, 0.7818, 0.82, 0.3908, 0.8455, 0.785, 0.4913, 0.8526, 0.8395] 
+2022-04-23 02:37:29.610447: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 02:37:30.205981: lr: 0.006441 
+2022-04-23 02:37:30.206178: saving scheduled checkpoint file... 
+2022-04-23 02:37:30.227880: saving checkpoint... 
+2022-04-23 02:37:31.082334: done, saving took 0.88 seconds 
+2022-04-23 02:37:31.083077: done 
+2022-04-23 02:37:31.104716: saving checkpoint... 
+2022-04-23 02:37:31.940813: done, saving took 0.86 seconds 
+2022-04-23 02:37:31.941601: This epoch took 331.264764 s
+ 
+2022-04-23 02:37:31.941766: 
+epoch:  116 
+2022-04-23 02:42:40.034154: train loss : -0.3234 
+2022-04-23 02:43:00.653035: validation loss: -0.2783 
+2022-04-23 02:43:00.654169: Average global foreground Dice: [0.9392, 0.8424, 0.877, 0.5115, 0.9303, 0.9252, 0.6407, 0.7129, 0.7348, 0.819, 0.5267, 0.8205, 0.7942, 0.3296, 0.8813, 0.8069] 
+2022-04-23 02:43:00.657520: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 02:43:01.226222: lr: 0.006409 
+2022-04-23 02:43:01.226454: saving scheduled checkpoint file... 
+2022-04-23 02:43:01.248273: saving checkpoint... 
+2022-04-23 02:43:02.074728: done, saving took 0.85 seconds 
+2022-04-23 02:43:02.075485: done 
+2022-04-23 02:43:02.097250: saving checkpoint... 
+2022-04-23 02:43:02.937317: done, saving took 0.86 seconds 
+2022-04-23 02:43:02.938087: This epoch took 330.996178 s
+ 
+2022-04-23 02:43:02.938226: 
+epoch:  117 
+2022-04-23 02:48:11.105465: train loss : -0.3398 
+2022-04-23 02:48:31.765288: validation loss: -0.3417 
+2022-04-23 02:48:31.766284: Average global foreground Dice: [0.9432, 0.8779, 0.8847, 0.5688, 0.9446, 0.8939, 0.6045, 0.5168, 0.7568, 0.8316, 0.5241, 0.816, 0.8032, 0.5813, 0.8353, 0.819] 
+2022-04-23 02:48:31.766951: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 02:48:32.352321: lr: 0.006378 
+2022-04-23 02:48:32.352501: saving scheduled checkpoint file... 
+2022-04-23 02:48:32.374204: saving checkpoint... 
+2022-04-23 02:48:33.206107: done, saving took 0.85 seconds 
+2022-04-23 02:48:33.206849: done 
+2022-04-23 02:48:33.228592: saving checkpoint... 
+2022-04-23 02:48:34.066405: done, saving took 0.86 seconds 
+2022-04-23 02:48:34.067147: This epoch took 331.128781 s
+ 
+2022-04-23 02:48:34.067289: 
+epoch:  118 
+2022-04-23 02:53:42.215887: train loss : -0.3303 
+2022-04-23 02:54:02.891765: validation loss: -0.2844 
+2022-04-23 02:54:02.902754: Average global foreground Dice: [0.9486, 0.8867, 0.9147, 0.6043, 0.9417, 0.9046, 0.5977, 0.4955, 0.7485, 0.8184, 0.5903, 0.7704, 0.7485, 0.3615, 0.9148, 0.7904] 
+2022-04-23 02:54:02.903147: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 02:54:03.490452: lr: 0.006346 
+2022-04-23 02:54:03.490636: saving scheduled checkpoint file... 
+2022-04-23 02:54:03.512420: saving checkpoint... 
+2022-04-23 02:54:04.351640: done, saving took 0.86 seconds 
+2022-04-23 02:54:04.352388: done 
+2022-04-23 02:54:04.374089: saving checkpoint... 
+2022-04-23 02:54:05.216110: done, saving took 0.86 seconds 
+2022-04-23 02:54:05.216866: This epoch took 331.149439 s
+ 
+2022-04-23 02:54:05.217006: 
+epoch:  119 
+2022-04-23 02:59:13.659924: train loss : -0.3411 
+2022-04-23 02:59:34.366746: validation loss: -0.2964 
+2022-04-23 02:59:34.367903: Average global foreground Dice: [0.9457, 0.8665, 0.8915, 0.5679, 0.9452, 0.8896, 0.6903, 0.6426, 0.7793, 0.8274, 0.2818, 0.8092, 0.7812, 0.3795, 0.8737, 0.7095] 
+2022-04-23 02:59:34.368603: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 02:59:34.980637: lr: 0.006314 
+2022-04-23 02:59:34.980854: saving scheduled checkpoint file... 
+2022-04-23 02:59:35.002562: saving checkpoint... 
+2022-04-23 02:59:35.927209: done, saving took 0.95 seconds 
+2022-04-23 02:59:35.934808: done 
+2022-04-23 02:59:35.934973: This epoch took 330.717825 s
+ 
+2022-04-23 02:59:35.935104: 
+epoch:  120 
+2022-04-23 03:04:44.495375: train loss : -0.3419 
+2022-04-23 03:05:05.017532: validation loss: -0.2731 
+2022-04-23 03:05:05.018715: Average global foreground Dice: [0.9403, 0.8738, 0.8952, 0.5625, 0.9492, 0.8816, 0.636, 0.4377, 0.7809, 0.8357, 0.4441, 0.6103, 0.7685, 0.1884, 0.8449, 0.8578] 
+2022-04-23 03:05:05.022707: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 03:05:05.590102: lr: 0.006283 
+2022-04-23 03:05:05.590282: saving scheduled checkpoint file... 
+2022-04-23 03:05:05.611996: saving checkpoint... 
+2022-04-23 03:05:06.458041: done, saving took 0.87 seconds 
+2022-04-23 03:05:06.458787: done 
+2022-04-23 03:05:06.458939: This epoch took 330.523703 s
+ 
+2022-04-23 03:05:06.459070: 
+epoch:  121 
+2022-04-23 03:10:14.881582: train loss : -0.3472 
+2022-04-23 03:10:35.540374: validation loss: -0.2768 
+2022-04-23 03:10:35.545269: Average global foreground Dice: [0.9406, 0.8802, 0.8853, 0.5614, 0.9376, 0.8857, 0.6319, 0.5488, 0.7593, 0.8393, 0.5778, 0.6457, 0.7261, 0.4779, 0.83, 0.7332] 
+2022-04-23 03:10:35.545891: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 03:10:36.135584: lr: 0.006251 
+2022-04-23 03:10:36.135765: saving scheduled checkpoint file... 
+2022-04-23 03:10:36.157413: saving checkpoint... 
+2022-04-23 03:10:36.995232: done, saving took 0.86 seconds 
+2022-04-23 03:10:36.995981: done 
+2022-04-23 03:10:36.996129: This epoch took 330.536918 s
+ 
+2022-04-23 03:10:36.996256: 
+epoch:  122 
+2022-04-23 03:15:45.317427: train loss : -0.3455 
+2022-04-23 03:16:05.927219: validation loss: -0.2404 
+2022-04-23 03:16:05.938404: Average global foreground Dice: [0.9448, 0.8656, 0.8678, 0.5285, 0.9363, 0.9261, 0.718, 0.3898, 0.7948, 0.8009, 0.5156, 0.8561, 0.704, 0.5049, 0.7943, 0.8003] 
+2022-04-23 03:16:05.941767: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 03:16:06.554676: lr: 0.00622 
+2022-04-23 03:16:06.554856: saving scheduled checkpoint file... 
+2022-04-23 03:16:06.576555: saving checkpoint... 
+2022-04-23 03:16:07.429026: done, saving took 0.87 seconds 
+2022-04-23 03:16:07.431906: done 
+2022-04-23 03:16:07.432067: This epoch took 330.435679 s
+ 
+2022-04-23 03:16:07.432204: 
+epoch:  123 
+2022-04-23 03:21:15.497245: train loss : -0.3347 
+2022-04-23 03:21:36.159988: validation loss: -0.2714 
+2022-04-23 03:21:36.171047: Average global foreground Dice: [0.947, 0.8539, 0.8723, 0.4565, 0.9427, 0.8344, 0.7114, 0.3448, 0.7582, 0.8265, 0.5544, 0.7766, 0.7353, 0.3468, 0.8905, 0.8195] 
+2022-04-23 03:21:36.171434: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 03:21:36.775397: lr: 0.006188 
+2022-04-23 03:21:36.775598: saving scheduled checkpoint file... 
+2022-04-23 03:21:36.802806: saving checkpoint... 
+2022-04-23 03:21:37.663663: done, saving took 0.89 seconds 
+2022-04-23 03:21:37.667768: done 
+2022-04-23 03:21:37.667930: This epoch took 330.235588 s
+ 
+2022-04-23 03:21:37.671944: 
+epoch:  124 
+2022-04-23 03:26:46.473948: train loss : -0.3472 
+2022-04-23 03:27:07.523908: validation loss: -0.3155 
+2022-04-23 03:27:07.534440: Average global foreground Dice: [0.9459, 0.8568, 0.8721, 0.57, 0.9438, 0.8713, 0.6845, 0.3888, 0.8041, 0.8236, 0.504, 0.805, 0.7586, 0.4318, 0.795, 0.8337] 
+2022-04-23 03:27:07.535126: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 03:27:08.124451: lr: 0.006156 
+2022-04-23 03:27:08.124643: saving scheduled checkpoint file... 
+2022-04-23 03:27:08.157556: saving checkpoint... 
+2022-04-23 03:27:08.997741: done, saving took 0.87 seconds 
+2022-04-23 03:27:08.998516: done 
+2022-04-23 03:27:08.998780: This epoch took 331.326686 s
+ 
+2022-04-23 03:27:08.998919: 
+epoch:  125 
+2022-04-23 03:32:17.837163: train loss : -0.3570 
+2022-04-23 03:32:38.429283: validation loss: -0.2594 
+2022-04-23 03:32:38.430506: Average global foreground Dice: [0.9382, 0.874, 0.8859, 0.5233, 0.9415, 0.88, 0.6136, 0.4025, 0.7416, 0.8324, 0.5536, 0.8155, 0.7856, 0.2856, 0.7739, 0.8047] 
+2022-04-23 03:32:38.430965: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 03:32:39.039560: lr: 0.006125 
+2022-04-23 03:32:39.040071: saving scheduled checkpoint file... 
+2022-04-23 03:32:39.067381: saving checkpoint... 
+2022-04-23 03:32:39.936536: done, saving took 0.90 seconds 
+2022-04-23 03:32:39.937267: done 
+2022-04-23 03:32:39.937420: This epoch took 330.938363 s
+ 
+2022-04-23 03:32:39.937553: 
+epoch:  126 
+2022-04-23 03:37:47.341115: train loss : -0.3694 
+2022-04-23 03:38:08.109805: validation loss: -0.3562 
+2022-04-23 03:38:08.120838: Average global foreground Dice: [0.9572, 0.8491, 0.8976, 0.5505, 0.9461, 0.9184, 0.6492, 0.5751, 0.7956, 0.831, 0.5396, 0.8367, 0.7076, 0.3783, 0.8966, 0.8318] 
+2022-04-23 03:38:08.124999: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 03:38:08.707001: lr: 0.006093 
+2022-04-23 03:38:08.707257: saving scheduled checkpoint file... 
+2022-04-23 03:38:08.732345: saving checkpoint... 
+2022-04-23 03:38:09.579680: done, saving took 0.87 seconds 
+2022-04-23 03:38:09.583184: done 
+2022-04-23 03:38:09.583341: This epoch took 329.645651 s
+ 
+2022-04-23 03:38:09.583491: 
+epoch:  127 
+2022-04-23 03:43:17.357361: train loss : -0.3544 
+2022-04-23 03:43:38.066015: validation loss: -0.3246 
+2022-04-23 03:43:38.071158: Average global foreground Dice: [0.9404, 0.8794, 0.8949, 0.5318, 0.9522, 0.9015, 0.6735, 0.4399, 0.7357, 0.8333, 0.5119, 0.9202, 0.8079, 0.5715, 0.8697, 0.7449] 
+2022-04-23 03:43:38.071912: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 03:43:38.664697: lr: 0.006061 
+2022-04-23 03:43:38.665125: saving scheduled checkpoint file... 
+2022-04-23 03:43:38.689902: saving checkpoint... 
+2022-04-23 03:43:39.557975: done, saving took 0.89 seconds 
+2022-04-23 03:43:39.558757: done 
+2022-04-23 03:43:39.558919: This epoch took 329.975277 s
+ 
+2022-04-23 03:43:39.559083: 
+epoch:  128 
+2022-04-23 03:48:48.101821: train loss : -0.3333 
+2022-04-23 03:49:08.785576: validation loss: -0.3345 
+2022-04-23 03:49:08.786665: Average global foreground Dice: [0.9452, 0.882, 0.8893, 0.565, 0.9472, 0.9117, 0.6768, 0.5405, 0.7395, 0.8229, 0.5031, 0.9174, 0.7771, 0.2937, 0.6262, 0.7442] 
+2022-04-23 03:49:08.787219: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 03:49:09.364440: lr: 0.00603 
+2022-04-23 03:49:09.364752: saving scheduled checkpoint file... 
+2022-04-23 03:49:09.389977: saving checkpoint... 
+2022-04-23 03:49:10.249672: done, saving took 0.88 seconds 
+2022-04-23 03:49:10.250451: done 
+2022-04-23 03:49:10.250607: This epoch took 330.691385 s
+ 
+2022-04-23 03:49:10.250740: 
+epoch:  129 
+2022-04-23 03:54:18.946324: train loss : -0.3362 
+2022-04-23 03:54:39.622452: validation loss: -0.2651 
+2022-04-23 03:54:39.623857: Average global foreground Dice: [0.9412, 0.8801, 0.8897, 0.5765, 0.9473, 0.892, 0.668, 0.4493, 0.7856, 0.7946, 0.4266, 0.8593, 0.7852, 0.2719, 0.8469, 0.7861] 
+2022-04-23 03:54:39.627078: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 03:54:40.239591: lr: 0.005998 
+2022-04-23 03:54:40.239820: saving scheduled checkpoint file... 
+2022-04-23 03:54:40.264769: saving checkpoint... 
+2022-04-23 03:54:41.165148: done, saving took 0.93 seconds 
+2022-04-23 03:54:41.166049: done 
+2022-04-23 03:54:41.166217: This epoch took 330.915334 s
+ 
+2022-04-23 03:54:41.166353: 
+epoch:  130 
+2022-04-23 03:59:49.476111: train loss : -0.3516 
+2022-04-23 04:00:10.155135: validation loss: -0.3316 
+2022-04-23 04:00:10.156307: Average global foreground Dice: [0.9436, 0.8972, 0.909, 0.5997, 0.9423, 0.9062, 0.6, 0.5937, 0.7905, 0.8272, 0.4566, 0.865, 0.8108, 0.4518, 0.891, 0.7962] 
+2022-04-23 04:00:10.156702: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 04:00:10.780780: lr: 0.005966 
+2022-04-23 04:00:10.780976: saving scheduled checkpoint file... 
+2022-04-23 04:00:10.802705: saving checkpoint... 
+2022-04-23 04:00:11.654508: done, saving took 0.87 seconds 
+2022-04-23 04:00:11.655262: done 
+2022-04-23 04:00:11.676986: saving checkpoint... 
+2022-04-23 04:00:12.521973: done, saving took 0.87 seconds 
+2022-04-23 04:00:12.522752: This epoch took 331.356256 s
+ 
+2022-04-23 04:00:12.522899: 
+epoch:  131 
+2022-04-23 04:05:21.570583: train loss : -0.3417 
+2022-04-23 04:05:42.115580: validation loss: -0.3126 
+2022-04-23 04:05:42.120822: Average global foreground Dice: [0.9515, 0.8547, 0.8671, 0.5949, 0.9523, 0.8933, 0.7007, 0.3999, 0.783, 0.8448, 0.6079, 0.6586, 0.7851, 0.3559, 0.8769, 0.8009] 
+2022-04-23 04:05:42.121231: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 04:05:42.741312: lr: 0.005934 
+2022-04-23 04:05:42.741496: saving scheduled checkpoint file... 
+2022-04-23 04:05:42.763244: saving checkpoint... 
+2022-04-23 04:05:43.616386: done, saving took 0.87 seconds 
+2022-04-23 04:05:43.617110: done 
+2022-04-23 04:05:43.638797: saving checkpoint... 
+2022-04-23 04:05:44.477436: done, saving took 0.86 seconds 
+2022-04-23 04:05:44.478201: This epoch took 331.955142 s
+ 
+2022-04-23 04:05:44.478352: 
+epoch:  132 
+2022-04-23 04:10:52.994976: train loss : -0.3376 
+2022-04-23 04:11:13.580103: validation loss: -0.3191 
+2022-04-23 04:11:13.580890: Average global foreground Dice: [0.9502, 0.8689, 0.8926, 0.5432, 0.9449, 0.9073, 0.6183, 0.3891, 0.7764, 0.8223, 0.4769, 0.8474, 0.8259, 0.4018, 0.8106, 0.7758] 
+2022-04-23 04:11:13.584914: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 04:11:14.159230: lr: 0.005902 
+2022-04-23 04:11:14.159408: saving scheduled checkpoint file... 
+2022-04-23 04:11:14.181175: saving checkpoint... 
+2022-04-23 04:11:15.021242: done, saving took 0.86 seconds 
+2022-04-23 04:11:15.021980: done 
+2022-04-23 04:11:15.022131: This epoch took 330.543626 s
+ 
+2022-04-23 04:11:15.022262: 
+epoch:  133 
+2022-04-23 04:16:23.091371: train loss : -0.3597 
+2022-04-23 04:16:43.794420: validation loss: -0.3151 
+2022-04-23 04:16:43.799448: Average global foreground Dice: [0.942, 0.8793, 0.8817, 0.5552, 0.9528, 0.9206, 0.6425, 0.3481, 0.7078, 0.8417, 0.5233, 0.8699, 0.7604, 0.3046, 0.8457, 0.8307] 
+2022-04-23 04:16:43.800140: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 04:16:44.389166: lr: 0.005871 
+2022-04-23 04:16:44.389399: saving scheduled checkpoint file... 
+2022-04-23 04:16:44.416827: saving checkpoint... 
+2022-04-23 04:16:45.275750: done, saving took 0.89 seconds 
+2022-04-23 04:16:45.276489: done 
+2022-04-23 04:16:45.276643: This epoch took 330.254243 s
+ 
+2022-04-23 04:16:45.276778: 
+epoch:  134 
+2022-04-23 04:21:54.417315: train loss : -0.3208 
+2022-04-23 04:22:15.193155: validation loss: -0.3523 
+2022-04-23 04:22:15.204038: Average global foreground Dice: [0.9498, 0.8543, 0.8858, 0.5523, 0.9301, 0.9068, 0.6246, 0.3507, 0.7563, 0.8426, 0.5172, 0.8505, 0.8025, 0.3448, 0.878, 0.8058] 
+2022-04-23 04:22:15.205240: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 04:22:15.795128: lr: 0.005839 
+2022-04-23 04:22:15.795328: saving scheduled checkpoint file... 
+2022-04-23 04:22:15.826726: saving checkpoint... 
+2022-04-23 04:22:16.688958: done, saving took 0.89 seconds 
+2022-04-23 04:22:16.689757: done 
+2022-04-23 04:22:16.689916: This epoch took 331.412998 s
+ 
+2022-04-23 04:22:16.690052: 
+epoch:  135 
+2022-04-23 04:27:28.170964: train loss : -0.3655 
+2022-04-23 04:27:49.265976: validation loss: -0.2978 
+2022-04-23 04:27:49.272943: Average global foreground Dice: [0.9503, 0.8536, 0.8888, 0.6029, 0.9498, 0.8792, 0.6624, 0.4508, 0.7645, 0.8478, 0.5446, 0.7563, 0.8087, 0.2818, 0.878, 0.787] 
+2022-04-23 04:27:49.273655: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 04:27:49.893776: lr: 0.005807 
+2022-04-23 04:27:49.893960: saving scheduled checkpoint file... 
+2022-04-23 04:27:49.925954: saving checkpoint... 
+2022-04-23 04:27:50.888438: done, saving took 0.99 seconds 
+2022-04-23 04:27:50.889192: done 
+2022-04-23 04:27:50.889340: This epoch took 334.199148 s
+ 
+2022-04-23 04:27:50.889471: 
+epoch:  136 
+2022-04-23 04:32:58.971782: train loss : -0.3579 
+2022-04-23 04:33:19.619119: validation loss: -0.3219 
+2022-04-23 04:33:19.620759: Average global foreground Dice: [0.9507, 0.8837, 0.8987, 0.5955, 0.9452, 0.929, 0.6626, 0.7055, 0.7649, 0.8431, 0.4813, 0.8512, 0.7164, 0.4716, 0.8838, 0.7973] 
+2022-04-23 04:33:19.621464: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 04:33:20.225438: lr: 0.005775 
+2022-04-23 04:33:20.225628: saving scheduled checkpoint file... 
+2022-04-23 04:33:20.247423: saving checkpoint... 
+2022-04-23 04:33:21.088438: done, saving took 0.86 seconds 
+2022-04-23 04:33:21.089197: done 
+2022-04-23 04:33:21.110878: saving checkpoint... 
+2022-04-23 04:33:21.952921: done, saving took 0.86 seconds 
+2022-04-23 04:33:21.953672: This epoch took 331.064065 s
+ 
+2022-04-23 04:33:21.953813: 
+epoch:  137 
+2022-04-23 04:38:29.771292: train loss : -0.3683 
+2022-04-23 04:38:50.451328: validation loss: -0.3101 
+2022-04-23 04:38:50.456469: Average global foreground Dice: [0.947, 0.8619, 0.8962, 0.5922, 0.9507, 0.8934, 0.7766, 0.507, 0.7536, 0.8415, 0.6066, 0.8162, 0.8044, 0.2491, 0.7417, 0.8082] 
+2022-04-23 04:38:50.457146: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 04:38:51.036077: lr: 0.005743 
+2022-04-23 04:38:51.036417: saving scheduled checkpoint file... 
+2022-04-23 04:38:51.058177: saving checkpoint... 
+2022-04-23 04:38:51.903803: done, saving took 0.87 seconds 
+2022-04-23 04:38:51.904622: done 
+2022-04-23 04:38:51.926306: saving checkpoint... 
+2022-04-23 04:38:52.762858: done, saving took 0.86 seconds 
+2022-04-23 04:38:52.763593: This epoch took 330.809615 s
+ 
+2022-04-23 04:38:52.763731: 
+epoch:  138 
+2022-04-23 04:44:01.483155: train loss : -0.3529 
+2022-04-23 04:44:22.143426: validation loss: -0.2941 
+2022-04-23 04:44:22.144578: Average global foreground Dice: [0.9462, 0.8398, 0.8457, 0.508, 0.9374, 0.9125, 0.692, 0.3155, 0.7257, 0.837, 0.4389, 0.8511, 0.7195, 0.2611, 0.8314, 0.8123] 
+2022-04-23 04:44:22.148263: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 04:44:22.721392: lr: 0.005711 
+2022-04-23 04:44:22.721576: saving scheduled checkpoint file... 
+2022-04-23 04:44:22.743416: saving checkpoint... 
+2022-04-23 04:44:23.607537: done, saving took 0.89 seconds 
+2022-04-23 04:44:23.608294: done 
+2022-04-23 04:44:23.608449: This epoch took 330.844582 s
+ 
+2022-04-23 04:44:23.608584: 
+epoch:  139 
+2022-04-23 04:49:31.976058: train loss : -0.3434 
+2022-04-23 04:49:52.586163: validation loss: -0.3187 
+2022-04-23 04:49:52.591280: Average global foreground Dice: [0.9481, 0.8557, 0.8527, 0.5731, 0.944, 0.9071, 0.6078, 0.5451, 0.7316, 0.8302, 0.5627, 0.7171, 0.7339, 0.3741, 0.8159, 0.8222] 
+2022-04-23 04:49:52.591996: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 04:49:53.211977: lr: 0.005679 
+2022-04-23 04:49:53.212226: saving scheduled checkpoint file... 
+2022-04-23 04:49:53.234046: saving checkpoint... 
+2022-04-23 04:49:54.091476: done, saving took 0.88 seconds 
+2022-04-23 04:49:54.092208: done 
+2022-04-23 04:49:54.092361: This epoch took 330.483640 s
+ 
+2022-04-23 04:49:54.092493: 
+epoch:  140 
+2022-04-23 04:55:02.371140: train loss : -0.3656 
+2022-04-23 04:55:22.998790: validation loss: -0.3160 
+2022-04-23 04:55:23.009779: Average global foreground Dice: [0.9449, 0.8988, 0.9044, 0.5583, 0.9474, 0.8879, 0.6351, 0.44, 0.7569, 0.849, 0.6579, 0.8564, 0.7153, 0.3215, 0.8645, 0.8028] 
+2022-04-23 04:55:23.010077: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 04:55:23.609535: lr: 0.005647 
+2022-04-23 04:55:23.609761: saving scheduled checkpoint file... 
+2022-04-23 04:55:23.631501: saving checkpoint... 
+2022-04-23 04:55:24.480921: done, saving took 0.87 seconds 
+2022-04-23 04:55:24.481651: done 
+2022-04-23 04:55:24.481804: This epoch took 330.389172 s
+ 
+2022-04-23 04:55:24.481937: 
+epoch:  141 
+2022-04-23 05:00:32.806263: train loss : -0.3717 
+2022-04-23 05:00:53.372149: validation loss: -0.3714 
+2022-04-23 05:00:53.383163: Average global foreground Dice: [0.9508, 0.8811, 0.8923, 0.5914, 0.9477, 0.9011, 0.6847, 0.4122, 0.7361, 0.8452, 0.5541, 0.847, 0.7923, 0.5664, 0.8539, 0.839] 
+2022-04-23 05:00:53.383826: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 05:00:53.960661: lr: 0.005615 
+2022-04-23 05:00:53.960854: saving scheduled checkpoint file... 
+2022-04-23 05:00:53.982574: saving checkpoint... 
+2022-04-23 05:00:54.906116: done, saving took 0.95 seconds 
+2022-04-23 05:00:54.907243: done 
+2022-04-23 05:00:54.907397: This epoch took 330.425325 s
+ 
+2022-04-23 05:00:54.907538: 
+epoch:  142 
+2022-04-23 05:06:02.963159: train loss : -0.3681 
+2022-04-23 05:06:23.658852: validation loss: -0.3347 
+2022-04-23 05:06:23.669780: Average global foreground Dice: [0.9465, 0.8737, 0.8893, 0.5955, 0.9373, 0.9165, 0.7067, 0.3407, 0.7592, 0.8495, 0.5404, 0.9151, 0.8132, 0.4966, 0.9045, 0.7741] 
+2022-04-23 05:06:23.670462: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 05:06:24.290789: lr: 0.005583 
+2022-04-23 05:06:24.290970: saving scheduled checkpoint file... 
+2022-04-23 05:06:24.312646: saving checkpoint... 
+2022-04-23 05:06:25.154044: done, saving took 0.86 seconds 
+2022-04-23 05:06:25.154791: done 
+2022-04-23 05:06:25.176687: saving checkpoint... 
+2022-04-23 05:06:26.033305: done, saving took 0.88 seconds 
+2022-04-23 05:06:26.034048: This epoch took 331.126370 s
+ 
+2022-04-23 05:06:26.034188: 
+epoch:  143 
+2022-04-23 05:11:34.196054: train loss : -0.3565 
+2022-04-23 05:11:54.814333: validation loss: -0.3481 
+2022-04-23 05:11:54.815517: Average global foreground Dice: [0.955, 0.8611, 0.8987, 0.6085, 0.9507, 0.9178, 0.7479, 0.5696, 0.7288, 0.8319, 0.5193, 0.8468, 0.8172, 0.3363, 0.8131, 0.7934] 
+2022-04-23 05:11:54.815905: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 05:11:55.394603: lr: 0.005551 
+2022-04-23 05:11:55.394827: saving scheduled checkpoint file... 
+2022-04-23 05:11:55.416564: saving checkpoint... 
+2022-04-23 05:11:56.263972: done, saving took 0.87 seconds 
+2022-04-23 05:11:56.264776: done 
+2022-04-23 05:11:56.286534: saving checkpoint... 
+2022-04-23 05:11:57.120351: done, saving took 0.86 seconds 
+2022-04-23 05:11:57.121084: This epoch took 331.086758 s
+ 
+2022-04-23 05:11:57.121220: 
+epoch:  144 
+2022-04-23 05:17:05.370542: train loss : -0.3649 
+2022-04-23 05:17:26.019079: validation loss: -0.2919 
+2022-04-23 05:17:26.020514: Average global foreground Dice: [0.9464, 0.8844, 0.893, 0.6134, 0.9409, 0.9182, 0.6514, 0.5599, 0.7588, 0.8613, 0.6342, 0.8259, 0.7739, 0.2017, 0.7978, 0.8109] 
+2022-04-23 05:17:26.020927: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 05:17:26.645931: lr: 0.005519 
+2022-04-23 05:17:26.646114: saving scheduled checkpoint file... 
+2022-04-23 05:17:26.667829: saving checkpoint... 
+2022-04-23 05:17:27.514927: done, saving took 0.87 seconds 
+2022-04-23 05:17:27.515679: done 
+2022-04-23 05:17:27.537383: saving checkpoint... 
+2022-04-23 05:17:28.372271: done, saving took 0.86 seconds 
+2022-04-23 05:17:28.373019: This epoch took 331.251665 s
+ 
+2022-04-23 05:17:28.373156: 
+epoch:  145 
+2022-04-23 05:22:35.806448: train loss : -0.3805 
+2022-04-23 05:22:56.425508: validation loss: -0.3253 
+2022-04-23 05:22:56.430562: Average global foreground Dice: [0.9458, 0.8861, 0.8894, 0.5985, 0.9467, 0.8971, 0.6642, 0.5696, 0.7694, 0.8527, 0.5813, 0.9049, 0.7457, 0.3231, 0.8906, 0.7995] 
+2022-04-23 05:22:56.430970: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 05:22:57.046666: lr: 0.005487 
+2022-04-23 05:22:57.047023: saving scheduled checkpoint file... 
+2022-04-23 05:22:57.068722: saving checkpoint... 
+2022-04-23 05:22:57.908474: done, saving took 0.86 seconds 
+2022-04-23 05:22:57.909289: done 
+2022-04-23 05:22:57.931048: saving checkpoint... 
+2022-04-23 05:22:58.760059: done, saving took 0.85 seconds 
+2022-04-23 05:22:58.760800: This epoch took 330.387503 s
+ 
+2022-04-23 05:22:58.760933: 
+epoch:  146 
+2022-04-23 05:28:06.460637: train loss : -0.3653 
+2022-04-23 05:28:27.120026: validation loss: -0.3403 
+2022-04-23 05:28:27.121190: Average global foreground Dice: [0.9522, 0.8408, 0.8817, 0.5652, 0.9302, 0.894, 0.6421, 0.4879, 0.7751, 0.834, 0.519, 0.8802, 0.7838, 0.4877, 0.9019, 0.7902] 
+2022-04-23 05:28:27.121562: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 05:28:27.701425: lr: 0.005455 
+2022-04-23 05:28:27.701610: saving scheduled checkpoint file... 
+2022-04-23 05:28:27.723321: saving checkpoint... 
+2022-04-23 05:28:28.591842: done, saving took 0.89 seconds 
+2022-04-23 05:28:28.592604: done 
+2022-04-23 05:28:28.614291: saving checkpoint... 
+2022-04-23 05:28:29.457266: done, saving took 0.86 seconds 
+2022-04-23 05:28:29.457999: This epoch took 330.696941 s
+ 
+2022-04-23 05:28:29.458138: 
+epoch:  147 
+2022-04-23 05:33:37.715383: train loss : -0.3798 
+2022-04-23 05:33:58.492734: validation loss: -0.2957 
+2022-04-23 05:33:58.494318: Average global foreground Dice: [0.9492, 0.8732, 0.8786, 0.5461, 0.942, 0.8878, 0.64, 0.4276, 0.7582, 0.8432, 0.5644, 0.8094, 0.7933, 0.387, 0.9144, 0.8251] 
+2022-04-23 05:33:58.494750: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 05:33:59.175313: lr: 0.005423 
+2022-04-23 05:33:59.175534: saving scheduled checkpoint file... 
+2022-04-23 05:33:59.197278: saving checkpoint... 
+2022-04-23 05:34:00.080594: done, saving took 0.90 seconds 
+2022-04-23 05:34:00.081399: done 
+2022-04-23 05:34:00.081550: This epoch took 330.623275 s
+ 
+2022-04-23 05:34:00.081686: 
+epoch:  148 
+2022-04-23 05:39:08.615663: train loss : -0.3873 
+2022-04-23 05:39:29.301567: validation loss: -0.3093 
+2022-04-23 05:39:29.312168: Average global foreground Dice: [0.945, 0.9076, 0.9119, 0.6041, 0.9488, 0.9086, 0.5782, 0.395, 0.759, 0.8452, 0.4761, 0.8911, 0.8161, 0.3843, 0.858, 0.7937] 
+2022-04-23 05:39:29.312860: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 05:39:29.921497: lr: 0.005391 
+2022-04-23 05:39:29.921700: saving scheduled checkpoint file... 
+2022-04-23 05:39:29.943397: saving checkpoint... 
+2022-04-23 05:39:30.783155: done, saving took 0.86 seconds 
+2022-04-23 05:39:30.783900: done 
+2022-04-23 05:39:30.784051: This epoch took 330.702228 s
+ 
+2022-04-23 05:39:30.784187: 
+epoch:  149 
+2022-04-23 05:44:39.433465: train loss : -0.3680 
+2022-04-23 05:45:00.188287: validation loss: -0.3341 
+2022-04-23 05:45:00.189447: Average global foreground Dice: [0.9466, 0.897, 0.9059, 0.5647, 0.9422, 0.9098, 0.7271, 0.3601, 0.7499, 0.8531, 0.4577, 0.9064, 0.8069, 0.4961, 0.8624, 0.7864] 
+2022-04-23 05:45:00.189825: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 05:45:00.811442: lr: 0.005359 
+2022-04-23 05:45:00.811676: saving scheduled checkpoint file... 
+2022-04-23 05:45:00.833345: saving checkpoint... 
+2022-04-23 05:45:01.667323: done, saving took 0.86 seconds 
+2022-04-23 05:45:01.668066: done 
+2022-04-23 05:45:01.689781: saving checkpoint... 
+2022-04-23 05:45:02.526798: done, saving took 0.86 seconds 
+2022-04-23 05:45:02.527551: This epoch took 331.743228 s
+ 
+2022-04-23 05:45:02.527697: 
+epoch:  150 
+2022-04-23 05:50:10.760509: train loss : -0.3595 
+2022-04-23 05:50:31.457409: validation loss: -0.3661 
+2022-04-23 05:50:31.458622: Average global foreground Dice: [0.9388, 0.8727, 0.8975, 0.5904, 0.9279, 0.923, 0.6411, 0.523, 0.7221, 0.8453, 0.5301, 0.8321, 0.8354, 0.3247, 0.8297, 0.8237] 
+2022-04-23 05:50:31.458997: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 05:50:32.037830: lr: 0.005327 
+2022-04-23 05:50:32.038018: saving scheduled checkpoint file... 
+2022-04-23 05:50:32.059702: saving checkpoint... 
+2022-04-23 05:50:32.916968: done, saving took 0.88 seconds 
+2022-04-23 05:50:32.917718: done 
+2022-04-23 05:50:32.917868: This epoch took 330.390031 s
+ 
+2022-04-23 05:50:32.917999: 
+epoch:  151 
+2022-04-23 05:55:40.904398: train loss : -0.3524 
+2022-04-23 05:56:01.512629: validation loss: -0.3013 
+2022-04-23 05:56:01.513906: Average global foreground Dice: [0.9502, 0.855, 0.884, 0.6156, 0.9455, 0.8898, 0.5556, 0.3705, 0.7472, 0.8449, 0.504, 0.8488, 0.771, 0.54, 0.8788, 0.7994] 
+2022-04-23 05:56:01.514281: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 05:56:02.094480: lr: 0.005295 
+2022-04-23 05:56:02.094704: saving scheduled checkpoint file... 
+2022-04-23 05:56:02.116389: saving checkpoint... 
+2022-04-23 05:56:02.968554: done, saving took 0.87 seconds 
+2022-04-23 05:56:02.969580: done 
+2022-04-23 05:56:02.969766: This epoch took 330.051636 s
+ 
+2022-04-23 05:56:02.969922: 
+epoch:  152 
+2022-04-23 06:01:11.572506: train loss : -0.3600 
+2022-04-23 06:01:32.231905: validation loss: -0.3554 
+2022-04-23 06:01:32.243047: Average global foreground Dice: [0.9519, 0.8641, 0.8806, 0.5883, 0.9516, 0.9253, 0.7325, 0.5845, 0.7505, 0.8355, 0.6222, 0.8561, 0.7599, 0.3825, 0.8588, 0.8642] 
+2022-04-23 06:01:32.243460: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 06:01:32.821235: lr: 0.005262 
+2022-04-23 06:01:32.821418: saving scheduled checkpoint file... 
+2022-04-23 06:01:32.853449: saving checkpoint... 
+2022-04-23 06:01:33.712052: done, saving took 0.89 seconds 
+2022-04-23 06:01:33.715227: done 
+2022-04-23 06:01:33.744250: saving checkpoint... 
+2022-04-23 06:01:34.592382: done, saving took 0.88 seconds 
+2022-04-23 06:01:34.593123: This epoch took 331.623035 s
+ 
+2022-04-23 06:01:34.593269: 
+epoch:  153 
+2022-04-23 06:06:44.753745: train loss : -0.3731 
+2022-04-23 06:07:05.845242: validation loss: -0.3212 
+2022-04-23 06:07:05.846418: Average global foreground Dice: [0.9517, 0.8639, 0.8818, 0.6116, 0.949, 0.9013, 0.7099, 0.5727, 0.7586, 0.8447, 0.5512, 0.8293, 0.8176, 0.5584, 0.9027, 0.8499] 
+2022-04-23 06:07:05.846819: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 06:07:06.511187: lr: 0.00523 
+2022-04-23 06:07:06.511365: saving scheduled checkpoint file... 
+2022-04-23 06:07:06.533077: saving checkpoint... 
+2022-04-23 06:07:07.382609: done, saving took 0.87 seconds 
+2022-04-23 06:07:07.383355: done 
+2022-04-23 06:07:07.405007: saving checkpoint... 
+2022-04-23 06:07:08.245954: done, saving took 0.86 seconds 
+2022-04-23 06:07:08.246706: This epoch took 333.653224 s
+ 
+2022-04-23 06:07:08.246849: 
+epoch:  154 
+2022-04-23 06:12:16.186524: train loss : -0.3820 
+2022-04-23 06:12:36.958602: validation loss: -0.3421 
+2022-04-23 06:12:36.959868: Average global foreground Dice: [0.9541, 0.8579, 0.8835, 0.523, 0.9531, 0.9081, 0.705, 0.3776, 0.7733, 0.8546, 0.6414, 0.9005, 0.7799, 0.419, 0.8711, 0.7851] 
+2022-04-23 06:12:36.960466: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 06:12:37.573889: lr: 0.005198 
+2022-04-23 06:12:37.574116: saving scheduled checkpoint file... 
+2022-04-23 06:12:37.595787: saving checkpoint... 
+2022-04-23 06:12:38.457516: done, saving took 0.88 seconds 
+2022-04-23 06:12:38.458630: done 
+2022-04-23 06:12:38.480211: saving checkpoint... 
+2022-04-23 06:12:39.332239: done, saving took 0.87 seconds 
+2022-04-23 06:12:39.332983: This epoch took 331.085994 s
+ 
+2022-04-23 06:12:39.333122: 
+epoch:  155 
+2022-04-23 06:17:50.270591: train loss : -0.3753 
+2022-04-23 06:18:11.935769: validation loss: -0.3389 
+2022-04-23 06:18:11.972586: Average global foreground Dice: [0.9506, 0.8689, 0.893, 0.5315, 0.9438, 0.9158, 0.6721, 0.3727, 0.7526, 0.8425, 0.3603, 0.8557, 0.821, 0.5488, 0.9057, 0.8127] 
+2022-04-23 06:18:11.973074: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 06:18:12.589450: lr: 0.005166 
+2022-04-23 06:18:12.589707: saving scheduled checkpoint file... 
+2022-04-23 06:18:12.611562: saving checkpoint... 
+2022-04-23 06:18:13.447004: done, saving took 0.86 seconds 
+2022-04-23 06:18:13.447742: done 
+2022-04-23 06:18:13.447891: This epoch took 334.114627 s
+ 
+2022-04-23 06:18:13.448019: 
+epoch:  156 
+2022-04-23 06:23:21.259423: train loss : -0.3620 
+2022-04-23 06:23:41.908934: validation loss: -0.3314 
+2022-04-23 06:23:41.910075: Average global foreground Dice: [0.9476, 0.8838, 0.8715, 0.5792, 0.9524, 0.9324, 0.6994, 0.4644, 0.769, 0.8263, 0.5088, 0.8533, 0.8298, 0.5071, 0.8058, 0.8287] 
+2022-04-23 06:23:41.910454: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 06:23:42.492117: lr: 0.005133 
+2022-04-23 06:23:42.492301: saving scheduled checkpoint file... 
+2022-04-23 06:23:42.514052: saving checkpoint... 
+2022-04-23 06:23:43.353856: done, saving took 0.86 seconds 
+2022-04-23 06:23:43.354598: done 
+2022-04-23 06:23:43.376314: saving checkpoint... 
+2022-04-23 06:23:44.208571: done, saving took 0.85 seconds 
+2022-04-23 06:23:44.209329: This epoch took 330.761178 s
+ 
+2022-04-23 06:23:44.209468: 
+epoch:  157 
+2022-04-23 06:28:52.282496: train loss : -0.3611 
+2022-04-23 06:29:12.848040: validation loss: -0.3059 
+2022-04-23 06:29:12.863070: Average global foreground Dice: [0.9397, 0.8687, 0.8914, 0.5771, 0.9375, 0.9095, 0.6759, 0.3516, 0.7644, 0.853, 0.5445, 0.8956, 0.8105, 0.4997, 0.8366, 0.8064] 
+2022-04-23 06:29:12.863533: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 06:29:13.440953: lr: 0.005101 
+2022-04-23 06:29:13.441340: saving scheduled checkpoint file... 
+2022-04-23 06:29:13.463089: saving checkpoint... 
+2022-04-23 06:29:14.328730: done, saving took 0.89 seconds 
+2022-04-23 06:29:14.329485: done 
+2022-04-23 06:29:14.351221: saving checkpoint... 
+2022-04-23 06:29:15.200383: done, saving took 0.87 seconds 
+2022-04-23 06:29:15.201191: This epoch took 330.991579 s
+ 
+2022-04-23 06:29:15.201327: 
+epoch:  158 
+2022-04-23 06:34:22.547456: train loss : -0.3804 
+2022-04-23 06:34:43.171008: validation loss: -0.3079 
+2022-04-23 06:34:43.181949: Average global foreground Dice: [0.9457, 0.8698, 0.8984, 0.5786, 0.9482, 0.9121, 0.655, 0.4428, 0.7535, 0.8522, 0.5313, 0.9171, 0.7962, 0.1769, 0.8885, 0.8183] 
+2022-04-23 06:34:43.182329: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 06:34:43.762946: lr: 0.005069 
+2022-04-23 06:34:43.763127: saving scheduled checkpoint file... 
+2022-04-23 06:34:43.784869: saving checkpoint... 
+2022-04-23 06:34:44.642804: done, saving took 0.88 seconds 
+2022-04-23 06:34:44.645487: done 
+2022-04-23 06:34:44.645643: This epoch took 329.444181 s
+ 
+2022-04-23 06:34:44.645770: 
+epoch:  159 
+2022-04-23 06:39:54.676929: train loss : -0.3893 
+2022-04-23 06:40:15.628513: validation loss: -0.3762 
+2022-04-23 06:40:15.629832: Average global foreground Dice: [0.9539, 0.8917, 0.9036, 0.6053, 0.9543, 0.9249, 0.7552, 0.3655, 0.7634, 0.8406, 0.4458, 0.9208, 0.8034, 0.3253, 0.9111, 0.7763] 
+2022-04-23 06:40:15.631025: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 06:40:16.218488: lr: 0.005036 
+2022-04-23 06:40:16.218840: saving scheduled checkpoint file... 
+2022-04-23 06:40:16.248356: saving checkpoint... 
+2022-04-23 06:40:17.169036: done, saving took 0.95 seconds 
+2022-04-23 06:40:17.170137: done 
+2022-04-23 06:40:17.170290: This epoch took 332.524386 s
+ 
+2022-04-23 06:40:17.170423: 
+epoch:  160 
+2022-04-23 06:45:24.521362: train loss : -0.3544 
+2022-04-23 06:45:45.218547: validation loss: -0.3190 
+2022-04-23 06:45:45.229418: Average global foreground Dice: [0.9437, 0.8612, 0.8824, 0.5302, 0.947, 0.9167, 0.6557, 0.3716, 0.7319, 0.8349, 0.5189, 0.8685, 0.8182, 0.5375, 0.8825, 0.8197] 
+2022-04-23 06:45:45.229854: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 06:45:45.813659: lr: 0.005004 
+2022-04-23 06:45:45.813852: saving scheduled checkpoint file... 
+2022-04-23 06:45:45.835587: saving checkpoint... 
+2022-04-23 06:45:46.676816: done, saving took 0.86 seconds 
+2022-04-23 06:45:46.677550: done 
+2022-04-23 06:45:46.677697: This epoch took 329.507138 s
+ 
+2022-04-23 06:45:46.677824: 
+epoch:  161 
+2022-04-23 06:50:54.537600: train loss : -0.3645 
+2022-04-23 06:51:15.134626: validation loss: -0.2735 
+2022-04-23 06:51:15.135828: Average global foreground Dice: [0.9461, 0.8261, 0.8459, 0.5787, 0.9495, 0.8812, 0.7371, 0.4412, 0.7625, 0.8387, 0.5522, 0.8695, 0.7693, 0.4258, 0.8789, 0.8842] 
+2022-04-23 06:51:15.136200: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 06:51:15.725196: lr: 0.004971 
+2022-04-23 06:51:15.725429: saving scheduled checkpoint file... 
+2022-04-23 06:51:15.747197: saving checkpoint... 
+2022-04-23 06:51:16.594694: done, saving took 0.87 seconds 
+2022-04-23 06:51:16.595453: done 
+2022-04-23 06:51:16.595617: This epoch took 329.917663 s
+ 
+2022-04-23 06:51:16.595753: 
+epoch:  162 
+2022-04-23 06:56:24.140597: train loss : -0.3708 
+2022-04-23 06:56:44.872945: validation loss: -0.3175 
+2022-04-23 06:56:44.883762: Average global foreground Dice: [0.9424, 0.9021, 0.9141, 0.5952, 0.9469, 0.9194, 0.681, 0.4225, 0.7564, 0.8195, 0.4704, 0.8007, 0.8414, 0.3445, 0.881, 0.7766] 
+2022-04-23 06:56:44.884420: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 06:56:45.514180: lr: 0.004939 
+2022-04-23 06:56:45.514357: saving scheduled checkpoint file... 
+2022-04-23 06:56:45.536031: saving checkpoint... 
+2022-04-23 06:56:46.378409: done, saving took 0.86 seconds 
+2022-04-23 06:56:46.379231: done 
+2022-04-23 06:56:46.379388: This epoch took 329.783496 s
+ 
+2022-04-23 06:56:46.379528: 
+epoch:  163 
+2022-04-23 07:01:54.404825: train loss : -0.3788 
+2022-04-23 07:02:15.086789: validation loss: -0.3582 
+2022-04-23 07:02:15.091860: Average global foreground Dice: [0.9495, 0.8934, 0.9067, 0.5954, 0.9507, 0.9218, 0.6512, 0.408, 0.7559, 0.83, 0.5465, 0.886, 0.8113, 0.3987, 0.8632, 0.8149] 
+2022-04-23 07:02:15.092245: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 07:02:15.669858: lr: 0.004907 
+2022-04-23 07:02:15.670033: saving scheduled checkpoint file... 
+2022-04-23 07:02:15.691741: saving checkpoint... 
+2022-04-23 07:02:16.557219: done, saving took 0.89 seconds 
+2022-04-23 07:02:16.557954: done 
+2022-04-23 07:02:16.558117: This epoch took 330.178449 s
+ 
+2022-04-23 07:02:16.558251: 
+epoch:  164 
+2022-04-23 07:07:24.455036: train loss : -0.3792 
+2022-04-23 07:07:45.081744: validation loss: -0.3551 
+2022-04-23 07:07:45.087204: Average global foreground Dice: [0.9571, 0.863, 0.8901, 0.5898, 0.9388, 0.9179, 0.5953, 0.4009, 0.7398, 0.8388, 0.5697, 0.9112, 0.78, 0.4603, 0.9192, 0.8225] 
+2022-04-23 07:07:45.087620: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 07:07:45.663192: lr: 0.004874 
+2022-04-23 07:07:45.663365: saving scheduled checkpoint file... 
+2022-04-23 07:07:45.685038: saving checkpoint... 
+2022-04-23 07:07:46.539895: done, saving took 0.88 seconds 
+2022-04-23 07:07:46.540662: done 
+2022-04-23 07:07:46.540829: This epoch took 329.982441 s
+ 
+2022-04-23 07:07:46.540974: 
+epoch:  165 
+2022-04-23 07:12:54.327640: train loss : -0.3674 
+2022-04-23 07:13:14.964116: validation loss: -0.3310 
+2022-04-23 07:13:14.965299: Average global foreground Dice: [0.9503, 0.8866, 0.8921, 0.5818, 0.9413, 0.8881, 0.6559, 0.4591, 0.7845, 0.848, 0.4268, 0.8678, 0.7996, 0.4198, 0.8972, 0.842] 
+2022-04-23 07:13:14.965678: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 07:13:15.556489: lr: 0.004842 
+2022-04-23 07:13:15.556688: saving scheduled checkpoint file... 
+2022-04-23 07:13:15.578598: saving checkpoint... 
+2022-04-23 07:13:16.479508: done, saving took 0.92 seconds 
+2022-04-23 07:13:16.485356: done 
+2022-04-23 07:13:16.485537: This epoch took 329.944412 s
+ 
+2022-04-23 07:13:16.485670: 
+epoch:  166 
+2022-04-23 07:18:24.377054: train loss : -0.3549 
+2022-04-23 07:18:45.052084: validation loss: -0.3014 
+2022-04-23 07:18:45.066760: Average global foreground Dice: [0.9439, 0.8922, 0.902, 0.5906, 0.9387, 0.8669, 0.6396, 0.3209, 0.7659, 0.8497, 0.5023, 0.8962, 0.797, 0.5777, 0.9226, 0.8632] 
+2022-04-23 07:18:45.067210: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 07:18:45.643582: lr: 0.004809 
+2022-04-23 07:18:45.643769: saving scheduled checkpoint file... 
+2022-04-23 07:18:45.665456: saving checkpoint... 
+2022-04-23 07:18:46.516077: done, saving took 0.87 seconds 
+2022-04-23 07:18:46.516836: done 
+2022-04-23 07:18:46.538561: saving checkpoint... 
+2022-04-23 07:18:47.380085: done, saving took 0.86 seconds 
+2022-04-23 07:18:47.380830: This epoch took 330.895020 s
+ 
+2022-04-23 07:18:47.380968: 
+epoch:  167 
+2022-04-23 07:23:55.394080: train loss : -0.3781 
+2022-04-23 07:24:16.104353: validation loss: -0.2844 
+2022-04-23 07:24:16.114954: Average global foreground Dice: [0.948, 0.9019, 0.9161, 0.5898, 0.9386, 0.893, 0.5637, 0.5786, 0.783, 0.8367, 0.4589, 0.7859, 0.7771, 0.504, 0.9209, 0.8116] 
+2022-04-23 07:24:16.115400: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 07:24:16.730710: lr: 0.004776 
+2022-04-23 07:24:16.730958: saving scheduled checkpoint file... 
+2022-04-23 07:24:16.752634: saving checkpoint... 
+2022-04-23 07:24:17.614076: done, saving took 0.88 seconds 
+2022-04-23 07:24:17.614822: done 
+2022-04-23 07:24:17.636473: saving checkpoint... 
+2022-04-23 07:24:18.470125: done, saving took 0.86 seconds 
+2022-04-23 07:24:18.470870: This epoch took 331.089766 s
+ 
+2022-04-23 07:24:18.471017: 
+epoch:  168 
+2022-04-23 07:29:26.613977: train loss : -0.3760 
+2022-04-23 07:29:47.262412: validation loss: -0.3292 
+2022-04-23 07:29:47.263594: Average global foreground Dice: [0.9511, 0.8529, 0.8678, 0.5771, 0.9537, 0.9022, 0.6654, 0.3197, 0.773, 0.8478, 0.5067, 0.9053, 0.8306, 0.4158, 0.0784, 0.8389] 
+2022-04-23 07:29:47.263968: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 07:29:47.868629: lr: 0.004744 
+2022-04-23 07:29:47.868815: saving scheduled checkpoint file... 
+2022-04-23 07:29:47.890501: saving checkpoint... 
+2022-04-23 07:29:48.741544: done, saving took 0.87 seconds 
+2022-04-23 07:29:48.742323: done 
+2022-04-23 07:29:48.742474: This epoch took 330.271313 s
+ 
+2022-04-23 07:29:48.742607: 
+epoch:  169 
+2022-04-23 07:34:56.936254: train loss : -0.3751 
+2022-04-23 07:35:17.719148: validation loss: -0.3491 
+2022-04-23 07:35:17.720145: Average global foreground Dice: [0.9422, 0.8866, 0.9008, 0.5188, 0.9444, 0.9057, 0.6922, 0.4565, 0.7847, 0.8568, 0.5187, 0.9293, 0.8148, 0.4548, 0.8472, 0.7908] 
+2022-04-23 07:35:17.720575: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 07:35:18.340253: lr: 0.004711 
+2022-04-23 07:35:18.340431: saving scheduled checkpoint file... 
+2022-04-23 07:35:18.372218: saving checkpoint... 
+2022-04-23 07:35:19.232041: done, saving took 0.89 seconds 
+2022-04-23 07:35:19.233092: done 
+2022-04-23 07:35:19.233243: This epoch took 330.490501 s
+ 
+2022-04-23 07:35:19.233378: 
+epoch:  170 
+2022-04-23 07:40:29.535416: train loss : -0.3842 
+2022-04-23 07:40:50.523059: validation loss: -0.3358 
+2022-04-23 07:40:50.524149: Average global foreground Dice: [0.9479, 0.8681, 0.8884, 0.5841, 0.9438, 0.8957, 0.7378, 0.7078, 0.7789, 0.814, 0.596, 0.8589, 0.7919, 0.4899, 0.8818, 0.7944] 
+2022-04-23 07:40:50.528313: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 07:40:51.128195: lr: 0.004679 
+2022-04-23 07:40:51.128373: saving scheduled checkpoint file... 
+2022-04-23 07:40:51.157689: saving checkpoint... 
+2022-04-23 07:40:52.006884: done, saving took 0.88 seconds 
+2022-04-23 07:40:52.010017: done 
+2022-04-23 07:40:52.010171: This epoch took 332.776656 s
+ 
+2022-04-23 07:40:52.010303: 
+epoch:  171 
+2022-04-23 07:46:02.292535: train loss : -0.3839 
+2022-04-23 07:46:23.358889: validation loss: -0.3629 
+2022-04-23 07:46:23.360016: Average global foreground Dice: [0.9541, 0.8738, 0.8801, 0.6114, 0.9529, 0.9194, 0.7246, 0.423, 0.7484, 0.8262, 0.6246, 0.8145, 0.7827, 0.5534, 0.8865, 0.8524] 
+2022-04-23 07:46:23.360483: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 07:46:23.960610: lr: 0.004646 
+2022-04-23 07:46:23.960809: saving scheduled checkpoint file... 
+2022-04-23 07:46:23.990355: saving checkpoint... 
+2022-04-23 07:46:24.906335: done, saving took 0.95 seconds 
+2022-04-23 07:46:24.910732: done 
+2022-04-23 07:46:24.932475: saving checkpoint... 
+2022-04-23 07:46:25.778467: done, saving took 0.87 seconds 
+2022-04-23 07:46:25.779221: This epoch took 333.768780 s
+ 
+2022-04-23 07:46:25.779362: 
+epoch:  172 
+2022-04-23 07:51:33.808291: train loss : -0.3739 
+2022-04-23 07:51:54.532495: validation loss: -0.3146 
+2022-04-23 07:51:54.542947: Average global foreground Dice: [0.9438, 0.8965, 0.9105, 0.565, 0.9484, 0.9103, 0.7088, 0.4205, 0.7554, 0.8387, 0.4947, 0.8261, 0.7762, 0.6202, 0.8854, 0.8081] 
+2022-04-23 07:51:54.543409: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 07:51:55.165654: lr: 0.004613 
+2022-04-23 07:51:55.165843: saving scheduled checkpoint file... 
+2022-04-23 07:51:55.187660: saving checkpoint... 
+2022-04-23 07:51:56.031291: done, saving took 0.87 seconds 
+2022-04-23 07:51:56.032052: done 
+2022-04-23 07:51:56.053865: saving checkpoint... 
+2022-04-23 07:51:56.894953: done, saving took 0.86 seconds 
+2022-04-23 07:51:56.895720: This epoch took 331.116214 s
+ 
+2022-04-23 07:51:56.895859: 
+epoch:  173 
+2022-04-23 07:57:04.923573: train loss : -0.3558 
+2022-04-23 07:57:25.543688: validation loss: -0.3203 
+2022-04-23 07:57:25.544915: Average global foreground Dice: [0.9455, 0.891, 0.9009, 0.5793, 0.9421, 0.9039, 0.6677, 0.4713, 0.7521, 0.8463, 0.5244, 0.9021, 0.8146, 0.2963, 0.8495, 0.8036] 
+2022-04-23 07:57:25.548425: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 07:57:26.133523: lr: 0.004581 
+2022-04-23 07:57:26.133712: saving scheduled checkpoint file... 
+2022-04-23 07:57:26.155486: saving checkpoint... 
+2022-04-23 07:57:27.006669: done, saving took 0.87 seconds 
+2022-04-23 07:57:27.007399: done 
+2022-04-23 07:57:27.007555: This epoch took 330.111559 s
+ 
+2022-04-23 07:57:27.007688: 
+epoch:  174 
+2022-04-23 08:02:35.065859: train loss : -0.3660 
+2022-04-23 08:02:55.700983: validation loss: -0.3386 
+2022-04-23 08:02:55.737536: Average global foreground Dice: [0.9494, 0.8658, 0.8918, 0.5549, 0.9396, 0.9209, 0.6833, 0.6605, 0.727, 0.8458, 0.6513, 0.8706, 0.8148, 0.4439, 0.8631, 0.8169] 
+2022-04-23 08:02:55.738350: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 08:02:56.321451: lr: 0.004548 
+2022-04-23 08:02:56.321642: saving scheduled checkpoint file... 
+2022-04-23 08:02:56.343341: saving checkpoint... 
+2022-04-23 08:02:57.195656: done, saving took 0.87 seconds 
+2022-04-23 08:02:57.198581: done 
+2022-04-23 08:02:57.229823: saving checkpoint... 
+2022-04-23 08:02:58.089091: done, saving took 0.89 seconds 
+2022-04-23 08:02:58.092286: This epoch took 331.084459 s
+ 
+2022-04-23 08:02:58.092439: 
+epoch:  175 
+2022-04-23 08:08:06.312938: train loss : -0.3728 
+2022-04-23 08:08:26.894589: validation loss: -0.3354 
+2022-04-23 08:08:26.899611: Average global foreground Dice: [0.9464, 0.9074, 0.9126, 0.6414, 0.9343, 0.9309, 0.6648, 0.4017, 0.7795, 0.846, 0.498, 0.8531, 0.8318, 0.473, 0.8391, 0.8374] 
+2022-04-23 08:08:26.901257: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 08:08:27.507493: lr: 0.004515 
+2022-04-23 08:08:27.507710: saving scheduled checkpoint file... 
+2022-04-23 08:08:27.540577: saving checkpoint... 
+2022-04-23 08:08:28.399581: done, saving took 0.89 seconds 
+2022-04-23 08:08:28.400331: done 
+2022-04-23 08:08:28.422050: saving checkpoint... 
+2022-04-23 08:08:29.247055: done, saving took 0.85 seconds 
+2022-04-23 08:08:29.247805: This epoch took 331.155217 s
+ 
+2022-04-23 08:08:29.247941: 
+epoch:  176 
+2022-04-23 08:13:39.441506: train loss : -0.3957 
+2022-04-23 08:14:00.514539: validation loss: -0.3187 
+2022-04-23 08:14:00.515845: Average global foreground Dice: [0.9456, 0.8978, 0.9069, 0.593, 0.9503, 0.9181, 0.6764, 0.5355, 0.7528, 0.8649, 0.5773, 0.8964, 0.8056, 0.5763, 0.903, 0.8228] 
+2022-04-23 08:14:00.519136: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 08:14:01.098692: lr: 0.004482 
+2022-04-23 08:14:01.098917: saving scheduled checkpoint file... 
+2022-04-23 08:14:01.128442: saving checkpoint... 
+2022-04-23 08:14:01.985050: done, saving took 0.89 seconds 
+2022-04-23 08:14:01.988346: done 
+2022-04-23 08:14:02.017407: saving checkpoint... 
+2022-04-23 08:14:02.866164: done, saving took 0.88 seconds 
+2022-04-23 08:14:02.866906: This epoch took 333.618821 s
+ 
+2022-04-23 08:14:02.867043: 
+epoch:  177 
+2022-04-23 08:19:13.246036: train loss : -0.3709 
+2022-04-23 08:19:34.248667: validation loss: -0.2843 
+2022-04-23 08:19:34.259197: Average global foreground Dice: [0.9446, 0.8798, 0.8963, 0.5121, 0.9511, 0.9211, 0.7061, 0.4727, 0.746, 0.8522, 0.5601, 0.8767, 0.8267, 0.6015, 0.8207, 0.827] 
+2022-04-23 08:19:34.259611: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 08:19:34.915385: lr: 0.00445 
+2022-04-23 08:19:34.915594: saving scheduled checkpoint file... 
+2022-04-23 08:19:34.937335: saving checkpoint... 
+2022-04-23 08:19:35.785719: done, saving took 0.87 seconds 
+2022-04-23 08:19:35.786477: done 
+2022-04-23 08:19:35.808137: saving checkpoint... 
+2022-04-23 08:19:36.656169: done, saving took 0.87 seconds 
+2022-04-23 08:19:36.656926: This epoch took 333.789742 s
+ 
+2022-04-23 08:19:36.657062: 
+epoch:  178 
+2022-04-23 08:24:44.234806: train loss : -0.3771 
+2022-04-23 08:25:04.923070: validation loss: -0.3013 
+2022-04-23 08:25:04.928334: Average global foreground Dice: [0.9483, 0.8839, 0.8994, 0.6298, 0.9375, 0.8934, 0.6777, 0.4765, 0.6923, 0.8351, 0.428, 0.8919, 0.8455, 0.5275, 0.8785, 0.8234] 
+2022-04-23 08:25:04.929080: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 08:25:05.522586: lr: 0.004417 
+2022-04-23 08:25:05.523097: saving scheduled checkpoint file... 
+2022-04-23 08:25:05.544854: saving checkpoint... 
+2022-04-23 08:25:06.391731: done, saving took 0.87 seconds 
+2022-04-23 08:25:06.392503: done 
+2022-04-23 08:25:06.414307: saving checkpoint... 
+2022-04-23 08:25:07.248047: done, saving took 0.86 seconds 
+2022-04-23 08:25:07.248796: This epoch took 330.591597 s
+ 
+2022-04-23 08:25:07.248943: 
+epoch:  179 
+2022-04-23 08:30:15.906119: train loss : -0.3884 
+2022-04-23 08:30:36.508884: validation loss: -0.3250 
+2022-04-23 08:30:36.519696: Average global foreground Dice: [0.9566, 0.8696, 0.8934, 0.5938, 0.9488, 0.9236, 0.6621, 0.6005, 0.7688, 0.8179, 0.657, 0.8745, 0.8009, 0.6239, 0.9191, 0.682] 
+2022-04-23 08:30:36.520160: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 08:30:37.116352: lr: 0.004384 
+2022-04-23 08:30:37.116539: saving scheduled checkpoint file... 
+2022-04-23 08:30:37.138250: saving checkpoint... 
+2022-04-23 08:30:37.987835: done, saving took 0.87 seconds 
+2022-04-23 08:30:37.988584: done 
+2022-04-23 08:30:38.010254: saving checkpoint... 
+2022-04-23 08:30:38.841145: done, saving took 0.85 seconds 
+2022-04-23 08:30:38.841915: This epoch took 331.592810 s
+ 
+2022-04-23 08:30:38.842056: 
+epoch:  180 
+2022-04-23 08:35:46.829842: train loss : -0.3641 
+2022-04-23 08:36:07.504541: validation loss: -0.3568 
+2022-04-23 08:36:07.505611: Average global foreground Dice: [0.9505, 0.8663, 0.8911, 0.571, 0.9541, 0.9216, 0.6589, 0.3894, 0.778, 0.8564, 0.3936, 0.8436, 0.8265, 0.3475, 0.9013, 0.7886] 
+2022-04-23 08:36:07.506131: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 08:36:08.103804: lr: 0.004351 
+2022-04-23 08:36:08.104006: saving scheduled checkpoint file... 
+2022-04-23 08:36:08.125787: saving checkpoint... 
+2022-04-23 08:36:08.973328: done, saving took 0.87 seconds 
+2022-04-23 08:36:08.974094: done 
+2022-04-23 08:36:08.974249: This epoch took 330.132055 s
+ 
+2022-04-23 08:36:08.974381: 
+epoch:  181 
+2022-04-23 08:41:17.229621: train loss : -0.3629 
+2022-04-23 08:41:37.827346: validation loss: -0.2919 
+2022-04-23 08:41:37.842050: Average global foreground Dice: [0.9475, 0.8805, 0.8883, 0.6111, 0.9496, 0.9123, 0.676, 0.3174, 0.7705, 0.8502, 0.5558, 0.7706, 0.7621, 0.4332, 0.7516, 0.8299] 
+2022-04-23 08:41:37.842515: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 08:41:38.423281: lr: 0.004318 
+2022-04-23 08:41:38.423456: saving scheduled checkpoint file... 
+2022-04-23 08:41:38.445125: saving checkpoint... 
+2022-04-23 08:41:39.299578: done, saving took 0.88 seconds 
+2022-04-23 08:41:39.300338: done 
+2022-04-23 08:41:39.300498: This epoch took 330.325976 s
+ 
+2022-04-23 08:41:39.300632: 
+epoch:  182 
+2022-04-23 08:46:47.441432: train loss : -0.3783 
+2022-04-23 08:47:08.170993: validation loss: -0.3186 
+2022-04-23 08:47:08.172491: Average global foreground Dice: [0.946, 0.8907, 0.8854, 0.6069, 0.9378, 0.8914, 0.6541, 0.4005, 0.7673, 0.8273, 0.4583, 0.7708, 0.79, 0.5268, 0.9251, 0.8087] 
+2022-04-23 08:47:08.172907: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 08:47:08.777541: lr: 0.004285 
+2022-04-23 08:47:08.777781: saving scheduled checkpoint file... 
+2022-04-23 08:47:08.807249: saving checkpoint... 
+2022-04-23 08:47:09.665226: done, saving took 0.89 seconds 
+2022-04-23 08:47:09.665951: done 
+2022-04-23 08:47:09.666101: This epoch took 330.365330 s
+ 
+2022-04-23 08:47:09.666237: 
+epoch:  183 
+2022-04-23 08:52:20.671586: train loss : -0.3795 
+2022-04-23 08:52:41.743862: validation loss: -0.3330 
+2022-04-23 08:52:41.745132: Average global foreground Dice: [0.9536, 0.8931, 0.9011, 0.5748, 0.9447, 0.8911, 0.6173, 0.4746, 0.7072, 0.8392, 0.6661, 0.8074, 0.7194, 0.4104, 0.9049, 0.8396] 
+2022-04-23 08:52:41.745559: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 08:52:42.373139: lr: 0.004252 
+2022-04-23 08:52:42.373320: saving scheduled checkpoint file... 
+2022-04-23 08:52:42.402595: saving checkpoint... 
+2022-04-23 08:52:43.318329: done, saving took 0.94 seconds 
+2022-04-23 08:52:43.319077: done 
+2022-04-23 08:52:43.319226: This epoch took 333.652850 s
+ 
+2022-04-23 08:52:43.319357: 
+epoch:  184 
+2022-04-23 08:57:51.447719: train loss : -0.3903 
+2022-04-23 08:58:12.156648: validation loss: -0.2753 
+2022-04-23 08:58:12.161908: Average global foreground Dice: [0.9477, 0.86, 0.8579, 0.562, 0.9456, 0.8954, 0.6658, 0.6698, 0.7796, 0.853, 0.5768, 0.9152, 0.8395, 0.4797, 0.8833, 0.8523] 
+2022-04-23 08:58:12.162311: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 08:58:12.770761: lr: 0.004219 
+2022-04-23 08:58:12.771195: saving scheduled checkpoint file... 
+2022-04-23 08:58:12.792886: saving checkpoint... 
+2022-04-23 08:58:13.634956: done, saving took 0.86 seconds 
+2022-04-23 08:58:13.635695: done 
+2022-04-23 08:58:13.635848: This epoch took 330.316356 s
+ 
+2022-04-23 08:58:13.635978: 
+epoch:  185 
+2022-04-23 09:03:24.374396: train loss : -0.3639 
+2022-04-23 09:03:45.285813: validation loss: -0.3246 
+2022-04-23 09:03:45.296535: Average global foreground Dice: [0.9495, 0.8965, 0.9099, 0.586, 0.9368, 0.8968, 0.6493, 0.4382, 0.762, 0.84, 0.5845, 0.8861, 0.8137, 0.4784, 0.8387, 0.8289] 
+2022-04-23 09:03:45.296932: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 09:03:45.892854: lr: 0.004186 
+2022-04-23 09:03:45.893041: saving scheduled checkpoint file... 
+2022-04-23 09:03:45.914719: saving checkpoint... 
+2022-04-23 09:03:46.752724: done, saving took 0.86 seconds 
+2022-04-23 09:03:46.753460: done 
+2022-04-23 09:03:46.753615: This epoch took 333.117503 s
+ 
+2022-04-23 09:03:46.753747: 
+epoch:  186 
+2022-04-23 09:08:56.577857: train loss : -0.3937 
+2022-04-23 09:09:17.640556: validation loss: -0.3410 
+2022-04-23 09:09:17.651488: Average global foreground Dice: [0.9515, 0.8913, 0.9033, 0.594, 0.9497, 0.9209, 0.7175, 0.4946, 0.7353, 0.8557, 0.6403, 0.8734, 0.814, 0.4535, 0.8891, 0.8599] 
+2022-04-23 09:09:17.651998: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 09:09:18.235514: lr: 0.004153 
+2022-04-23 09:09:18.235745: saving scheduled checkpoint file... 
+2022-04-23 09:09:18.257442: saving checkpoint... 
+2022-04-23 09:09:19.094917: done, saving took 0.86 seconds 
+2022-04-23 09:09:19.095673: done 
+2022-04-23 09:09:19.095826: This epoch took 332.341944 s
+ 
+2022-04-23 09:09:19.095958: 
+epoch:  187 
+2022-04-23 09:14:27.172617: train loss : -0.3667 
+2022-04-23 09:14:47.828415: validation loss: -0.3336 
+2022-04-23 09:14:47.843060: Average global foreground Dice: [0.9367, 0.8895, 0.9021, 0.5758, 0.9181, 0.9143, 0.6788, 0.4886, 0.7508, 0.8351, 0.5844, 0.9121, 0.8042, 0.3551, 0.8077, 0.8144] 
+2022-04-23 09:14:47.843521: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 09:14:48.455492: lr: 0.00412 
+2022-04-23 09:14:48.455678: saving scheduled checkpoint file... 
+2022-04-23 09:14:48.477331: saving checkpoint... 
+2022-04-23 09:14:49.337352: done, saving took 0.88 seconds 
+2022-04-23 09:14:49.338097: done 
+2022-04-23 09:14:49.338246: This epoch took 330.242151 s
+ 
+2022-04-23 09:14:49.338381: 
+epoch:  188 
+2022-04-23 09:19:57.171121: train loss : -0.3851 
+2022-04-23 09:20:17.858857: validation loss: -0.3260 
+2022-04-23 09:20:17.860244: Average global foreground Dice: [0.9519, 0.8805, 0.8964, 0.5818, 0.9498, 0.9212, 0.695, 0.6321, 0.7394, 0.8505, 0.5748, 0.8432, 0.84, 0.4941, 0.8995, 0.865] 
+2022-04-23 09:20:17.860630: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 09:20:18.493362: lr: 0.004087 
+2022-04-23 09:20:18.493570: saving scheduled checkpoint file... 
+2022-04-23 09:20:18.515210: saving checkpoint... 
+2022-04-23 09:20:19.362160: done, saving took 0.87 seconds 
+2022-04-23 09:20:19.362891: done 
+2022-04-23 09:20:19.384582: saving checkpoint... 
+2022-04-23 09:20:20.211570: done, saving took 0.85 seconds 
+2022-04-23 09:20:20.212310: This epoch took 330.873791 s
+ 
+2022-04-23 09:20:20.212444: 
+epoch:  189 
+2022-04-23 09:25:28.606247: train loss : -0.3770 
+2022-04-23 09:25:49.281433: validation loss: -0.3278 
+2022-04-23 09:25:49.291963: Average global foreground Dice: [0.9527, 0.902, 0.908, 0.6065, 0.9516, 0.9014, 0.705, 0.4769, 0.7456, 0.8461, 0.3298, 0.8399, 0.7748, 0.4302, 0.8636, 0.8266] 
+2022-04-23 09:25:49.292434: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 09:25:49.949556: lr: 0.004054 
+2022-04-23 09:25:49.949783: saving scheduled checkpoint file... 
+2022-04-23 09:25:49.971470: saving checkpoint... 
+2022-04-23 09:25:50.827778: done, saving took 0.88 seconds 
+2022-04-23 09:25:50.828529: done 
+2022-04-23 09:25:50.828677: This epoch took 330.616091 s
+ 
+2022-04-23 09:25:50.828812: 
+epoch:  190 
+2022-04-23 09:31:01.312374: train loss : -0.3753 
+2022-04-23 09:31:22.132801: validation loss: -0.2750 
+2022-04-23 09:31:22.147618: Average global foreground Dice: [0.9484, 0.8829, 0.8725, 0.614, 0.9455, 0.8911, 0.684, 0.6748, 0.765, 0.8594, 0.5834, 0.6029, 0.7957, 0.4312, 0.8771, 0.82] 
+2022-04-23 09:31:22.148018: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 09:31:22.765544: lr: 0.00402 
+2022-04-23 09:31:22.765771: saving scheduled checkpoint file... 
+2022-04-23 09:31:22.787481: saving checkpoint... 
+2022-04-23 09:31:23.638199: done, saving took 0.87 seconds 
+2022-04-23 09:31:23.639235: done 
+2022-04-23 09:31:23.639411: This epoch took 332.806523 s
+ 
+2022-04-23 09:31:23.639553: 
+epoch:  191 
+2022-04-23 09:36:33.632999: train loss : -0.3762 
+2022-04-23 09:36:54.338977: validation loss: -0.2895 
+2022-04-23 09:36:54.349574: Average global foreground Dice: [0.9475, 0.8579, 0.8904, 0.5964, 0.9424, 0.8984, 0.6397, 0.4942, 0.78, 0.8407, 0.5999, 0.8326, 0.8211, 0.401, 0.9243, 0.7869] 
+2022-04-23 09:36:54.349959: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 09:36:54.964942: lr: 0.003987 
+2022-04-23 09:36:54.965170: saving scheduled checkpoint file... 
+2022-04-23 09:36:54.986824: saving checkpoint... 
+2022-04-23 09:36:55.827226: done, saving took 0.86 seconds 
+2022-04-23 09:36:55.827965: done 
+2022-04-23 09:36:55.828118: This epoch took 332.188426 s
+ 
+2022-04-23 09:36:55.828250: 
+epoch:  192 
+2022-04-23 09:42:05.725348: train loss : -0.3699 
+2022-04-23 09:42:26.566109: validation loss: -0.3263 
+2022-04-23 09:42:26.567111: Average global foreground Dice: [0.9457, 0.8586, 0.8952, 0.5341, 0.9484, 0.8831, 0.6432, 0.3177, 0.7235, 0.8272, 0.5652, 0.8687, 0.7793, 0.5456, 0.9397, 0.8118] 
+2022-04-23 09:42:26.568509: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 09:42:27.188487: lr: 0.003954 
+2022-04-23 09:42:27.188708: saving scheduled checkpoint file... 
+2022-04-23 09:42:27.210399: saving checkpoint... 
+2022-04-23 09:42:28.073389: done, saving took 0.88 seconds 
+2022-04-23 09:42:28.074140: done 
+2022-04-23 09:42:28.074292: This epoch took 332.245906 s
+ 
+2022-04-23 09:42:28.074430: 
+epoch:  193 
+2022-04-23 09:47:38.051180: train loss : -0.3647 
+2022-04-23 09:47:58.953428: validation loss: -0.3453 
+2022-04-23 09:47:58.954847: Average global foreground Dice: [0.9512, 0.8834, 0.9027, 0.6087, 0.9488, 0.9213, 0.6674, 0.5926, 0.7624, 0.8323, 0.5694, 0.8942, 0.7723, 0.5357, 0.8718, 0.7951] 
+2022-04-23 09:47:58.955232: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 09:47:59.561237: lr: 0.003921 
+2022-04-23 09:47:59.561457: saving scheduled checkpoint file... 
+2022-04-23 09:47:59.583303: saving checkpoint... 
+2022-04-23 09:48:00.450428: done, saving took 0.89 seconds 
+2022-04-23 09:48:00.451161: done 
+2022-04-23 09:48:00.451314: This epoch took 332.376744 s
+ 
+2022-04-23 09:48:00.451445: 
+epoch:  194 
+2022-04-23 09:53:10.510633: train loss : -0.3786 
+2022-04-23 09:53:31.569010: validation loss: -0.3495 
+2022-04-23 09:53:31.580040: Average global foreground Dice: [0.9546, 0.8645, 0.8849, 0.584, 0.9485, 0.9125, 0.6421, 0.4865, 0.7753, 0.8308, 0.5414, 0.8901, 0.8555, 0.4814, 0.8583, 0.786] 
+2022-04-23 09:53:31.580483: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 09:53:32.163960: lr: 0.003887 
+2022-04-23 09:53:32.164144: saving scheduled checkpoint file... 
+2022-04-23 09:53:32.193704: saving checkpoint... 
+2022-04-23 09:53:33.036777: done, saving took 0.87 seconds 
+2022-04-23 09:53:33.037509: done 
+2022-04-23 09:53:33.037661: This epoch took 332.586069 s
+ 
+2022-04-23 09:53:33.037795: 
+epoch:  195 
+2022-04-23 09:58:42.267837: train loss : -0.3583 
+2022-04-23 09:59:03.374955: validation loss: -0.3426 
+2022-04-23 09:59:03.385862: Average global foreground Dice: [0.9474, 0.8661, 0.8785, 0.5992, 0.9471, 0.8887, 0.6432, 0.4236, 0.7302, 0.8328, 0.487, 0.8784, 0.7951, 0.4906, 0.8977, 0.7714] 
+2022-04-23 09:59:03.391022: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 09:59:04.019299: lr: 0.003854 
+2022-04-23 09:59:04.019482: saving scheduled checkpoint file... 
+2022-04-23 09:59:04.048954: saving checkpoint... 
+2022-04-23 09:59:04.963542: done, saving took 0.94 seconds 
+2022-04-23 09:59:04.964295: done 
+2022-04-23 09:59:04.964444: This epoch took 331.926511 s
+ 
+2022-04-23 09:59:04.964572: 
+epoch:  196 
+2022-04-23 10:04:13.171724: train loss : -0.3816 
+2022-04-23 10:04:33.953190: validation loss: -0.3322 
+2022-04-23 10:04:33.989958: Average global foreground Dice: [0.9515, 0.8718, 0.9071, 0.5896, 0.9541, 0.9296, 0.6914, 0.3887, 0.7628, 0.8428, 0.5233, 0.8982, 0.8118, 0.4769, 0.9049, 0.8056] 
+2022-04-23 10:04:33.990417: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 10:04:34.605205: lr: 0.003821 
+2022-04-23 10:04:34.605387: saving scheduled checkpoint file... 
+2022-04-23 10:04:34.627060: saving checkpoint... 
+2022-04-23 10:04:35.485306: done, saving took 0.88 seconds 
+2022-04-23 10:04:35.486029: done 
+2022-04-23 10:04:35.486179: This epoch took 330.521474 s
+ 
+2022-04-23 10:04:35.486311: 
+epoch:  197 
+2022-04-23 10:09:43.373801: train loss : -0.3988 
+2022-04-23 10:10:03.953157: validation loss: -0.3235 
+2022-04-23 10:10:03.954304: Average global foreground Dice: [0.9529, 0.8568, 0.9109, 0.6234, 0.9502, 0.9191, 0.7106, 0.3916, 0.7531, 0.8519, 0.5366, 0.9169, 0.7644, 0.5025, 0.8997, 0.8018] 
+2022-04-23 10:10:03.957839: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 10:10:04.564707: lr: 0.003787 
+2022-04-23 10:10:04.564933: saving scheduled checkpoint file... 
+2022-04-23 10:10:04.586624: saving checkpoint... 
+2022-04-23 10:10:05.443178: done, saving took 0.88 seconds 
+2022-04-23 10:10:05.443928: done 
+2022-04-23 10:10:05.444080: This epoch took 329.957632 s
+ 
+2022-04-23 10:10:05.444219: 
+epoch:  198 
+2022-04-23 10:15:13.840916: train loss : -0.3690 
+2022-04-23 10:15:34.384104: validation loss: -0.3239 
+2022-04-23 10:15:34.385378: Average global foreground Dice: [0.9489, 0.8831, 0.8888, 0.6234, 0.94, 0.9125, 0.6534, 0.4171, 0.7482, 0.8377, 0.6002, 0.8088, 0.8262, 0.4872, 0.8831, 0.8376] 
+2022-04-23 10:15:34.386298: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 10:15:35.013993: lr: 0.003754 
+2022-04-23 10:15:35.014222: saving scheduled checkpoint file... 
+2022-04-23 10:15:35.035920: saving checkpoint... 
+2022-04-23 10:15:35.890912: done, saving took 0.88 seconds 
+2022-04-23 10:15:35.891677: done 
+2022-04-23 10:15:35.891842: This epoch took 330.447487 s
+ 
+2022-04-23 10:15:35.891983: 
+epoch:  199 
+2022-04-23 10:20:44.109931: train loss : -0.3792 
+2022-04-23 10:21:04.707604: validation loss: -0.3658 
+2022-04-23 10:21:04.708663: Average global foreground Dice: [0.9544, 0.8793, 0.8955, 0.5876, 0.9544, 0.9247, 0.7448, 0.5198, 0.744, 0.8488, 0.5866, 0.9474, 0.8229, 0.4799, 0.9241, 0.8397] 
+2022-04-23 10:21:04.712759: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 10:21:05.324592: lr: 0.00372 
+2022-04-23 10:21:05.324823: saving scheduled checkpoint file... 
+2022-04-23 10:21:05.346544: saving checkpoint... 
+2022-04-23 10:21:06.222234: done, saving took 0.90 seconds 
+2022-04-23 10:21:06.222995: done 
+2022-04-23 10:21:06.244785: saving checkpoint... 
+2022-04-23 10:21:07.102519: done, saving took 0.88 seconds 
+2022-04-23 10:21:07.103250: This epoch took 331.211118 s
+ 
+2022-04-23 10:21:07.103384: 
+epoch:  200 
+2022-04-23 10:26:15.297709: train loss : -0.3615 
+2022-04-23 10:26:36.061902: validation loss: -0.3075 
+2022-04-23 10:26:36.063021: Average global foreground Dice: [0.9566, 0.8507, 0.8992, 0.6022, 0.9475, 0.9131, 0.6657, 0.4478, 0.7887, 0.8425, 0.5322, 0.9162, 0.8035, 0.538, 0.9265, 0.7951] 
+2022-04-23 10:26:36.066606: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 10:26:36.675285: lr: 0.003687 
+2022-04-23 10:26:36.679686: saving scheduled checkpoint file... 
+2022-04-23 10:26:36.701598: saving checkpoint... 
+2022-04-23 10:26:37.539660: done, saving took 0.86 seconds 
+2022-04-23 10:26:37.540401: done 
+2022-04-23 10:26:37.562052: saving checkpoint... 
+2022-04-23 10:26:38.398700: done, saving took 0.86 seconds 
+2022-04-23 10:26:38.399438: This epoch took 331.295911 s
+ 
+2022-04-23 10:26:38.399585: 
+epoch:  201 
+2022-04-23 10:31:47.133569: train loss : -0.4097 
+2022-04-23 10:32:07.847050: validation loss: -0.3234 
+2022-04-23 10:32:07.848226: Average global foreground Dice: [0.9531, 0.8547, 0.8733, 0.564, 0.9521, 0.9208, 0.6699, 0.7024, 0.7456, 0.8407, 0.469, 0.9058, 0.8428, 0.4602, 0.8949, 0.8044] 
+2022-04-23 10:32:07.848663: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 10:32:08.519351: lr: 0.003653 
+2022-04-23 10:32:08.519541: saving scheduled checkpoint file... 
+2022-04-23 10:32:08.541205: saving checkpoint... 
+2022-04-23 10:32:09.393986: done, saving took 0.87 seconds 
+2022-04-23 10:32:09.394723: done 
+2022-04-23 10:32:09.416353: saving checkpoint... 
+2022-04-23 10:32:10.262805: done, saving took 0.87 seconds 
+2022-04-23 10:32:10.263661: This epoch took 331.863938 s
+ 
+2022-04-23 10:32:10.263804: 
+epoch:  202 
+2022-04-23 10:37:18.201635: train loss : -0.3815 
+2022-04-23 10:37:38.796780: validation loss: -0.3370 
+2022-04-23 10:37:38.798074: Average global foreground Dice: [0.9585, 0.8158, 0.8756, 0.5558, 0.9536, 0.9266, 0.7434, 0.4646, 0.7725, 0.8551, 0.5607, 0.7843, 0.8319, 0.3986, 0.9234, 0.8633] 
+2022-04-23 10:37:38.798452: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 10:37:39.380382: lr: 0.00362 
+2022-04-23 10:37:39.380569: saving scheduled checkpoint file... 
+2022-04-23 10:37:39.402258: saving checkpoint... 
+2022-04-23 10:37:40.260190: done, saving took 0.88 seconds 
+2022-04-23 10:37:40.260925: done 
+2022-04-23 10:37:40.261072: This epoch took 329.997120 s
+ 
+2022-04-23 10:37:40.261208: 
+epoch:  203 
+2022-04-23 10:42:48.606044: train loss : -0.3519 
+2022-04-23 10:43:09.287548: validation loss: -0.3083 
+2022-04-23 10:43:09.288958: Average global foreground Dice: [0.9477, 0.8925, 0.9054, 0.6177, 0.9457, 0.9068, 0.6288, 0.4016, 0.78, 0.8454, 0.543, 0.9045, 0.7921, 0.4374, 0.9382, 0.8122] 
+2022-04-23 10:43:09.292482: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 10:43:09.910153: lr: 0.003586 
+2022-04-23 10:43:09.910340: saving scheduled checkpoint file... 
+2022-04-23 10:43:09.932142: saving checkpoint... 
+2022-04-23 10:43:10.779539: done, saving took 0.87 seconds 
+2022-04-23 10:43:10.780279: done 
+2022-04-23 10:43:10.780431: This epoch took 330.519084 s
+ 
+2022-04-23 10:43:10.780565: 
+epoch:  204 
+2022-04-23 10:48:19.542403: train loss : -0.4016 
+2022-04-23 10:48:40.143558: validation loss: -0.3238 
+2022-04-23 10:48:40.154221: Average global foreground Dice: [0.9521, 0.7882, 0.8498, 0.5737, 0.9548, 0.9299, 0.6939, 0.336, 0.7662, 0.8611, 0.5996, 0.9458, 0.8344, 0.3812, 0.9236, 0.8291] 
+2022-04-23 10:48:40.154642: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 10:48:40.776100: lr: 0.003553 
+2022-04-23 10:48:40.776315: saving scheduled checkpoint file... 
+2022-04-23 10:48:40.798070: saving checkpoint... 
+2022-04-23 10:48:41.647631: done, saving took 0.87 seconds 
+2022-04-23 10:48:41.648410: done 
+2022-04-23 10:48:41.648567: This epoch took 330.867863 s
+ 
+2022-04-23 10:48:41.648704: 
+epoch:  205 
+2022-04-23 10:53:49.909007: train loss : -0.3845 
+2022-04-23 10:54:10.546204: validation loss: -0.3346 
+2022-04-23 10:54:10.551630: Average global foreground Dice: [0.9547, 0.8757, 0.9001, 0.6112, 0.9524, 0.9127, 0.6948, 0.3932, 0.7685, 0.8455, 0.6246, 0.7073, 0.7595, 0.4278, 0.942, 0.8095] 
+2022-04-23 10:54:10.552019: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 10:54:11.128324: lr: 0.003519 
+2022-04-23 10:54:11.128505: saving scheduled checkpoint file... 
+2022-04-23 10:54:11.154298: saving checkpoint... 
+2022-04-23 10:54:12.011542: done, saving took 0.88 seconds 
+2022-04-23 10:54:12.012285: done 
+2022-04-23 10:54:12.012436: This epoch took 330.363450 s
+ 
+2022-04-23 10:54:12.012569: 
+epoch:  206 
+2022-04-23 10:59:20.409812: train loss : -0.3993 
+2022-04-23 10:59:41.106276: validation loss: -0.3144 
+2022-04-23 10:59:41.117162: Average global foreground Dice: [0.953, 0.8797, 0.8784, 0.6008, 0.9547, 0.9151, 0.6834, 0.3849, 0.7728, 0.856, 0.5608, 0.8835, 0.8246, 0.4679, 0.9304, 0.8072] 
+2022-04-23 10:59:41.117572: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 10:59:41.696492: lr: 0.003485 
+2022-04-23 10:59:41.696719: saving scheduled checkpoint file... 
+2022-04-23 10:59:41.718442: saving checkpoint... 
+2022-04-23 10:59:42.568488: done, saving took 0.87 seconds 
+2022-04-23 10:59:42.569235: done 
+2022-04-23 10:59:42.569386: This epoch took 330.556680 s
+ 
+2022-04-23 10:59:42.569517: 
+epoch:  207 
+2022-04-23 11:04:52.381953: train loss : -0.3786 
+2022-04-23 11:05:13.340526: validation loss: -0.3441 
+2022-04-23 11:05:13.341674: Average global foreground Dice: [0.9547, 0.8654, 0.8949, 0.5829, 0.9504, 0.9146, 0.6879, 0.4519, 0.742, 0.8552, 0.5967, 0.8503, 0.8117, 0.5647, 0.9149, 0.8397] 
+2022-04-23 11:05:13.342077: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 11:05:13.936516: lr: 0.003451 
+2022-04-23 11:05:13.936728: saving scheduled checkpoint file... 
+2022-04-23 11:05:13.965805: saving checkpoint... 
+2022-04-23 11:05:14.814113: done, saving took 0.88 seconds 
+2022-04-23 11:05:14.816630: done 
+2022-04-23 11:05:14.816780: This epoch took 332.247125 s
+ 
+2022-04-23 11:05:14.816911: 
+epoch:  208 
+2022-04-23 11:10:25.651777: train loss : -0.3966 
+2022-04-23 11:10:46.724986: validation loss: -0.3684 
+2022-04-23 11:10:46.730014: Average global foreground Dice: [0.9484, 0.8874, 0.8973, 0.6101, 0.9469, 0.9057, 0.6575, 0.5829, 0.7735, 0.8556, 0.5556, 0.9199, 0.8416, 0.4368, 0.9277, 0.8139] 
+2022-04-23 11:10:46.730400: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 11:10:47.321841: lr: 0.003418 
+2022-04-23 11:10:47.322022: saving scheduled checkpoint file... 
+2022-04-23 11:10:47.349473: saving checkpoint... 
+2022-04-23 11:10:48.299230: done, saving took 0.98 seconds 
+2022-04-23 11:10:48.299989: done 
+2022-04-23 11:10:48.324102: saving checkpoint... 
+2022-04-23 11:10:49.169367: done, saving took 0.87 seconds 
+2022-04-23 11:10:49.170102: This epoch took 334.353054 s
+ 
+2022-04-23 11:10:49.170233: 
+epoch:  209 
+2022-04-23 11:15:57.073768: train loss : -0.3633 
+2022-04-23 11:16:17.722446: validation loss: -0.3535 
+2022-04-23 11:16:17.733371: Average global foreground Dice: [0.9533, 0.8953, 0.9037, 0.6034, 0.9518, 0.8935, 0.5972, 0.5415, 0.7725, 0.8574, 0.5453, 0.8677, 0.8103, 0.4589, 0.8491, 0.8308] 
+2022-04-23 11:16:17.733879: (interpret this as an estimate for the Dice of the different classes. This is not exact.) 
+2022-04-23 11:16:18.353835: lr: 0.003384 
+2022-04-23 11:16:18.354065: saving scheduled checkpoint file... 
+2022-04-23 11:16:18.375745: saving checkpoint... 
+2022-04-23 11:16:19.221302: done, saving took 0.87 seconds 
+2022-04-23 11:16:19.222260: done 
+2022-04-23 11:16:19.222436: This epoch took 330.052060 s
+ 
+2022-04-23 11:16:19.222578: 
+epoch:  210 
